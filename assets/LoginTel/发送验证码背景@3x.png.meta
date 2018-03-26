@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "75ba8d55-b7fc-430b-b80a-8420b0897851",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "发送验证码背景@3x": {
+      "ver": "1.0.3",
+      "uuid": "c7811daf-a293-4b47-9c7b-96a3c837848e",
+      "rawTextureUuid": "75ba8d55-b7fc-430b-b80a-8420b0897851",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 299,
+      "height": 95,
+      "rawWidth": 299,
+      "rawHeight": 95,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

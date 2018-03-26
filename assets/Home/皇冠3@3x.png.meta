@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "949ba843-5f1f-40fc-a546-f69c6d320e6d",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "皇冠3@3x": {
+      "ver": "1.0.3",
+      "uuid": "9ef72421-3f1e-44ee-aa90-ae9c485af004",
+      "rawTextureUuid": "949ba843-5f1f-40fc-a546-f69c6d320e6d",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 71,
+      "height": 68,
+      "rawWidth": 71,
+      "rawHeight": 68,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "fc700734-c90d-4605-a748-7d9709cffa23",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "当前层收益金币@3x": {
+      "ver": "1.0.3",
+      "uuid": "9037743e-4d04-4dad-88b4-98ffba878339",
+      "rawTextureUuid": "fc700734-c90d-4605-a748-7d9709cffa23",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 77,
+      "height": 77,
+      "rawWidth": 77,
+      "rawHeight": 77,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
