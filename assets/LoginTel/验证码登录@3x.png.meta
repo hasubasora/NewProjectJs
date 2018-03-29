@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "e3d7193a-006e-49a3-aadc-efbe05916576",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "验证码登录@3x": {
+      "ver": "1.0.3",
+      "uuid": "4359590d-b9a4-4df5-ab14-2d2053e45c6b",
+      "rawTextureUuid": "e3d7193a-006e-49a3-aadc-efbe05916576",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -0.5,
+      "offsetY": 0.5,
+      "trimX": 2,
+      "trimY": 2,
+      "width": 282,
+      "height": 67,
+      "rawWidth": 287,
+      "rawHeight": 72,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
