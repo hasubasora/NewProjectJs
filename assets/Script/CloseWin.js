@@ -12,35 +12,21 @@ cc.Class({
   extends: cc.Component,
 
   properties: {
-    Wechar: {
+    CloseWin: {
       default: null,
       type: cc.Node
-    },
-    Phone: {
-      default: null,
-      type: cc.Node
-    },
-    PhoneView: {
-      default: null,
-      type: cc.Prefab
     }
   },
 
   // LIFE-CYCLE CALLBACKS:
 
   onLoad() {
-    this.Wechar.on("touchstart", this.SignInBoxLeft, this);
+    this.CloseWin.on("touchstart", this.CloseWins, this);
   },
-  //登陆框移动方法
-  SignInBoxLeft() {
-     let PhoneViews = cc.instantiate(this.PhoneView);
-     this.node.parent.addChild(PhoneViews, 101);
-     PhoneViews.setPosition(this.node.parent.width, 0);
-    // var ViewWidth = this.node.parent.width / 2 + this.PhoneView.width / 2;
-    var SignInBox = cc.moveBy(0.2, cc.p(-this.node.parent.width, 0));
-    PhoneViews.runAction(SignInBox);
-  },
-  start() {}
+
+  CloseWins() {
+      this.node.removeFromParent();
+  }
 
   // update (dt) {},
 });

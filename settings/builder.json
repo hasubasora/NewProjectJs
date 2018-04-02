@@ -9,7 +9,7 @@
   "inlineSpriteFrames": true,
   "inlineSpriteFrames_native": true,
   "jailbreakPlatform": false,
-  "md5Cache": false,
+  "md5Cache": true,
   "mergeStartScene": false,
   "oauthLoginServer": "",
   "optimizeHotUpdate": false,
@@ -24,10 +24,10 @@
   "qqplay": {
     "orientation": "portrait"
   },
-  "renderMode": "1",
-  "startScene": "2d2f792f-a40c-49bb-a189-ed176a246e49",
+  "renderMode": "0",
+  "startScene": "c69b387d-1030-41a2-99dd-caf3d2c9b5d7",
   "title": "hello_world",
-  "webOrientation": "portrait",
+  "webOrientation": "landscape",
   "wechatgame": {
     "appid": "wx6ac3f5090a6b99c5",
     "orientation": "portrait"

@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "a933f0cb-c802-41c5-b791-87103a2f5732",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "游戏大厅标题@3x": {
+      "ver": "1.0.3",
+      "uuid": "93825f68-314b-4eef-8ab3-b55fc41a43ff",
+      "rawTextureUuid": "a933f0cb-c802-41c5-b791-87103a2f5732",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 527,
+      "height": 171,
+      "rawWidth": 527,
+      "rawHeight": 171,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

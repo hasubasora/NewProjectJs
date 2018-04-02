@@ -67,6 +67,9 @@
     "_components": [
       {
         "__id__": 162
+      },
+      {
+        "__id__": 163
       }
     ],
     "_prefab": null,
@@ -252,7 +255,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "设置@3x",
+    "_name": "gohome",
     "_objFlags": 0,
     "_parent": {
       "__id__": 4
@@ -5449,5 +5452,17 @@
     },
     "_fitWidth": false,
     "_fitHeight": true
+  },
+  {
+    "__type__": "56031cYliJMZ5Rsvz9PsbWO",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "Returns": {
+      "__id__": 5
+    }
   }
 ]

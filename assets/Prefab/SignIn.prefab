@@ -32,10 +32,13 @@
       },
       {
         "__id__": 34
+      },
+      {
+        "__id__": 35
       }
     ],
     "_prefab": {
-      "__id__": 35
+      "__id__": 36
     },
     "_id": "",
     "_opacity": 255,
@@ -193,7 +196,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "7e34bb4c-1296-4609-8f1d-1f0c9bb463a4"
     },
     "fileId": "5ed8UycyVLcLJmaps2Exwb",
     "sync": false
@@ -374,7 +377,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "7e34bb4c-1296-4609-8f1d-1f0c9bb463a4"
     },
     "fileId": "94cJKsfrxE04rxQ2UW1nQ5",
     "sync": false
@@ -532,7 +535,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "7e34bb4c-1296-4609-8f1d-1f0c9bb463a4"
     },
     "fileId": "b186Z9IwtNRaZxs7i3tA9Z",
     "sync": false
@@ -681,7 +684,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "7e34bb4c-1296-4609-8f1d-1f0c9bb463a4"
     },
     "fileId": "08U4rouPVFzLhx7z/s1Mgy",
     "sync": false
@@ -718,7 +721,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "7e34bb4c-1296-4609-8f1d-1f0c9bb463a4"
     },
     "fileId": "e2aa8yOB1Hvp76rCwP2axD",
     "sync": false
@@ -867,7 +870,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "7e34bb4c-1296-4609-8f1d-1f0c9bb463a4"
     },
     "fileId": "5de7dfv4FGLaymKgpx10Kb",
     "sync": false
@@ -904,7 +907,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "7e34bb4c-1296-4609-8f1d-1f0c9bb463a4"
     },
     "fileId": "83UqzgqqBP5IqVnbgwxOin",
     "sync": false
@@ -967,7 +970,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "7e34bb4c-1296-4609-8f1d-1f0c9bb463a4"
     },
     "fileId": "0epqOUga1CtpG5XgxsnDHS",
     "sync": false
@@ -1004,7 +1007,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "7e34bb4c-1296-4609-8f1d-1f0c9bb463a4"
     },
     "fileId": "b9OtAH07ZKZJMNSrGosqTd",
     "sync": false
@@ -1078,7 +1081,18 @@
     "Phone": {
       "__id__": 21
     },
-    "PhoneView": null
+    "PhoneView": {
+      "__uuid__": "fcddf19b-b54f-48fb-a153-6c732307c6a2"
+    }
+  },
+  {
+    "__type__": "cc.BlockInputEvents",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -1086,7 +1100,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "7e34bb4c-1296-4609-8f1d-1f0c9bb463a4"
     },
     "fileId": "c7WwH0kpJA9rhAzMqJnYHe",
     "sync": false
