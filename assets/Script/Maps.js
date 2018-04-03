@@ -1,6 +1,6 @@
 cc.Class({
     extends: cc.Component,
-
+1
     properties: {
         Maps: {
             default: null,
