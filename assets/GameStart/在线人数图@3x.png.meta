@@ -1,14 +1,14 @@
 {
   "ver": "1.0.0",
-  "uuid": "41babbcf-b33a-44a9-89f0-2c7f811d7b94",
+  "uuid": "d6feba5d-ad75-42d3-9fb4-85db6bdc9b15",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
-    "头部左边背景@3x": {
+    "在线人数图@3x": {
       "ver": "1.0.3",
-      "uuid": "77b20621-6eeb-449e-9ca1-372c94bccc49",
-      "rawTextureUuid": "41babbcf-b33a-44a9-89f0-2c7f811d7b94",
+      "uuid": "25e5a3d0-1c83-4323-86e7-339323fa0c99",
+      "rawTextureUuid": "d6feba5d-ad75-42d3-9fb4-85db6bdc9b15",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
@@ -16,10 +16,10 @@
       "offsetY": 0,
       "trimX": 0,
       "trimY": 0,
-      "width": 612,
-      "height": 146,
-      "rawWidth": 612,
-      "rawHeight": 146,
+      "width": 68,
+      "height": 47,
+      "rawWidth": 68,
+      "rawHeight": 47,
       "borderTop": 0,
       "borderBottom": 0,
       "borderLeft": 0,

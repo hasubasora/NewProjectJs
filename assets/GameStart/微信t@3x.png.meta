@@ -1,14 +1,14 @@
 {
   "ver": "1.0.0",
-  "uuid": "41babbcf-b33a-44a9-89f0-2c7f811d7b94",
+  "uuid": "60cdb39a-8306-4cfa-93e1-c8a5fba68048",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
-    "头部左边背景@3x": {
+    "微信t@3x": {
       "ver": "1.0.3",
-      "uuid": "77b20621-6eeb-449e-9ca1-372c94bccc49",
-      "rawTextureUuid": "41babbcf-b33a-44a9-89f0-2c7f811d7b94",
+      "uuid": "806c775b-6066-476c-ab2a-f9de5dcda1e1",
+      "rawTextureUuid": "60cdb39a-8306-4cfa-93e1-c8a5fba68048",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
@@ -16,10 +16,10 @@
       "offsetY": 0,
       "trimX": 0,
       "trimY": 0,
-      "width": 612,
-      "height": 146,
-      "rawWidth": 612,
-      "rawHeight": 146,
+      "width": 65,
+      "height": 54,
+      "rawWidth": 65,
+      "rawHeight": 54,
       "borderTop": 0,
       "borderBottom": 0,
       "borderLeft": 0,
