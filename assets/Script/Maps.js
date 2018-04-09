@@ -22,9 +22,10 @@ cc.Class({
       type: cc.Label
     },
     Times: 60,
-    Toggles: {
-      default: null,
-      type: cc.ToggleContainer
+    
+    radioButton: {
+      default: [],
+      type: cc.Toggle
     },
     //  音效设置
     Music: cc.Slider,
@@ -55,16 +56,7 @@ cc.Class({
     let pos3 = this.Player.getPositionAt(3, 12); //Vec2 {x: 150, y: 450}
     console.log(pos1);
     console.log(this.Gotop);
-    console.log(this.Toggles.toggleItems);
-    let items = this.Toggles.toggleItems;
-    for (let i = 0; i < items.length; i++) {
-      const element = items[i];
-      // element.target.active = true;
-      console.log(items[0].isChecked);
-      console.log("-----");
-      // console.log(element.isChecked)
-      // console.log(element.target)
-    }
+    
     // console.log(this.Toggles.enabled = false)
 
     console.log(cc.sys.localStorage.getItem("Mic"));
@@ -176,8 +168,27 @@ cc.Class({
 
     // 上面的计时器将在10秒后开始计时，每5秒执行一次回调，重复3次。
   },
-
-  Toggle() {}
+  /**
+   * 切换金币的
+   */
+  radioButtonClicked: function(toggle) {
+    var index = this.radioButton.indexOf(toggle);
+    alert(index);
+    var title = "RadioButton";
+    switch (index) {
+      case 0:
+        title += "1";
+        break;
+      case 1:
+        title += "2";
+        break;
+      case 2:
+        title += "3";
+        break;
+      default:
+        break;
+    }
+  }
   // update (dt) {},
 });
 // console.log(this.Maps.getMapSize()) //getMapSize 设置地图大小。

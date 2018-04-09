@@ -1,13 +1,5 @@
-// Learn cc.Class:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
+import { verificationPhone } from "filters";
 cc.Class({
   extends: cc.Component,
 
@@ -15,17 +7,17 @@ cc.Class({
     //用户手机号控件
     Phone: {
       default: null,
-      type: cc.Node
+      type: cc.EditBox
     },
     //验证码控件
     SecurityCode: {
       default: null,
-      type: cc.Node
+      type: cc.EditBox
     },
     // 短信验证码控件
     Messages: {
       default: null,
-      type: cc.Node
+      type: cc.EditBox
     },
     SubmitBtn: {
       default: null,
@@ -34,13 +26,28 @@ cc.Class({
     CloseView: {
       default: null,
       type: cc.Node
-    }
+    },
+    RedLabel: cc.Label,
+    // xhr:cc.loader.getXMLHttpRequest(),http://192.168.0.200:808
+    GetCodeUrl:"/account/getcode"
   },
   //信息发射站
   SendMessages() {
-    console.log(this.Phone._components[0].string);
-    console.log(this.SecurityCode._components[0].string);
-    console.log(this.Messages._components[0].string);
+    var xhr = cc.loader.getXMLHttpRequest()
+    // console.log(this.Phone.string);
+    // console.log(this.SecurityCode.string);
+    // console.log(this.Messages.string);
+    if (!this.Phone.string) {
+      this.RedLabel.string = "请输入手机号"
+    } else{
+      if (verificationPhone(this.Phone.string) == false) {
+        this.RedLabel.string = "请输入正确手机号"
+      } else {
+        console.log(verificationPhone(JSON.stringify({ mobilephone: this.Phone.string, signature:""})));
+        this.streamXHREventsToLabel(xhr, "POST", this.GetCodeUrl, JSON.stringify({ mobilephone: this.Phone.string, signature:"D643A6FB5BF744E7BE518D88C11A1FE"}))
+      }
+    }
+    
   },
   // 关闭方式
   CloseViews() {
@@ -52,9 +59,27 @@ cc.Class({
     console.log("/执行穿越模式/");
     this.SubmitBtn.on("touchstart", this.SendMessages, this);
     this.CloseView.on("touchstart", this.CloseViews, this);
-  }
-
+  },
+  //net（xhr，木块，）
+ 
+  streamXHREventsToLabel: function (xhr, method, url, data) {
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status < 400)) {
+        var response = xhr.responseText;
+        // var fn = fn || function () { }
+        // fn(response);
+        console.log(response);
+        return response;
+      }
+    };
+    xhr.open(method, url, true);
+    xhr.setRequestHeader("Content-Type", "text/plain");
+    xhr.send(data)
+  },
+  // net　end
   //   start() {}
 
-  // update (dt) {},
+  update(dt) {
+
+  },
 });

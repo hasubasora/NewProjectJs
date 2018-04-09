@@ -85,6 +85,10 @@ cc.Class({
   ActivityWin() {
     cc.director.loadScene("Activity");
   },
+  directors(e,d){
+    console.log(d)
+    cc.director.loadScene(d);
+  },
   UserInfos() {
     let Infos = cc.instantiate(this.UserInfo);
     this.node.addChild(Infos, 103);
