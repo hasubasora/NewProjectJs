@@ -75,9 +75,9 @@ cc.Class({
     //商店
     this.ShopsBtn.on("touchstart", this.Shops, this);
 
-    // if (!this.UserInfoNames) {
-    //   this.SignInBoxRight();
-    // }
+    if (!this.UserInfoNames) {
+      this.SignInBoxRight();
+    }
   },
   Shops() {
     cc.director.loadScene("Shop");

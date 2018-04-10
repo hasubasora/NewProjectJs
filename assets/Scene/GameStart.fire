@@ -1241,7 +1241,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "充值按钮@3x",
+    "_name": "Recharge",
     "_objFlags": 0,
     "_parent": {
       "__id__": 25
@@ -1319,7 +1319,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "label",
+    "_name": "Gold",
     "_objFlags": 0,
     "_parent": {
       "__id__": 25
@@ -1350,7 +1350,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 156,
+      "width": 22,
       "height": 40
     },
     "_rotationX": 0,
@@ -1385,7 +1385,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "5555555",
+    "_N$string": "1",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -2626,11 +2626,18 @@
     "CircuseeOnlookers": {
       "__id__": 55
     },
-    "Recharge": null,
-    "Gold": null,
+    "Recharge": {
+      "__id__": 30
+    },
+    "Gold": {
+      "__id__": 33
+    },
     "UserName": null,
     "UserPic": null,
-    "UserID": null
+    "UserID": null,
+    "ts": {
+      "__uuid__": "e3d43763-f59d-4052-87f0-76e65f6ed456"
+    }
   },
   {
     "__type__": "cc.Canvas",

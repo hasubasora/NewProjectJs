@@ -25,7 +25,7 @@ cc.Class({
         //参加记录
         Record: cc.Node,
         //规则
-        Rule : cc.Node,
+        Rule: cc.Node,
         //邀请
         SendAnInvitation: cc.Node,
         //在线人数
@@ -35,10 +35,11 @@ cc.Class({
         //充值按钮
         Recharge: cc.Node,
         //金币
-        Gold: cc.Node,
+        Gold: cc.Label,
         UserName: cc.Node,
         UserPic: cc.Node,
-        UserID:cc.Node,
+        UserID: cc.Node,
+        ts: cc.Prefab,
 
     },
 
@@ -47,12 +48,19 @@ cc.Class({
     // onLoad () {},
 
     start() {
-
+        console.log(this.Gold.string)
     },
     startGame() {
-        let Game = cc.instantiate(this.StartLayout);
-        this.node.addChild(Game, 106);
-        Game.setPosition(0, 0);
+        if (this.Gold.string < 10) {
+            let ts = cc.instantiate(this.ts);
+            this.node.addChild(ts, 107);
+            ts.setPosition(0, 0);
+        } else {
+            let Game = cc.instantiate(this.StartLayout);
+            this.node.addChild(Game, 106);
+            Game.setPosition(0, 0);
+        }
+
     },
     // update (dt) {},
 });
