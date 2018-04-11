@@ -1,9 +1,8 @@
 
 import { verificationPhone } from "filters";
-
+import { GetUserDatas, CloseWins, SignInBoxRight} from "GetUserData";
 cc.Class({
   extends: cc.Component,
-
   properties: {
     //用户手机号控件
     Phone: {
@@ -24,10 +23,7 @@ cc.Class({
       default: null,
       type: cc.Node
     },
-    CloseView: {
-      default: null,
-      type: cc.Node
-    },
+  
     RedLabel: cc.Label,
     GetImgCodes: cc.Sprite,
     //倒计时
@@ -37,12 +33,16 @@ cc.Class({
     // xhr:cc.loader.getXMLHttpRequest(),http://192.168.0.200:808 http://192.168.0.114:819
     GetCodeUrl: "http://localhost:11072/account/getcode",
     SetUserUrl: "http://localhost:11072/account/loginorregister",
+    GetUserDataUrl: "http://localhost:11072/account/loginorregister",
     WebUrl: cc.WebView,
-    num:1
+    num: 1,
+    //返回登录选择
+    SignInBox:cc.Prefab
   },
   RedLabels(str) {
     this.RedLabel.string = str
   },
+
   //信息发射站
   SendMessages(e, c) {
     var xhr = cc.loader.getXMLHttpRequest()
@@ -59,34 +59,46 @@ cc.Class({
       if (verificationPhone(this.Phone.string) == false) {
         this.RedLabels("请输入正确手机号")
       } else {
-        if (!this.SecurityCode.string) {
-          this.RedLabels("请输入验证码")
-        }else{
-          if (c == "code") {
-            let data = {
-              "mobilephone": this.Phone.string,
-              "imgcode": this.SecurityCode.string
-            }
-            // this.streamXHREventsToLabel(xhr, "POST", this.GetCodeUrl, JSON.stringify(data),e=>{})
-            this.streamXHREventsToLabel(xhr, "POST", this.GetCodeUrl, data, e => {
-              let code = JSON.parse(e)
-              if (code.code == 12000) {
-                this.TimesOutBtn.interactable = false;
-                this.SetTimeOut()
-              }
-            })
+        if (c == "code") {
+          if (!this.SecurityCode.string) {
+            this.RedLabels("请输入验证码")
+            return;
           }
-          if (c == "sub") {
-            let data = {
-              "mobilephone": this.Phone.string,
-              "vscode": this.Messages.string,
-              "code": "",
-            }
-            this.streamXHREventsToLabel(xhr, "POST", this.SetUserUrl, data, e => { })
-            alert("这是提交按钮")
+          let data = {
+            "mobilephone": this.Phone.string,
+            "imgcode": this.SecurityCode.string
           }
+          // this.streamXHREventsToLabel(xhr, "POST", this.GetCodeUrl, JSON.stringify(data),e=>{})
+          this.streamXHREventsToLabel(xhr, "POST", this.GetCodeUrl, data, e => {
+            let code = JSON.parse(e)
+            if (code.code == 12000) {
+              this.TimesOutBtn.interactable = false;
+              this.SetTimeOut()
+            }
+          })
         }
-       
+        if (c == "sub") {
+          if (!this.Messages.string) {
+            this.RedLabels("请输入短信验证码");
+            return;
+          }
+          let data = {
+            "mobilephone": this.Phone.string,
+            "vscode": this.Messages.string,
+            "code": "",
+          }
+          this.streamXHREventsToLabel(xhr, "POST", this.SetUserUrl, data, e => {
+            let _e = JSON.parse(e)
+            if (_e.code == 12000) {
+              this.node.destroy()
+              cc.sys.localStorage.setItem("SJ", encodeURIComponent(JSON.stringify(_e.object)));
+            }
+
+          })
+
+        }
+
+
       }
     }
 
@@ -117,11 +129,16 @@ cc.Class({
     var ViewWidth = this.node.parent.width / 2 + this.node.width / 2;
     var SignInBox = cc.moveBy(0.2, cc.p(ViewWidth, 0));
     this.node.runAction(SignInBox);
+    CloseWins(this.node)
+    console.log(this.node)
+    console.log(this.node.parent)
+    // SignInBoxRight(this.node.parent, this.SignInBox)
+    // 因为不是父节点所有还没成
   },
   onLoad() {
     console.log("/执行穿越模式/");
     this.SubmitBtn.on("touchstart", this.SendMessages, this);
-    this.CloseView.on("touchstart", this.CloseViews, this);
+    // this.CloseView.on("touchstart", this.CloseViews, this);
 
 
     console.log(this.WebUrl.url + '?' + 1)

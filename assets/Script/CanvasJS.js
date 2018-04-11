@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-
+import { GetUserDatas, SignInBoxRight} from "GetUserData";
 cc.Class({
   extends: cc.Component,
 
@@ -74,9 +74,14 @@ cc.Class({
     this.Activitys.on("touchstart", this.ActivityWin, this);
     //商店
     this.ShopsBtn.on("touchstart", this.Shops, this);
-
-    if (!this.UserInfoNames) {
-      this.SignInBoxRight();
+    GetUserDatas()
+    if (!cc.sys.localStorage.getItem('SJ')) {
+      SignInBoxRight(this.node,this.SignIn);
+    } else {
+      let d = cc.sys.localStorage.getItem('SJ')
+      let ds = JSON.parse(decodeURIComponent(d))
+      this.UserInfoName.string = ds.UserName;
+      this.UserInfoId.string="ID:"+ds.Login;
     }
   },
   Shops() {
@@ -85,7 +90,7 @@ cc.Class({
   ActivityWin() {
     cc.director.loadScene("Activity");
   },
-  directors(e,d){
+  directors(e, d) {
     console.log(d)
     cc.director.loadScene(d);
   },
@@ -100,16 +105,7 @@ cc.Class({
     Infos.setPosition(0, 0);
   },
 
-  //登陆框移动方法
-  SignInBoxRight() {
-    let Logins = cc.instantiate(this.SignIn);
-    this.node.addChild(Logins, 100);
-    Logins.setPosition(-this.node.width, 0);
-    // let ViewWidth = this.node.width / 2 + this.SignIn.width / 2;
-    let SignInBox = cc.moveBy(0.2, cc.p(this.node.width, 0));
-    Logins.runAction(SignInBox);
-  },
-  start() {}
+  start() { }
 
   // update (dt) {},
 });
