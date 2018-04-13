@@ -1,14 +1,14 @@
 {
   "ver": "1.0.0",
-  "uuid": "f023d0aa-0384-497b-9483-1ffb6bdd2635",
+  "uuid": "676361ef-4ff4-4539-9757-3861d16f720f",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
-    "二@3x": {
+    "价格背景@3x": {
       "ver": "1.0.3",
-      "uuid": "bd5e6047-8c81-4c99-82be-0de2c6578cad",
-      "rawTextureUuid": "f023d0aa-0384-497b-9483-1ffb6bdd2635",
+      "uuid": "1064c7e1-2cd2-4c5e-bbe5-07e218391f42",
+      "rawTextureUuid": "676361ef-4ff4-4539-9757-3861d16f720f",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
@@ -16,10 +16,10 @@
       "offsetY": 0,
       "trimX": 0,
       "trimY": 0,
-      "width": 123,
-      "height": 123,
-      "rawWidth": 123,
-      "rawHeight": 123,
+      "width": 963,
+      "height": 114,
+      "rawWidth": 963,
+      "rawHeight": 114,
       "borderTop": 0,
       "borderBottom": 0,
       "borderLeft": 0,

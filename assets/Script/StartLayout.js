@@ -92,7 +92,7 @@ cc.Class({
       //倒计时
 
       this.now_time += dt;
-      console.log(this.now_time )
+      // console.log(this.now_time )
       
       // var percent = this.now_time / this.action_time; //百分比
       var percent = this.now_time / this.action_time

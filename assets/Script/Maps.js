@@ -1,3 +1,7 @@
+
+import { GetUserDatas, AddWindow } from "GetUserData";
+// var netControl = require('NetControl');
+
 cc.Class({
   extends: cc.Component,
 
@@ -27,55 +31,51 @@ cc.Class({
       default: [],
       type: cc.Toggle
     },
-    //  音效设置
-    Music: cc.Slider,
-    Sounds: cc.Slider,
+
     Audios: cc.AudioSource,
-    SetingsBtn: {
-      default: null,
-      type: cc.Node
-    },
     Setings: {
       default: null,
-      type: cc.Node
+      type: cc.Prefab
     },
-    CloseBtn: {
-      default: null,
-      type: cc.Node
-    }
   },
 
   // LIFE-CYCLE CALLBACKS:
 
   onLoad() {
-    //将像素坐标转化为瓦片坐标，posInPixel：目标节点的position
+    var ws = new WebSocket("ws://192.168.1.168:2000");
+    ws.onopen = function (event) {
+      console.log("Send Text WS was opened. 打开OPEN");
+    };
+    ws.onmessage = function (event) {
+      console.log("response text msg数据: " + event.data);
+      console.log('sdsds');
+    };
+    ws.onerror = function (event) {
+      console.log("Send Text fired an error错误");
+    };
+    ws.onclose = function (event) {
+      console.log("WebSocket instance closed.");
+    };
 
+    setTimeout(function () {
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.send("Hello WebSocket, I'm a text message！这.");
+      }
+      else {
+        console.log("WebSocket instance wasn't ready...！");
+      }
+    }, 3);
+
+    //音乐初始化
+    Global.Audios = this.Audios;
+    Global.Audios.volume = cc.sys.localStorage.getItem("Mic");
+    //将像素坐标转化为瓦片坐标，posInPixel：目标节点的position
+    console.log(this.Player);
     let pos = this.Player.getPositionAt(0, 0);
     let pos1 = this.Player.getPositionAt(3, 14); //Vec2 {x: 50, y: 400}
     let pos2 = this.Player.getPositionAt(3, 13); //Vec2 {x: 100, y: 425}
     let pos3 = this.Player.getPositionAt(3, 12); //Vec2 {x: 150, y: 450}
-    console.log(pos1);
-    console.log(this.Gotop);
-    
-    // console.log(this.Toggles.enabled = false)
 
-    console.log(cc.sys.localStorage.getItem("Mic"));
-
-    // cc.sys.localStorage.setItem("userData", JSON.stringify(userData));
-
-    // this.Sounds.progress = 1;
-    //音乐设置
-
-    if (cc.sys.localStorage.getItem("Mic") != null) {
-      this._updateMusicVolume(cc.sys.localStorage.getItem("Mic"));
-      this.Music.progress = cc.sys.localStorage.getItem("Mic");
-    } else {
-      this._updateMusicVolume(this.Music.progress);
-    }
-
-    //设置按钮
-    this.SetingsBtn.on("touchstart", this.SetingBox, this);
-    this.CloseBtn.on("touchstart", this.SetingBoxClose, this);
     //选择人物前面+1 移动后面-1
 
     //获取GID 没有就是0 用来判断地雷
@@ -85,33 +85,16 @@ cc.Class({
       this.Gotop.interactable = true;
     }, 3);
     this.TimeOuts();
-  },
-  /**
-   * 音乐设置
-   * @param {d} progress
-   */
-  _updateMusicVolume(progress) {
-    this.Audios.volume = progress;
-    cc.sys.localStorage.setItem("Mic", progress);
+
   },
 
-  onSliderHEvent(sender, eventType) {
-    this._updateMusicVolume(sender.progress);
-  },
   /**
    * 设置按钮
    */
   SetingBox() {
-    console.log("打开设置");
-    this.Setings.setPosition(-this.node.width, 0);
-    let b = cc.moveBy(0.2, cc.p(this.node.width, 0));
-    this.Setings.runAction(b);
+    AddWindow(this.node.parent, this.Setings)
   },
-  SetingBoxClose() {
-    console.log("关闭了");
-    let b = cc.moveBy(0.2, cc.p(-this.node.width, 0));
-    this.Setings.runAction(b);
-  },
+
 
   //移动人物用
   moveToPlayer(n, x) {

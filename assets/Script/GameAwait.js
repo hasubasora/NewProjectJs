@@ -1,13 +1,5 @@
-// Learn cc.Class:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
+import { GetUserDatas, GoLoadScene } from "GetUserData";
 cc.Class({
     extends: cc.Component,
 
@@ -36,31 +28,67 @@ cc.Class({
         Recharge: cc.Node,
         //金币
         Gold: cc.Label,
-        UserName: cc.Node,
+        UserName: cc.Label,
         UserPic: cc.Node,
-        UserID: cc.Node,
+        UserID: cc.Label,
         ts: cc.Prefab,
 
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
+    onLoad() {
+        //判断有没有账户
+        GetUserDatas() ? '' : GoLoadScene("Home")
+        let d = cc.sys.localStorage.getItem('SJ')
+        if (d != null) {
+            let ds = JSON.parse(decodeURIComponent(d))
+            this.UserName.string = ds.UserName;
+            this.UserID.string = "ID:" + ds.Login;
+            this.Gold.string = ds.Balance
+        } else {
+            // GoLoadScene("Home")
+        }
+
+    },
 
     start() {
         console.log(this.Gold.string)
     },
-    startGame() {
-        if (this.Gold.string < 10) {
-            let ts = cc.instantiate(this.ts);
-            this.node.addChild(ts, 107);
-            ts.setPosition(0, 0);
-        } else {
+    /**
+     * 
+     * @param {*} e 默认的event
+     * @param {*} id 0是开始游戏 1是参观
+     */
+    startGame(e, id) {
+        if (id == 0) {
+            // if (this.Gold.string < 30) {
+            //     let ts = cc.instantiate(this.ts);
+            //     this.node.addChild(ts, 107);
+            //     ts.setPosition(0, 0);
+            //     return;
+            // }
+            //游戏匹配倒计时图
+            // if (this.Gold.string > 9) {
             let Game = cc.instantiate(this.StartLayout);
             this.node.addChild(Game, 106);
             Game.setPosition(0, 0);
+            let xhr = cc.loader.getXMLHttpRequest()
+            console.log(Global.DataUsers.sToken)
+            let _data = {
+                Userid: Global.DataUsers.sUserId,
+                Token: Global.DataUsers.sToken,
+                Type: id
+            }
+            Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/caileigame/inroom", _data, e => {
+              //匹配进入游戏
+                console.log(e)
+            })
+            // }
         }
-
+        if (id == 1) {
+            //围观
+        }
     },
     // update (dt) {},
 });

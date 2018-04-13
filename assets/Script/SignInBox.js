@@ -23,14 +23,18 @@ cc.Class({
   onLoad() {
   },
   //登陆框移动方法
-  Wecher(){
-   
+  Wecher() {
+
   },
   Tel() {
-    SignInBoxLeft(this.node, this.PhoneView)
-    DestroyNode(this.node)
+    let PhoneViews = cc.instantiate(this.PhoneView);
+    this.node.parent.addChild(PhoneViews, 101);
+    PhoneViews.setPosition(this.node.parent.width, 0);
+    // var ViewWidth = this.node.parent.width / 2 + this.PhoneView.width / 2;
+    var SignInBox = cc.moveBy(0.2, cc.p(-this.node.parent.width, 0));
+    PhoneViews.runAction(SignInBox);
   },
-  start() {}
+  start() { }
 
   // update (dt) {},
 });

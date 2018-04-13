@@ -63,7 +63,7 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 68
+        "__id__": 70
       }
     ],
     "_prefab": null,
@@ -124,20 +124,20 @@
         "__id__": 55
       },
       {
-        "__id__": 61
+        "__id__": 63
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 65
-      },
-      {
-        "__id__": 66
-      },
-      {
         "__id__": 67
+      },
+      {
+        "__id__": 68
+      },
+      {
+        "__id__": 69
       }
     ],
     "_prefab": null,
@@ -814,12 +814,12 @@
     "_cascadeOpacityEnabled": true,
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5088831690132262,
-      "y": 0.467354353876395
+      "x": 0,
+      "y": 0.5
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 76,
+      "width": 20,
       "height": 36
     },
     "_rotationX": 0,
@@ -828,7 +828,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 79,
+      "x": 38,
       "y": 13
     },
     "_skewX": 0,
@@ -854,7 +854,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "ENN",
+    "_N$string": "0",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -871,7 +871,7 @@
     "isAlignOnce": true,
     "_target": null,
     "_alignFlags": 8,
-    "_left": 81.67770689442688,
+    "_left": 79.35282773943207,
     "_right": 0,
     "_top": 0,
     "_bottom": 0,
@@ -917,8 +917,8 @@
     "_cascadeOpacityEnabled": true,
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5088831690132262,
-      "y": 0.467354353876395
+      "x": 0,
+      "y": 0.5
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -931,7 +931,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 145,
+      "x": 40.17006718327541,
       "y": -22
     },
     "_skewX": 0,
@@ -2177,6 +2177,9 @@
     "_components": [
       {
         "__id__": 60
+      },
+      {
+        "__id__": 61
       }
     ],
     "_prefab": null,
@@ -2395,6 +2398,71 @@
     "_atlas": null
   },
   {
+    "__type__": "cc.Button",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 55
+    },
+    "_enabled": true,
+    "transition": 0,
+    "pressedColor": {
+      "__type__": "cc.Color",
+      "r": 211,
+      "g": 211,
+      "b": 211,
+      "a": 255
+    },
+    "hoverColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "duration": 0.1,
+    "zoomScale": 1.2,
+    "clickEvents": [
+      {
+        "__id__": 62
+      }
+    ],
+    "_N$interactable": true,
+    "_N$enableAutoGrayEffect": false,
+    "_N$normalColor": {
+      "__type__": "cc.Color",
+      "r": 214,
+      "g": 214,
+      "b": 214,
+      "a": 255
+    },
+    "_N$disabledColor": {
+      "__type__": "cc.Color",
+      "r": 124,
+      "g": 124,
+      "b": 124,
+      "a": 255
+    },
+    "_N$normalSprite": null,
+    "_N$pressedSprite": null,
+    "pressedSprite": null,
+    "_N$hoverSprite": null,
+    "hoverSprite": null,
+    "_N$disabledSprite": null,
+    "_N$target": {
+      "__id__": 55
+    }
+  },
+  {
+    "__type__": "cc.ClickEvent",
+    "target": {
+      "__id__": 3
+    },
+    "component": "GameAwait",
+    "handler": "",
+    "customEventData": ""
+  },
+  {
     "__type__": "cc.Node",
     "_name": "StartGame",
     "_objFlags": 0,
@@ -2406,10 +2474,10 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 62
+        "__id__": 64
       },
       {
-        "__id__": 63
+        "__id__": 65
       }
     ],
     "_prefab": null,
@@ -2454,7 +2522,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 61
+      "__id__": 63
     },
     "_enabled": true,
     "_spriteFrame": {
@@ -2480,7 +2548,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 61
+      "__id__": 63
     },
     "_enabled": true,
     "transition": 3,
@@ -2502,7 +2570,7 @@
     "zoomScale": 0.9,
     "clickEvents": [
       {
-        "__id__": 64
+        "__id__": 66
       }
     ],
     "_N$interactable": true,
@@ -2528,7 +2596,7 @@
     "hoverSprite": null,
     "_N$disabledSprite": null,
     "_N$target": {
-      "__id__": 61
+      "__id__": 63
     }
   },
   {
@@ -2538,7 +2606,7 @@
     },
     "component": "GameAwait",
     "handler": "startGame",
-    "customEventData": ""
+    "customEventData": "0"
   },
   {
     "__type__": "cc.Sprite",
@@ -2606,7 +2674,7 @@
     },
     "_enabled": true,
     "StartSp": {
-      "__id__": 63
+      "__id__": 65
     },
     "StartLayout": {
       "__uuid__": "6d71b960-b7e1-4c0c-ba89-243ba6061828"
@@ -2632,9 +2700,13 @@
     "Gold": {
       "__id__": 33
     },
-    "UserName": null,
+    "UserName": {
+      "__id__": 19
+    },
     "UserPic": null,
-    "UserID": null,
+    "UserID": {
+      "__id__": 22
+    },
     "ts": {
       "__uuid__": "e3d43763-f59d-4052-87f0-76e65f6ed456"
     }

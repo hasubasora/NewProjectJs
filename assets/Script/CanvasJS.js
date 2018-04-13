@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-import { GetUserDatas, SignInBoxRight} from "GetUserData";
+import { GetUserDatas, SignInBoxRight, AddWindow } from "GetUserData";
 cc.Class({
   extends: cc.Component,
 
@@ -60,7 +60,16 @@ cc.Class({
     ShopsBtn: {
       default: null,
       type: cc.Node
-    }
+    },
+    // 金币
+    Gulds: {
+      default: null,
+      type: cc.Node
+    },
+    GuldsSetings: {
+      default: null,
+      type: cc.Prefab
+    },
   },
 
   // LIFE-CYCLE CALLBACKS:
@@ -74,14 +83,16 @@ cc.Class({
     this.Activitys.on("touchstart", this.ActivityWin, this);
     //商店
     this.ShopsBtn.on("touchstart", this.Shops, this);
-    GetUserDatas()
-    if (!cc.sys.localStorage.getItem('SJ')) {
-      SignInBoxRight(this.node,this.SignIn);
+    //金币
+    this.Gulds.on("touchstart", this.AddWindows, this);
+
+    if (!cc.sys.localStorage.getItem('SJ') || GetUserDatas() == false) {
+      SignInBoxRight(this.node, this.SignIn);
     } else {
       let d = cc.sys.localStorage.getItem('SJ')
       let ds = JSON.parse(decodeURIComponent(d))
       this.UserInfoName.string = ds.UserName;
-      this.UserInfoId.string="ID:"+ds.Login;
+      this.UserInfoId.string = "ID:" + ds.Login;
     }
   },
   Shops() {
@@ -90,9 +101,18 @@ cc.Class({
   ActivityWin() {
     cc.director.loadScene("Activity");
   },
+  //游戏跳转
   directors(e, d) {
+    if (GetUserDatas() == false) {
+      SignInBoxRight(this.node, this.SignIn);
+    }else{
+      cc.director.loadScene(d);
+    }
     console.log(d)
-    cc.director.loadScene(d);
+
+  },
+  AddWindows() {
+    AddWindow(this.node, this.GuldsSetings)
   },
   UserInfos() {
     let Infos = cc.instantiate(this.UserInfo);

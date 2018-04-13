@@ -1120,24 +1120,6 @@
     "_N$horizontalDirection": 0
   },
   {
-    "__type__": "0e596aiEwZP9o8wVokeyJhV",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "Phone": null,
-    "SecurityCode": null,
-    "Messages": null,
-    "SubmitBtn": {
-      "__id__": 18
-    },
-    "CloseView": {
-      "__id__": 7
-    }
-  },
-  {
     "__type__": "cc.BlockInputEvents",
     "_name": "",
     "_objFlags": 0,
@@ -1145,6 +1127,18 @@
       "__id__": 1
     },
     "_enabled": true
+  },
+  {
+    "__type__": "0d6dbGzUeVFjZG+mlC5SfQk",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "CloseWin": {
+      "__id__": 7
+    }
   },
   {
     "__type__": "cc.PrefabInfo",

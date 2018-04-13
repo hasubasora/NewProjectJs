@@ -35,10 +35,13 @@
       },
       {
         "__id__": 53
+      },
+      {
+        "__id__": 54
       }
     ],
     "_prefab": {
-      "__id__": 54
+      "__id__": 55
     },
     "_id": "",
     "_opacity": 255,
@@ -853,7 +856,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 480,
+      "width": 147,
       "height": 40
     },
     "_rotationX": 0,
@@ -888,7 +891,7 @@
     "_N$file": null,
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "ID：888888888883434555",
+    "_N$string": "ID：666",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -1088,7 +1091,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "不知道",
+    "_N$string": "未填写",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -1628,6 +1631,24 @@
       "__id__": 1
     },
     "_enabled": true
+  },
+  {
+    "__type__": "44f33A0eBFHO5QvrHzFxK2i",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "UserName": {
+      "__id__": 21
+    },
+    "UserId": {
+      "__id__": 25
+    },
+    "UserAddress": {
+      "__id__": 32
+    }
   },
   {
     "__type__": "cc.PrefabInfo",
