@@ -1,5 +1,4 @@
-
-import { GetUserDatas, AddWindow } from "GetUserData";
+import { GetUserDatas, AddWindow, GoLoadScene } from "GetUserData";
 // var netControl = require('NetControl');
 
 cc.Class({
@@ -20,13 +19,12 @@ cc.Class({
       default: null,
       type: cc.Button
     },
-    xplayer: 14,
     TimesOut: {
       default: null,
       type: cc.Label
     },
     Times: 60,
-    
+
     radioButton: {
       default: [],
       type: cc.Toggle
@@ -37,34 +35,27 @@ cc.Class({
       default: null,
       type: cc.Prefab
     },
+    //金币
+    Gold: cc.Label,
+    //用户名字设置
+    User_Name: cc.Label,
+    User_Id: cc.Label,
+    //当前楼层    
+    xplayer: 14,
+    xUserNum: 0
   },
 
   // LIFE-CYCLE CALLBACKS:
 
   onLoad() {
-    var ws = new WebSocket("ws://192.168.1.168:2000");
-    ws.onopen = function (event) {
-      console.log("Send Text WS was opened. 打开OPEN");
-    };
-    ws.onmessage = function (event) {
-      console.log("response text msg数据: " + event.data);
-      console.log('sdsds');
-    };
-    ws.onerror = function (event) {
-      console.log("Send Text fired an error错误");
-    };
-    ws.onclose = function (event) {
-      console.log("WebSocket instance closed.");
-    };
+    console.log('wwwwwwwwwwwwwwwwwwwwwwwwwwwww')
 
-    setTimeout(function () {
-      if (ws.readyState === WebSocket.OPEN) {
-        ws.send("Hello WebSocket, I'm a text message！这.");
-      }
-      else {
-        console.log("WebSocket instance wasn't ready...！");
-      }
-    }, 3);
+    Global.nSocket()
+
+    //判断有没有账户
+    GetUserDatas() ? this.SetInfo() : GoLoadScene("Home");
+
+    console.log(Global._StageData)
 
     //音乐初始化
     Global.Audios = this.Audios;
@@ -80,22 +71,160 @@ cc.Class({
 
     //获取GID 没有就是0 用来判断地雷
 
-    this.schedule(function() {
+    this.schedule(function () {
       // 这里的 this 指向 component
       this.Gotop.interactable = true;
     }, 3);
     this.TimeOuts();
+  },
+  start() {
+    this.Prepare()
+    this.StartGames()
+  },
+  //获取准备房间信息
+  Prepare() {
+    let xhr = cc.loader.getXMLHttpRequest()
+    let _data = {
+      Userid: Global.DataUsers.sUserId,
+      Token: Global.DataUsers.sToken,
+      roomnumberid: Global._StageData.Data
+    }
+    console.log('准备获取房间数据')
+    Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/caileigame/getroom", _data, e => {
+      console.log('已获取房间数据')
+      let _StageData = JSON.parse(e);
+      if (_StageData.code == 12000) {
+        cc.sys.localStorage.setItem('_StageData', e);
+        console.log(cc.sys.localStorage.getItem("_StageData"))
+        var D = JSON.parse(_StageData.object)
+        //收益排行
+        console.log('收益排行')
+        console.log(D.ProfitSortList)
+        //参与用户
+        console.log('参与用户')
+        console.log(D.RoomUser)
+        //围观用户
+        console.log(D.Visit)
+        //围观人数
+        console.log(D.VisitCount)
+        D.RoomUser.forEach((v, i) => {
+          console.log(v)
+          console.log(i)
+          console.log(v.UserId == Global.DataUsers.sUserId)
+          console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+          if (v.UserId == Global.DataUsers.sUserId) {
+            console.log(v.UserId)
+            console.log(i)
+            //设置人物位置数据
+            this.xUserNum = i + 2
+            console.log('~~~~~~~~~~~~~~~~~' + this.xUserNum+'~~~~~~~~~~~~~~~~~~~~~~~~~~')
+          }
+        })
 
+
+        // array.forEach(function (currentValue, index, arr), thisValue)
+        for (const obj of D.RoomUser) {
+          // console.log(obj.UserId == Global.DataUsers.sUserId)
+
+          switch (obj) {
+            case 0:
+              console.log('1')
+              break;
+            case 1:
+              console.log('2')
+              break;
+            case 2:
+              console.log('3')
+              break;
+            default:
+              break;
+          }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      } else {
+        console.log('GetRoom 错误，在房间躺枪了')
+      }
+
+    })
+  },
+  //确认开始游戏
+  StartGames() {
+    let xhr = cc.loader.getXMLHttpRequest()
+    let _data = {
+      Userid: Global.DataUsers.sUserId,
+      Token: Global.DataUsers.sToken,
+      Roomid: Global._StageData.Data
+    }
+    Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/caileigame/gameready", _data, e => {
+      console.log('确认游戏')
+      let _StageData = JSON.parse(e);
+      if (_StageData.code == 12000) {
+        console.log('成功准备游戏')
+        this.Prepare()
+      } else {
+        console.log('GameReady错误，在房间躺枪了')
+      }
+
+    })
+  },
+  //上一楼
+  GoToUp() {
+    let xhr = cc.loader.getXMLHttpRequest()
+    let _data = {
+      Userid: Global.DataUsers.sUserId,
+      Token: Global.DataUsers.sToken,
+      Roomnumberid: Global._StageData.Data
+    }
+    console.log(_data)
+    Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/caileigame/gameaction", _data, e => {
+      console.log('上一层')
+      let _StageData = JSON.parse(e);
+      if (_StageData.code == 12000) {
+        console.log('成功上一层')
+        this.Prepare()
+        return true
+      } else {
+        console.log('在房间躺枪了上一层')
+        return false
+      }
+
+    })
   },
 
-  /**
-   * 设置按钮
-   */
-  SetingBox() {
-    AddWindow(this.node.parent, this.Setings)
+
+  //前进
+  ClickGoTop() {
+    this.GoToUp()
+    if (this.xplayer > 2) {
+      this.moveToPlayer(this.xUserNum, this.xplayer);
+      this.Gotop.interactable = false;
+    }
   },
-
-
   //移动人物用
   moveToPlayer(n, x) {
     //n是第几个玩家
@@ -121,13 +250,7 @@ cc.Class({
     players.runAction(mAcion);
     //运动结束后重新设置GID
   },
-  //前进
-  ClickGoTop() {
-    if (this.xplayer > 3) {
-      this.moveToPlayer(8, this.xplayer);
-      this.Gotop.interactable = false;
-    }
-  },
+
   //不走
   StopPlayer() {
     console.log("不走了");
@@ -154,7 +277,7 @@ cc.Class({
   /**
    * 切换金币的
    */
-  radioButtonClicked: function(toggle) {
+  radioButtonClicked: function (toggle) {
     var index = this.radioButton.indexOf(toggle);
     alert(index);
     var title = "RadioButton";
@@ -171,7 +294,20 @@ cc.Class({
       default:
         break;
     }
-  }
+  },
+  /**
+ * 设置按钮
+ */
+  SetingBox() {
+    AddWindow(this.node.parent, this.Setings);
+  },
+  // 账户数据设置
+  SetInfo() {
+    Global.getDataUsers()
+    this.User_Name.string = Global.DataUsers.sNickName;
+    this.User_Id.string = 'ID:' + Global.DataUsers.sLogin;
+    this.Gold.string = Global.DataUsers.sBalance;
+  },
   // update (dt) {},
 });
 // console.log(this.Maps.getMapSize()) //getMapSize 设置地图大小。

@@ -9,7 +9,7 @@ cc.Class({
     Sounds: cc.Slider,
   },
   onLoad() {
-    if (Global.Audios==''){
+    if (Global.Audios == '') {
       Global.Audios = this.node.parent.getComponentInChildren(cc.AudioSource)
     }
     //音乐设置
@@ -25,12 +25,28 @@ cc.Class({
    * @param {d} progress
    */
   _updateMusicVolume(progress) {
-    console.log(Global.Audios.volume);
     Global.Audios.volume = progress;
     cc.sys.localStorage.setItem("Mic", progress);
   },
   onSliderHEvent(sender, eventType) {
     this._updateMusicVolume(sender.progress);
   },
+  LoginOut() {
+    let data = {
+      userid: Global.DataUsers.sUserId
+    }, xhr = cc.loader.getXMLHttpRequest()
+    Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + '/account/logout', data, e => {
+      console.log('退出')
+      if (e) {
+        // cc.sys.localStorage.removeItem('SJ')
+      }
+    })
+
+  }
+
+
+
+
+
 
 });

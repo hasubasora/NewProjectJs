@@ -1,5 +1,5 @@
 
-import { GetUserDatas, GoLoadScene } from "GetUserData";
+import { GetUserDatas, GoLoadScene, LoginTimeOut } from "GetUserData";
 cc.Class({
     extends: cc.Component,
 
@@ -32,29 +32,18 @@ cc.Class({
         UserPic: cc.Node,
         UserID: cc.Label,
         ts: cc.Prefab,
-
     },
-
-    // LIFE-CYCLE CALLBACKS:
-
     onLoad() {
         //判断有没有账户
-        GetUserDatas() ? '' : GoLoadScene("Home")
-        let d = cc.sys.localStorage.getItem('SJ')
-        if (d != null) {
-            let ds = JSON.parse(decodeURIComponent(d))
-            this.UserName.string = ds.UserName;
-            this.UserID.string = "ID:" + ds.Login;
-            this.Gold.string = ds.Balance
-        } else {
-            // GoLoadScene("Home")
-        }
-
+        GetUserDatas() ? this.SetInfo() : GoLoadScene("Home");
+    },
+    SetInfo() {
+        Global.getDataUsers()
+        this.UserName.string = Global.DataUsers.sNickName;
+        this.UserID.string = 'ID:' + Global.DataUsers.sLogin;
+        this.Gold.string = Global.DataUsers.sBalance;
     },
 
-    start() {
-        console.log(this.Gold.string)
-    },
     /**
      * 
      * @param {*} e 默认的event
@@ -70,19 +59,27 @@ cc.Class({
             // }
             //游戏匹配倒计时图
             // if (this.Gold.string > 9) {
-            let Game = cc.instantiate(this.StartLayout);
-            this.node.addChild(Game, 106);
-            Game.setPosition(0, 0);
+            // let Game = cc.instantiate(this.StartLayout);
+            // this.node.addChild(Game, 106);
+            // Game.setPosition(0, 0);
             let xhr = cc.loader.getXMLHttpRequest()
-            console.log(Global.DataUsers.sToken)
             let _data = {
                 Userid: Global.DataUsers.sUserId,
                 Token: Global.DataUsers.sToken,
                 Type: id
             }
             Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/caileigame/inroom", _data, e => {
-              //匹配进入游戏
-                console.log(e)
+                //匹配进入游戏
+                console.log('匹配进入游戏')
+                Global._StageData = JSON.parse(e);
+               
+                console.log(Global._StageData.Success)
+                if (Global._StageData.code) {
+                    LoginTimeOut(Global._StageData.code)
+                }
+                if (Global._StageData.Success){
+                    GoLoadScene("Stage")
+                }
             })
             // }
         }

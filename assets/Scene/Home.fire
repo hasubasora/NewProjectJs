@@ -63,10 +63,10 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 123
+        "__id__": 125
       },
       {
-        "__id__": 124
+        "__id__": 126
       }
     ],
     "_prefab": null,
@@ -137,13 +137,16 @@
       },
       {
         "__id__": 100
+      },
+      {
+        "__id__": 122
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 122
+        "__id__": 124
       }
     ],
     "_prefab": null,
@@ -1529,7 +1532,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "label",
+    "_name": "Gul",
     "_objFlags": 0,
     "_parent": {
       "__id__": 30
@@ -4841,6 +4844,75 @@
     "_N$indicator": null
   },
   {
+    "__type__": "cc.Node",
+    "_name": "Mic",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 3
+    },
+    "_children": [],
+    "_tag": -1,
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 123
+      }
+    ],
+    "_prefab": null,
+    "_id": "96i2nz35pMrq2i1Ds9xCRt",
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_cascadeOpacityEnabled": true,
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 0,
+      "height": 0
+    },
+    "_rotationX": 0,
+    "_rotationY": 0,
+    "_scaleX": 1,
+    "_scaleY": 1,
+    "_position": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_localZOrder": 0,
+    "_globalZOrder": 0,
+    "_opacityModifyRGB": false,
+    "groupIndex": 0
+  },
+  {
+    "__type__": "cc.AudioSource",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 122
+    },
+    "_enabled": true,
+    "_clip": {
+      "__uuid__": "fccbdb12-b0ee-453e-8159-76d94eb2e2c5"
+    },
+    "_volume": 1,
+    "_mute": false,
+    "_loop": true,
+    "playOnLoad": true,
+    "preload": false
+  },
+  {
     "__type__": "cc.Sprite",
     "_name": "",
     "_objFlags": 0,
@@ -4893,7 +4965,6 @@
     "SignIn": {
       "__uuid__": "7e34bb4c-1296-4609-8f1d-1f0c9bb463a4"
     },
-    "SignInTime": null,
     "UserInfo": {
       "__uuid__": "bd9ad2bc-18ae-42a8-b912-91073714850f"
     },
@@ -4924,6 +4995,12 @@
     },
     "GuldsSetings": {
       "__uuid__": "bfc54423-7994-4922-81a6-2bd038e51a55"
+    },
+    "Gold": {
+      "__id__": 38
+    },
+    "Audios": {
+      "__id__": 123
     }
   }
 ]

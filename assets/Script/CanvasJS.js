@@ -17,10 +17,7 @@ cc.Class({
       default: null,
       type: cc.Prefab
     },
-    SignInTime: {
-      default: null,
-      type: cc.Number
-    },
+
     UserInfo: {
       default: null,
       type: cc.Prefab
@@ -70,6 +67,8 @@ cc.Class({
       default: null,
       type: cc.Prefab
     },
+    Gold:cc.Label,
+    Audios: cc.AudioSource
   },
 
   // LIFE-CYCLE CALLBACKS:
@@ -85,15 +84,17 @@ cc.Class({
     this.ShopsBtn.on("touchstart", this.Shops, this);
     //金币
     this.Gulds.on("touchstart", this.AddWindows, this);
-
-    if (!cc.sys.localStorage.getItem('SJ') || GetUserDatas() == false) {
-      SignInBoxRight(this.node, this.SignIn);
-    } else {
-      let d = cc.sys.localStorage.getItem('SJ')
-      let ds = JSON.parse(decodeURIComponent(d))
-      this.UserInfoName.string = ds.UserName;
-      this.UserInfoId.string = "ID:" + ds.Login;
-    }
+    //音乐初始化
+    Global.Audios = this.Audios;
+    Global.Audios.volume = cc.sys.localStorage.getItem("Mic");
+    //判断有没有账户
+    GetUserDatas() ? this.SetInfo() : SignInBoxRight(this.node, this.SignIn);;
+  },
+  SetInfo() {
+    Global.getDataUsers()
+    this.UserInfoName.string = Global.DataUsers.sNickName;
+    this.UserInfoId.string = 'ID:' + Global.DataUsers.sLogin;
+    this.Gold.string = Global.DataUsers.sBalance;
   },
   Shops() {
     cc.director.loadScene("Shop");

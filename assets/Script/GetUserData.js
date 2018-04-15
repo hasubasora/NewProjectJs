@@ -1,24 +1,28 @@
 module.exports = {
-    host: "ws://localhost",
-    port: 9000,
     GetUserDatas(_fn) {
         let d = cc.sys.localStorage.getItem('SJ')
         if (!d) {
             return false;
         } else {
             let ds = JSON.parse(decodeURIComponent(d))
-            let xhr = cc.loader.getXMLHttpRequest()
             let _data = {
                 token: ds.Token,
                 userid: ds.UserId
             }
-            Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/account/getuserinfo", _data, e => {
+            Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/account/getuserinfo", _data, e => {
                 console.log('獲取用戶數據')
                 Global.getDataUsers()
             })
             return true;
         }
 
+    },
+    //登陆超时
+    LoginTimeOut(outCode) {
+        if (outCode != 12000) {
+            cc.sys.localStorage.removeItem('SJ')
+            module.exports.GoLoadScene('Home')
+        }
     },
     //登陆框移动方法
     SignInBoxRight(node, SignIn) {
@@ -53,7 +57,8 @@ module.exports = {
     // 场景跳转
     GoLoadScene(d) {
         cc.director.loadScene(d);
-    }
+    },
+
 }
 // this.streamXHREventsToLabel(xhr, "POST", this.GetCodeUrl, JSON.stringify(data),e=>{})
 window.Global = {
@@ -91,6 +96,49 @@ window.Global = {
         Global.DataUsers.sUserId = ds.UserId;
         Global.DataUsers.sUserName = ds.UserName;
     },
-    Audios:''
+    Audios: '',
+    //房间数据
+    _StageData: '',
+    
+    //长连接
+    nSocket() {
+        let _data = {
+            token: Global.DataUsers.sToken,
+            userid: Global.DataUsers.sUserId
+        }
+        Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/account/GetWebSocket", _data, e => {
+            console.log('獲取aWebSocket')
+            var _e = JSON.parse(e)
+            console.log(_e.object.path)
+            var ws = new WebSocket("ws://192.168.1.200:2000" + _e.object.path);
+            ws.onopen = function (event) {
+                console.log("サーバー　オペ");
+            };
+            ws.onmessage = function (event) {
+                console.log("サーバーのメッセージ: " + event.data);
+            };
+            ws.onerror = function (event) {
+                console.log("メッセージ エッロ！！");
+            };
+            ws.onclose = function (event) {
+                console.log("サーバー　オフ.");
+            };
+
+            setTimeout(function () {
+                if (ws.readyState === WebSocket.OPEN) {
+                    var room = {
+                        Code: 101,
+                        Data: {
+                            roomId: Global._StageData.Data,
+                            userId: Global.DataUsers.sUserId,
+                        }
+                    };
+                    ws.send(JSON.stringify(room));
+                } else {
+                    console.log("WebSocket instance wasn't ready...！");
+                }
+            }, 3);
+        })
+    }
 };
 
