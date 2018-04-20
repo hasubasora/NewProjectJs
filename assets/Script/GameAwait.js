@@ -35,7 +35,7 @@ cc.Class({
     },
     onLoad() {
         //判断有没有账户
-        GetUserDatas() ? this.SetInfo() : GoLoadScene("Home");
+        this.SetInfo()
     },
     SetInfo() {
         Global.getDataUsers()
@@ -50,18 +50,18 @@ cc.Class({
      * @param {*} id 0是开始游戏 1是参观
      */
     startGame(e, id) {
-        if (id == 0) {
-            // if (this.Gold.string < 30) {
-            //     let ts = cc.instantiate(this.ts);
-            //     this.node.addChild(ts, 107);
-            //     ts.setPosition(0, 0);
-            //     return;
-            // }
-            //游戏匹配倒计时图
-            // if (this.Gold.string > 9) {
+        if (this.Gold.string < 30) {
+            let ts = cc.instantiate(this.ts);
+            this.node.addChild(ts, 107);
+            ts.setPosition(0, 0);
+            return;
+        }
+        //游戏匹配倒计时图
+        if (this.Gold.string > 9) {
             // let Game = cc.instantiate(this.StartLayout);
             // this.node.addChild(Game, 106);
             // Game.setPosition(0, 0);
+
             let xhr = cc.loader.getXMLHttpRequest()
             let _data = {
                 Userid: Global.DataUsers.sUserId,
@@ -71,20 +71,14 @@ cc.Class({
             Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/caileigame/inroom", _data, e => {
                 //匹配进入游戏
                 console.log('匹配进入游戏')
-                Global._StageData = JSON.parse(e);
-               
-                console.log(Global._StageData.Success)
-                if (Global._StageData.code) {
+                let _GoToGame = JSON.parse(e);
+                Global._StageData = _GoToGame
+                if (_GoToGame.code != 12000) {
                     LoginTimeOut(Global._StageData.code)
-                }
-                if (Global._StageData.Success){
+                } else {
                     GoLoadScene("Stage")
                 }
             })
-            // }
-        }
-        if (id == 1) {
-            //围观
         }
     },
     // update (dt) {},

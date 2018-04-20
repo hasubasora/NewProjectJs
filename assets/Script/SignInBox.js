@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-import { SignInBoxLeft, DestroyNode } from "GetUserData";
+// import { SignInBoxLeft } from "GetUserData";
 cc.Class({
   extends: cc.Component,
 
@@ -24,9 +24,11 @@ cc.Class({
   },
   //登陆框移动方法
   Wecher() {
-
+    console.log('微信登陆s')
   },
+
   Tel() {
+    console.log(this.node.parent.height)
     let PhoneViews = cc.instantiate(this.PhoneView);
     this.node.parent.addChild(PhoneViews, 101);
     PhoneViews.setPosition(this.node.parent.width, 0);

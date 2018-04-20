@@ -105,18 +105,14 @@ cc.Class({
               let pay = cc.find("top/pay", background)
               pay.getComponentInChildren(cc.Label).string = _e.object.Balance;                //金币
               console.log(_e.object)
-              Global.DataUsers=_e.object //植入全局数据
+              // Global.DataUsers=_e.object //植入全局数据
               this.node.parent.getChildByName('SignIn').destroy()
               this.node.destroy()
               cc.sys.localStorage.setItem("SJ", encodeURIComponent(JSON.stringify(_e.object)));
               GetUserDatas()
             }
-
           })
-
         }
-
-
       }
     }
 
@@ -144,10 +140,9 @@ cc.Class({
 
   // 关闭方式（暂时没用）
   CloseViews() {
-    var ViewWidth = this.node.parent.width / 2 + this.node.width / 2;
-    var SignInBox = cc.moveBy(0.2, cc.p(ViewWidth, 0));
-    this.node.runAction(SignInBox);
+    this.node.destroy()
     // 因为不是父节点所有还没成
+
   },
   onLoad() {
     console.log("/执行穿越模式/");
@@ -168,22 +163,6 @@ cc.Class({
       _this.WebUrl.spriteFrame.setTexture(tex);
     });
   },
-  //确定提交信息
-  // streamXHREventsToLabel: function (xhr, method, url, _data, _fn) {
-  //   xhr.onreadystatechange = function () {
-  //     if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status < 400)) {
-  //       var response = xhr.responseText;
-  //       _fn(response) || function (response) { }
-  //       // console.log(response);
-  //     }
-  //   };
-  //   xhr.open(method, url, true);
-  //   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
-
-  //   xhr.send("data=" + JSON.stringify(_data))
-  // },
-  // net　end
-  //   start() {}
 
   update(dt) {
 

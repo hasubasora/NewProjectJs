@@ -45,7 +45,7 @@
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
     "groupIndex": 0,
-    "autoReleaseAssets": false
+    "autoReleaseAssets": true
   },
   {
     "__type__": "cc.Node",
@@ -2405,7 +2405,7 @@
       "__id__": 55
     },
     "_enabled": true,
-    "transition": 0,
+    "transition": 3,
     "pressedColor": {
       "__type__": "cc.Color",
       "r": 211,
@@ -2459,8 +2459,8 @@
       "__id__": 3
     },
     "component": "GameAwait",
-    "handler": "",
-    "customEventData": ""
+    "handler": "startGame",
+    "customEventData": "1"
   },
   {
     "__type__": "cc.Node",
