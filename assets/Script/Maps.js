@@ -41,6 +41,7 @@ cc.Class({
     Gold: cc.Label,         //金币总数
     upGold: cc.Label,       //前进所需要的金币
     allGold: cc.Label,      //金币池
+    SaveGolds: 0,            //保存總金額
     //用户名字设置
     User_Name: cc.Label,
     User_Id: cc.Label,
@@ -65,7 +66,10 @@ cc.Class({
     tName: cc.Label,          //倒计时的文字
     n1: 0,                    //爆炸上一楼有多少人
     n2: 0,                    //爆炸此楼有多少人
-    bom: 0                    //保存炸弹的楼层
+    bom: 0,                   //保存炸弹的楼层
+    sNumber1: 0,                     //保存某层有多少人
+    sNumber2: 0,                     //保存某层有多少人
+    sNumber3: 0,                     //保存某层有多少人
 
   },
 
@@ -95,20 +99,9 @@ cc.Class({
     //选择人物前面+1 移动后面-1
 
     //获取GID 没有就是0 用来判断地雷
-
-    // this.schedule(function () {
-    //   // 这里的 this 指向 component
-    //   this.GotoUp.interactable = true;
-    // }, 3);
-
-
-
-
-
   },
   start() {
     this.Prepare()          //获取房间数据
-    // this.StartGames()
     this.nSocket()
   },
   //获取规则
@@ -121,7 +114,7 @@ cc.Class({
     Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/caileigame/getbaseroom", _data, e => {
       let _e = JSON.parse(e);
       cc.sys.localStorage.setItem('_Golds', JSON.stringify(_e.object.rule.List));
-      console.log(_e.object.rule.List)
+      // console.log(_e.object.rule.List)
       this.CalculateGold()
     })
   },
@@ -186,7 +179,7 @@ cc.Class({
         // console.log(this.sThirty)
         // console.log('设置结束时间：' + D.EndTimestamps)
         // console.log('设置开始时间：' + D.CurrentTimestamps)
-        console.log(D.CountdownType)
+        // console.log(D.CountdownType)
         //当前游戏状态 1:等待开始,2:前进,3:开雷
         if (D.CountdownType == 1) {
           this.tName.string = '等待玩家..'
@@ -257,6 +250,7 @@ cc.Class({
   ClickGotoUp(e, n) {
     console.log("前进");
     if (this.xplayer > 2) {
+      // this.sNumber1++
       this.GoToUpFn(n)
       this.xFloor++
       this.moveToPlayer(this.xUserNum, this.xplayer);
@@ -377,13 +371,35 @@ cc.Class({
     this.schedule(this.T4, 5);
   },
   CalculateAllGold() {
-    var s = 0;
+    let s = 0
     Global.GameRoomData.forEach((v, i) => {
       s += v.Amount
-      console.log('计算')
     })
-    this.allGold.string = s
+    this.allGold.string = s;
+    this.SaveGolds = s
+    console.log('總額：' + s)
+    this.CalculateForm()
   },
+
+  CalculateForm() {
+    console.log('總額2：' + this.SaveGolds)
+    let numbs = 0, frome = 0, next = 0;
+    Global.GameRoomData.forEach((v, i) => {
+      if (this.xFloor == v.CurrentFloor) {
+        numbs++
+        console.log('计算' + numbs)
+        console.log(this.xFloor == v.CurrentFloor)
+      }
+      // c = c < v.CurrentFloor ? v.CurrentFloor : c;
+    })
+    if (numbs != 0) {
+      frome = parseInt(this.SaveGolds / numbs)
+      next = parseInt(parseInt(this.SaveGolds) + parseInt(this.upGold.string) / numbs)
+      this.floorForme.string = frome;
+      this.floorNext.string = next
+    }
+  },
+
   //金币计算
   CalculateGold() {
     Global._Golds = JSON.parse(cc.sys.localStorage.getItem('_Golds'))
@@ -393,8 +409,6 @@ cc.Class({
       }
       if (iterator.Floor == this.xFloor) {
         this.Gold.string = this.Gold.string - iterator.Chip
-        this.floorForme.string = (this.allGold.string / Global.RoomUser);
-        this.floorNext.string = '我是预计的'
       }
     }
 
@@ -539,6 +553,7 @@ cc.Class({
             //设置人物位置数据
             this.moveToPlayer((i + 2), (15 - v.CurrentFloor));
             this.CalculateGold()
+            this.sNumber1++
           }
         })
         break;

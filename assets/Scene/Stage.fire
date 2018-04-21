@@ -605,6 +605,7 @@
     "allGold": {
       "__id__": 46
     },
+    "SaveGolds": 0,
     "User_Name": {
       "__id__": 66
     },
@@ -637,7 +638,10 @@
     },
     "n1": 0,
     "n2": 0,
-    "bom": 0
+    "bom": 0,
+    "sNumber1": 0,
+    "sNumber2": 0,
+    "sNumber3": 0
   },
   {
     "__type__": "cc.Button",
@@ -1792,7 +1796,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 20,
+      "width": 17,
       "height": 40
     },
     "_rotationX": 0,
@@ -1827,7 +1831,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "--",
+    "_N$string": "0",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -2025,7 +2029,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 20,
+      "width": 17,
       "height": 40
     },
     "_rotationX": 0,
@@ -2060,7 +2064,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "--",
+    "_N$string": "0",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",

@@ -104,7 +104,7 @@ window.Global = {
             module.exports.GoLoadScene('Home')
         }
     },
-    RoomUser:0,
+    RoomUserLen:0,
     Audios: '',
     //房间数据
     _StageData: '',
