@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "设置@3x",
+    "texture": "assets/Home/设置@3x.png",
+    "rect": [
+      0,
+      0,
+      66,
+      108
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      66,
+      108
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "社区@3x",
+    "texture": "assets/Home/社区@3x.png",
+    "rect": [
+      0,
+      0,
+      180,
+      57
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      180,
+      57
+    ]
+  }
+}

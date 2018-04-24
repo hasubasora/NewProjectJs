@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "前进@3x",
+    "texture": "assets/Stage/前进@3x.png",
+    "rect": [
+      0,
+      0,
+      243,
+      234
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      243,
+      234
+    ]
+  }
+}

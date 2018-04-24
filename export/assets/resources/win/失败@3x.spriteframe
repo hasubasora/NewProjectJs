@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "失败@3x",
+    "texture": "assets/resources/win/失败@3x.png",
+    "rect": [
+      0,
+      0,
+      1490,
+      878
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      1490,
+      878
+    ]
+  }
+}

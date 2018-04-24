@@ -12,6 +12,8 @@ module.exports = {
             Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/account/getuserinfo", _data, e => {
                 console.log('獲取用戶數據')
                 module.exports.LoginTimeOut(JSON.parse(e).code)
+                let sData = JSON.parse(e)
+                // cc.sys.localStorage.setItem("SJ", encodeURIComponent(JSON.stringify(sData.object)));
                 Global.getDataUsers()
             })
             return true;
@@ -61,6 +63,7 @@ module.exports = {
         cc.director.loadScene(d);
     },
 
+
 }
 // Global.streamXHREventsToLabel(xhr, "POST",Global.serverUrl + "/account/GetWebSocket", JSON.stringify(data),e=>{})
 window.Global = {
@@ -78,7 +81,7 @@ window.Global = {
         xhr.send("data=" + JSON.stringify(_data))
     },
     DataUsers: {
-        sBalance: 0,
+        sBalance: cc.sys.localStorage.getItem('sBalance'),
         sInvitationCode: "",
         sLogin: 0,
         sNickName: "0",
@@ -86,7 +89,7 @@ window.Global = {
         sUserIcon: "",
         sUserId: 0,
         sUserName: "0",
-        swsUrl:''
+        swsUrl: ''
     },
     getDataUsers() {
         let ds = JSON.parse(decodeURIComponent(cc.sys.localStorage.getItem('SJ')))
@@ -99,120 +102,19 @@ window.Global = {
             Global.DataUsers.sUserIcon = ds.UserIcon;
             Global.DataUsers.sUserId = ds.UserId;
             Global.DataUsers.sUserName = ds.UserName;
-            Global.DataUsers.wsUrl = ds.wsUrl;
+            Global.DataUsers.wsUrl = ds.wsUrl
         } else {
             module.exports.GoLoadScene('Home')
         }
     },
-    RoomUserLen:0,
+    RoomUserLen: 0,
     Audios: '',
     //房间数据
     _StageData: '',
     //保存游戏中的用户数据
     GameRoomData: '',
     //保存金额列表
-    _Golds:'',
-    //长连接
-    nSocket(_fnRun) {
-        let _data = {
-            token: Global.DataUsers.sToken,
-            userid: Global.DataUsers.sUserId
-        }
-        Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/account/GetWebSocket", _data, e => {
-            console.log('獲取aWebSocket')
-            var _e = JSON.parse(e)
-            module.exports.LoginTimeOut(_e.code)
-            var ws = new WebSocket("ws://192.168.1.200:200" + Global.DataUsers.sUserId % 1 + _e.object.path);
-            ws.onopen = function (event) {
-                console.log("サーバー　オペ");
-            };
-            ws.onmessage = function (event) {
-                console.log("サーバーのメッセージ: " + event.data);
-                let aData = JSON.parse(event.data).Data.Status
-                let UserID = JSON.parse(event.data).Data.UserID
-                Global.GetStatus(aData, UserID)
+    _Golds: '',
 
-            };
-            ws.onerror = function (event) {
-                console.log("メッセージ エッロ！！");
-            };
-            ws.onclose = function (event) {
-                console.log("サーバー　オフ.");
-            };
-
-            setTimeout(function () {
-                if (ws.readyState === WebSocket.OPEN) {
-                    var room = {
-                        Code: 101,
-                        Data: {
-                            roomId: Global._StageData.Data,
-                            userId: Global.DataUsers.sUserId,
-                        }
-                    };
-                    ws.send(JSON.stringify(room));
-                } else {
-                    console.log("WebSocket instance wasn't ready...！");
-                }
-            }, 3);
-
-        })
-    },
-    GetStatus(x, u) {
-        switch (x) {
-            case 0:
-                console.log('什么宝物都没有')
-                break;
-            case 1:
-                console.log('有人参战')
-                break;
-            case 2:
-                console.log('有人观战')
-                break;
-            case 3:
-                console.log('准备战斗')
-                break;
-            case 4:
-                console.log('取消准备')
-                break;
-            case 5:
-                console.log('开始游戏')
-                break;
-            case 6:
-                Global.GameRoomData.forEach((v, i) => {
-                    console.log(v.UserId == u)
-                    if (v.UserId == u) {
-                        //设置人物位置数据
-                        console.log('-----------------------------------')
-
-                        this.xUserNum = i + 2
-                    }
-                })
-                console.log('上一层楼')
-                break;
-            case 7:
-                console.log('停住')
-                break;
-            case 8:
-                console.log('退出游戏')
-                break;
-            case 9:
-                console.log('游戏结束')
-                break;
-            case 10:
-                console.log('解散房间')
-                break;
-            case 11:
-                console.log('要爆炸了')
-                break;
-            case 12:
-                console.log('爆炸了')
-                break;
-            case 13:
-                console.log('没死人')
-                break;
-            default:
-                break;
-        }
-    }
 };
 

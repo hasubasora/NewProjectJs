@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "立即充值@3x",
+    "texture": "assets/Activity/立即充值@3x.png",
+    "rect": [
+      3,
+      2,
+      279,
+      111
+    ],
+    "offset": [
+      0,
+      0.5
+    ],
+    "originalSize": [
+      285,
+      116
+    ]
+  }
+}

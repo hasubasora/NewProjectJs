@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "答题@3x",
+    "texture": "assets/Home/答题@3x.png",
+    "rect": [
+      0,
+      0,
+      443,
+      644
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      443,
+      644
+    ]
+  }
+}

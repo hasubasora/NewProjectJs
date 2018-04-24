@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "enligsh-chinese",
+    "texture": "assets/resources/font/enligsh-chinese.png",
+    "rect": [
+      3,
+      2,
+      501,
+      171
+    ],
+    "offset": [
+      -2.5,
+      40.5
+    ],
+    "originalSize": [
+      512,
+      256
+    ]
+  }
+}

@@ -12,12 +12,6 @@ cc.Class({
   extends: cc.Component,
 
   properties: {
-    //登陆 ローク
-    SignIn: {
-      default: null,
-      type: cc.Prefab
-    },
-
     UserInfo: {
       default: null,
       type: cc.Prefab
@@ -67,7 +61,7 @@ cc.Class({
       default: null,
       type: cc.Prefab
     },
-    Gold:cc.Label,
+    Gold: cc.Label,
     Audios: cc.AudioSource
   },
 
@@ -88,7 +82,8 @@ cc.Class({
     Global.Audios = this.Audios;
     Global.Audios.volume = cc.sys.localStorage.getItem("Mic");
     //判断有没有账户
-    GetUserDatas() ? this.SetInfo() : SignInBoxRight(this.node, this.SignIn);;
+    // GetUserDatas() ? this.SetInfo() : SignInBoxRight(this.node, this.SignIn);
+    GetUserDatas() ? this.SetInfo() : this.GetPrefab('SignIn');
   },
   SetInfo() {
     Global.getDataUsers()
@@ -105,8 +100,9 @@ cc.Class({
   //游戏跳转
   directors(e, d) {
     if (GetUserDatas() == false) {
-      SignInBoxRight(this.node, this.SignIn);
-    }else{
+      // SignInBoxRight(this.node, this.SignIn);
+      this.GetPrefab('SignIn')
+    } else {
       cc.director.loadScene(d);
     }
     console.log(d)
@@ -125,7 +121,27 @@ cc.Class({
     this.node.addChild(Infos, 104);
     Infos.setPosition(0, 0);
   },
-
+  //SignIn
+  GetPrefab(fab) {
+    cc.loader.loadRes("/prefab/" + fab, (err, Prefab) => {
+      if (err) {
+        console.log(err)
+        return;
+      }
+      var newNode = cc.instantiate(Prefab);
+      newNode.setPosition(this.node.width / 2, this.node.height / 2);
+      cc.director.getScene().addChild(newNode);
+      // let _newNode = cc.find("sl/winText", newNode)
+      // _newNode.getComponentsInChildren(cc.Label)[0].string = gold;
+    });
+  },
+  //手機的登陸
+  SetSignInPhone(){
+    this.GetPrefab('SignInTel') 
+  },
+  CloseViews() {
+    this.node.destroy()
+  },
   start() { }
 
   // update (dt) {},

@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "右边导航背景@3x",
+    "texture": "assets/Home/右边导航背景@3x.png",
+    "rect": [
+      0,
+      0,
+      173,
+      480
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      173,
+      480
+    ]
+  }
+}

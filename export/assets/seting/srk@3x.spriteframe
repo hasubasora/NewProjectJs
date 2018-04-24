@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "srk@3x",
+    "texture": "assets/seting/srk@3x.png",
+    "rect": [
+      0,
+      0,
+      867,
+      105
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      867,
+      105
+    ]
+  }
+}

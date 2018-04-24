@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "默认背景@3x",
+    "texture": "assets/PayTab/默认背景@3x.png",
+    "rect": [
+      0,
+      0,
+      299,
+      105
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      299,
+      105
+    ]
+  }
+}

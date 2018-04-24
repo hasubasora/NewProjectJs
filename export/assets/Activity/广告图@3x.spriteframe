@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "广告图@3x",
+    "texture": "assets/Activity/广告图@3x.png",
+    "rect": [
+      0,
+      0,
+      1322,
+      210
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      1322,
+      210
+    ]
+  }
+}

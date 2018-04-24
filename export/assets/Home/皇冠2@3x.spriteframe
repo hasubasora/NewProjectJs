@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "皇冠2@3x",
+    "texture": "assets/Home/皇冠2@3x.png",
+    "rect": [
+      0,
+      0,
+      83,
+      89
+    ],
+    "offset": [
+      -0.5,
+      0
+    ],
+    "originalSize": [
+      84,
+      89
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "title@3x",
+    "texture": "assets/Stage/title@3x.png",
+    "rect": [
+      1,
+      0,
+      151,
+      101
+    ],
+    "offset": [
+      0,
+      0.5
+    ],
+    "originalSize": [
+      153,
+      102
+    ]
+  }
+}

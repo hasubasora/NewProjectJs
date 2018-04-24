@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "底部左侧bg@3x",
+    "texture": "assets/Stage/底部左侧bg@3x.png",
+    "rect": [
+      0,
+      0,
+      719,
+      113
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      719,
+      113
+    ]
+  }
+}

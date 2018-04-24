@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "shuzibiaoqian03",
+    "texture": "assets/resources/font/shuzibiaoqian03.png",
+    "rect": [
+      0,
+      1,
+      170,
+      23
+    ],
+    "offset": [
+      0,
+      -0.5
+    ],
+    "originalSize": [
+      170,
+      24
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "输入框@3x",
+    "texture": "assets/PayTab/输入框@3x.png",
+    "rect": [
+      0,
+      0,
+      641,
+      105
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      641,
+      105
+    ]
+  }
+}

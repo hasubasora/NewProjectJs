@@ -7,11 +7,15 @@ cc.Class({
     //  音效设置
     Music: cc.Slider,
     Sounds: cc.Slider,
+    scroll: cc.ScrollView
   },
   onLoad() {
+
+    this.GetAddress()
     if (Global.Audios == '') {
       Global.Audios = this.node.parent.getComponentInChildren(cc.AudioSource)
     }
+
     //音乐设置
     if (cc.sys.localStorage.getItem("Mic") != null) {
       this._updateMusicVolume(cc.sys.localStorage.getItem("Mic"));
@@ -38,13 +42,22 @@ cc.Class({
     Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + '/account/logout', data, e => {
       console.log('退出')
       if (e) {
-        // cc.sys.localStorage.removeItem('SJ')
+        cc.sys.localStorage.removeItem('SJ')
       }
     })
 
+  },
+
+  GetAddress() {
+   let xhr = cc.loader.getXMLHttpRequest()
+    let _data = {
+      Token: Global.DataUsers.sToken,
+      Userid: Global.DataUsers.sUserId,
+      ParentID: 0
+    }
+    Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Address/GetLstAreasInfo", _data, e => { console.log(e) })
+
   }
-
-
 
 
 

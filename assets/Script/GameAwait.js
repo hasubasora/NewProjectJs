@@ -36,6 +36,7 @@ cc.Class({
     onLoad() {
         //判断有没有账户
         this.SetInfo()
+        GetUserDatas()
     },
     SetInfo() {
         Global.getDataUsers()
@@ -43,7 +44,6 @@ cc.Class({
         this.UserID.string = 'ID:' + Global.DataUsers.sLogin;
         this.Gold.string = Global.DataUsers.sBalance;
     },
-
     /**
      * 
      * @param {*} e 默认的event

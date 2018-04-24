@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "选中状态@3x",
+    "texture": "assets/Shop/选中状态@3x.png",
+    "rect": [
+      3,
+      3,
+      348,
+      150
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      354,
+      156
+    ]
+  }
+}

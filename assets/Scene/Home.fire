@@ -5043,9 +5043,6 @@
       "__id__": 2
     },
     "_enabled": true,
-    "SignIn": {
-      "__uuid__": "7e34bb4c-1296-4609-8f1d-1f0c9bb463a4"
-    },
     "UserInfo": {
       "__uuid__": "bd9ad2bc-18ae-42a8-b912-91073714850f"
     },

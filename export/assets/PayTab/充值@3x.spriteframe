@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "充值@3x",
+    "texture": "assets/PayTab/充值@3x.png",
+    "rect": [
+      1,
+      0,
+      122,
+      70
+    ],
+    "offset": [
+      -0.5,
+      1
+    ],
+    "originalSize": [
+      125,
+      72
+    ]
+  }
+}

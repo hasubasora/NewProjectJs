@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "客户@3x",
+    "texture": "assets/Home/客户@3x.png",
+    "rect": [
+      0,
+      0,
+      66,
+      113
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      66,
+      113
+    ]
+  }
+}

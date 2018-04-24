@@ -98,8 +98,9 @@ cc.Class({
               return;
             }
             if (_e.code == 12000) {
-              let background = this.node.parent.getChildByName('background')
+              let background = cc.director.getScene().getChildByName('Canvas').getChildByName('background')
               let InfoBox = cc.find("top/InfoBox", background)
+              console.log(cc.director.getScene().getChildByName('Canvas').getChildByName('background'))
               InfoBox.getComponentsInChildren(cc.Label)[0].string = _e.object.NickName;       //名字
               InfoBox.getComponentsInChildren(cc.Label)[1].string = "ID:" + _e.object.Login;  //id
               let pay = cc.find("top/pay", background)

@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "装饰4@3x",
+    "texture": "assets/GameStart/装饰4@3x.png",
+    "rect": [
+      0,
+      0,
+      330,
+      258
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      330,
+      258
+    ]
+  }
+}

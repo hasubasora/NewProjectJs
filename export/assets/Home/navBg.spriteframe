@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "navBg",
+    "texture": "assets/Home/navBg.png",
+    "rect": [
+      12,
+      0,
+      1310,
+      70
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      1334,
+      70
+    ]
+  }
+}
