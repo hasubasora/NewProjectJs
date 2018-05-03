@@ -469,7 +469,7 @@ cc.Class({
  * 设置按钮
  */
   SetingBox() {
-    AddWindow(this.node.parent, this.Setings, cc.director.getScene().getChildByName('Canvas').width / 2, cc.director.getScene().getChildByName('Canvas').height / 2);
+    AddWindow(this.node.parent, this.Setings, 0,0);
   },
   // 账户数据设置
   SetInfo() {

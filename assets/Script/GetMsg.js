@@ -49,10 +49,12 @@ cc.Class({
         this.content.height = 45 * this.spawnCount
         for (let i = 0; i < this.spawnCount; ++i) { // spawn items, we only need to do this once
             let item = cc.instantiate(this.itemTemplate);
+            console.log(DataLists[i].UserID)
             let _item = item.getComponentsInChildren(cc.Label)
-            _item[0].string = 'ID:'+DataLists[i].UserID
+            _item[0].string = 'ID:' + DataLists[i].UserID
             _item[1].string = DataLists[i].PlusAmount
-            _item[2].string = "第" + (i + 1) + "名"
+            // _item[2].string = "第" + (i + 1) + "名"
+            _item[2].string = ""
             this.content.addChild(item);
             item.setPosition(0, -item.height * (0.5 + i) - this.spacing * (i + 1));
             // item.getComponent('Item').updateItem(i, i);

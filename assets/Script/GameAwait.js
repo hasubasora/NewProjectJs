@@ -9,11 +9,11 @@ cc.Class({
             default: null,
             type: cc.Button
         },
-        //开始加入资源
-        StartLayout: {
-            default: null,
-            type: cc.Prefab
-        },
+        // //开始加入资源
+        // StartLayout: {
+        //     default: null,
+        //     type: cc.Prefab
+        // },
         //参加记录
         Record: cc.Node,
         //规则

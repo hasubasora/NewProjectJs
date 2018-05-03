@@ -2,6 +2,9 @@ module.exports = {
     GetUserDatas(_fn) {
         let d = cc.sys.localStorage.getItem('SJ')
         console.log(!d)
+        if (d == 'undefined') {
+            return false;
+        }
         if (!d) {
             return false;
         } else {
@@ -97,7 +100,7 @@ window.Global = {
         let ds = JSON.parse(decodeURIComponent(cc.sys.localStorage.getItem('SJ')))
         console.log(ds)
 
-        if (ds != 'undefined') {
+        if (ds != 'undefined' && ds != null) {
             Global.DataUsers.sBalance = ds.Balance;
             Global.DataUsers.sNickName = ds.NickName;
             Global.DataUsers.sInvitationCode = ds.InvitationCode;
@@ -108,7 +111,9 @@ window.Global = {
             Global.DataUsers.sUserName = ds.UserName;
             Global.DataUsers.wsUrl = ds.wsUrl
         }
-
+        if (ds == null) {
+            module.exports.GoLoadScene('Home')
+        }
         if (ds == 'undefined') {
             module.exports.GoLoadScene('Home')
         }
