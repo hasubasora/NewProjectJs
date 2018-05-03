@@ -1,6 +1,7 @@
 module.exports = {
     GetUserDatas(_fn) {
         let d = cc.sys.localStorage.getItem('SJ')
+        console.log(!d)
         if (!d) {
             return false;
         } else {
@@ -13,7 +14,7 @@ module.exports = {
                 console.log('獲取用戶數據')
                 module.exports.LoginTimeOut(JSON.parse(e).code)
                 let sData = JSON.parse(e)
-                // cc.sys.localStorage.setItem("SJ", encodeURIComponent(JSON.stringify(sData.object)));
+                cc.sys.localStorage.setItem("SJ", encodeURIComponent(JSON.stringify(sData.object)));
                 Global.getDataUsers()
             })
             return true;
@@ -53,10 +54,10 @@ module.exports = {
         node.removeFromParent();
     },
     //添加弹窗到场景
-    AddWindow(node, prefab) {
+    AddWindow(node, prefab, x = 0, y = 0) {
         let obj = cc.instantiate(prefab);
         node.addChild(obj, 103);
-        obj.setPosition(0, 0);
+        obj.setPosition(x, y);
     },
     // 场景跳转
     GoLoadScene(d) {
@@ -92,8 +93,11 @@ window.Global = {
         swsUrl: ''
     },
     getDataUsers() {
+
         let ds = JSON.parse(decodeURIComponent(cc.sys.localStorage.getItem('SJ')))
-        if (ds != undefined) {
+        console.log(ds)
+
+        if (ds != 'undefined') {
             Global.DataUsers.sBalance = ds.Balance;
             Global.DataUsers.sNickName = ds.NickName;
             Global.DataUsers.sInvitationCode = ds.InvitationCode;
@@ -103,7 +107,9 @@ window.Global = {
             Global.DataUsers.sUserId = ds.UserId;
             Global.DataUsers.sUserName = ds.UserName;
             Global.DataUsers.wsUrl = ds.wsUrl
-        } else {
+        }
+
+        if (ds == 'undefined') {
             module.exports.GoLoadScene('Home')
         }
     },
@@ -116,5 +122,22 @@ window.Global = {
     //保存金额列表
     _Golds: '',
 
+    alertWindw(msg) {
+        let windowLabel = new cc.Node('Label');
+        let wLabel = windowLabel.addComponent(cc.Label);
+        wLabel.string = msg
+        windowLabel.color = new cc.Color(255, 0, 0)
+        windowLabel.zIndex = 999;
+        windowLabel.opacity = 0;
+        windowLabel.setPosition(cc.p(cc.director.getScene().getChildByName('Canvas').width / 2, cc.director.getScene().getChildByName('Canvas').height / 2))
+        cc.director.getScene().addChild(windowLabel)
+        windowLabel.runAction(cc.sequence(
+            cc.delayTime(0.5),
+            cc.fadeIn(0.5),
+            cc.delayTime(1),
+            cc.fadeOut(1),
+            cc.tintTo(2, 255, 255, 255)
+        ));
+    }
 };
 

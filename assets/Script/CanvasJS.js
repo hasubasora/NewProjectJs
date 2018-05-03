@@ -99,13 +99,11 @@ cc.Class({
   },
   //游戏跳转
   directors(e, d) {
-    if (GetUserDatas() == false) {
-      // SignInBoxRight(this.node, this.SignIn);
-      this.GetPrefab('SignIn')
-    } else {
+    if (GetUserDatas()) {
       cc.director.loadScene(d);
+    } else {
+      this.GetPrefab('SignIn')
     }
-    console.log(d)
 
   },
   AddWindows() {
@@ -136,13 +134,16 @@ cc.Class({
     });
   },
   //手機的登陸
-  SetSignInPhone(){
-    this.GetPrefab('SignInTel') 
+  SetSignInPhone() {
+    this.GetPrefab('SignInTel')
   },
   CloseViews() {
     this.node.destroy()
   },
   start() { }
-
+  ,
+  GoToMsg() {
+    cc.director.loadScene("News");
+  }
   // update (dt) {},
 });

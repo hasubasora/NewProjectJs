@@ -72,7 +72,12 @@ cc.Class({
     n2: 0,                    //爆炸此楼有多少人
     bom: 0,                   //保存炸弹的楼层
 
-    anim: cc.Animation
+    anim: cc.Animation,
+    animbom: cc.Animation,
+    animOver: cc.Animation,
+    anim1: cc.Node,
+    anim2: cc.Node,
+    anim3: cc.Node
   },
 
   // LIFE-CYCLE CALLBACKS:
@@ -88,7 +93,6 @@ cc.Class({
     this.GetServerTimes()   //获取服务器时间接口
     this.SetServerTimes()   //服务器时间自动计时
     //判断有没有账户
-    console.log(this.anim)
     //音乐初始化
     Global.Audios = this.Audios;
     Global.Audios.volume = cc.sys.localStorage.getItem("Mic");
@@ -97,15 +101,14 @@ cc.Class({
     let pos1 = this.Player.getPositionAt(3, 14); //Vec2 {x: 50, y: 400}
     let pos2 = this.Player.getPositionAt(3, 13); //Vec2 {x: 100, y: 425}
     let pos3 = this.Player.getPositionAt(3, 12); //Vec2 {x: 150, y: 450}
-    var aaa=this.anim.play();
-    
-    aaa.repeatCount = 1;
+
+
     // this.Player.setTileGID(pos1, 3, 14, gid);
     // console.log(this.Player.setTexture()) //setTexture 设置纹理。
     //选择人物前面+1 移动后面-1
 
     //获取GID 没有就是0 用来判断地雷
- 
+
     // let three = 3
     // this.T3 = function () {
     //   if (three < 1) {
@@ -116,11 +119,15 @@ cc.Class({
     //   }
     // };
     // this.schedule(this.T3, 1);
+
+
   },
+
   start() {
     this.Prepare()          //获取房间数据
     this.nSocket()
   },
+
   //获取规则
   GetBaseRoom() {
     let _data = {
@@ -462,7 +469,7 @@ cc.Class({
  * 设置按钮
  */
   SetingBox() {
-    AddWindow(this.node.parent, this.Setings);
+    AddWindow(this.node.parent, this.Setings, cc.director.getScene().getChildByName('Canvas').width / 2, cc.director.getScene().getChildByName('Canvas').height / 2);
   },
   // 账户数据设置
   SetInfo() {
@@ -550,6 +557,9 @@ cc.Class({
         break;
       case 7:
         console.log('停住')
+        if (u == Global.DataUsers.sUserId) {
+          this.IsStop = 1
+        }
         break;
       case 8:
         console.log('退出游戏')
@@ -558,12 +568,16 @@ cc.Class({
         this.ButtonType(2)
         console.log('游戏结束')
         this.Prepare()
-        this.Bomfn(x, f)
+        this.scheduleOnce(() => {
+          // 这里的 this 指向 component
+          this.Bomfn(x, f)
+        }, 4);
         break;
       case 10:
         console.log('解散房间')
         break;
       case 11:
+        this.aAnimationTimes()
         this.ButtonType(2)
         this.Prepare()  //获取爆炸倒计时
         console.log('要爆炸了')
@@ -571,9 +585,11 @@ cc.Class({
       case 12:
         console.log('爆炸了')
         this.bom = f
+        this.aAnimationBom()
         break;
       case 13:
         console.log('没死人')
+        this.aAnimationTimesOver()
         this.ButtonType(1)
         this.Prepare()
         break;
@@ -587,6 +603,55 @@ cc.Class({
       default:
         break;
     }
+  },
+  //动画1
+  aAnimationTimes() {
+    let aAnimation1 = this.anim.play();
+    aAnimation1.repeatCount = 1;
+    this.anim1.runAction(cc.sequence(
+      cc.delayTime(0.1),
+      cc.fadeIn(0.5),
+      cc.delayTime(1),
+      cc.fadeOut(1),
+      cc.tintTo(2, 255, 255, 255)
+    ));
+  },
+  aAnimationBom() {
+    let aAnimation1 = this.animbom.play();
+    aAnimation1.repeatCount = 1;
+    this.anim2.runAction(cc.sequence(
+      cc.delayTime(0.5),
+      cc.fadeIn(1),
+      cc.delayTime(1),
+      cc.fadeOut(1),
+      cc.tintTo(2, 255, 255, 255)
+
+    ))
+    this.scheduleOnce(() => {
+      //咸鱼在当前的爆炸层
+      const arr = [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4]
+      for (let i = 11; i > 1; i--) {
+        let gid = this.Player.getTileGIDAt(i, arr[this.bom - 1]);
+        if (gid != 0) {
+          this.Player.removeTileAt(i, arr[this.bom - 1]);
+          this.Player.setTileGID(37, i, arr[this.bom - 1], 37);
+        }
+        //爆炸的楼层 
+        this.LayerOne.setTileGID(40, (i + 1), arr[(this.bom - 2)], 40);
+      }
+    }, 2.2);
+  },
+  aAnimationTimesOver() {
+    let aAnimation1 = this.animOver.play();
+    aAnimation1.repeatCount = 1;
+    this.anim3.runAction(cc.sequence(
+      cc.delayTime(0),
+      cc.fadeIn(0.5),
+      cc.delayTime(0),
+      cc.fadeOut(1),
+      cc.tintTo(2, 255, 255, 255)
+    ));
+
   },
   //1 释放按钮  2 禁止按钮 && this.IsStop != 1
   ButtonType(a) {
@@ -602,8 +667,6 @@ cc.Class({
   Bomfn(x, f) {
     let dot = false;
     let _f;
-    const arr = [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4]
-    var numb = 14
     /***
      * 爆炸的输赢逻辑
      */
@@ -615,28 +678,14 @@ cc.Class({
         i < 1 ? dot = true : ''
       })
       if (dot && this.xFloor == this.bom) {
-        //咸鱼在当前的爆炸层
-        for (let i = 11; i > 1; i--) {
-          let gid = this.Player.getTileGIDAt(i, arr[this.bom - 1]);
-          // let gids = this.LayerOne.getTileGIDAt(i, numb);
-          console.log('坐标' + i + 'GID:' + gid)
-          let moveTo = cc.moveBy(0.1, cc.p(10, 100)); //x=50 y=25 z=50
-          if (gid != 0) {
-            this.Player.removeTileAt(i, arr[this.bom - 1]);
-            this.Player.setTileGID(37, i, arr[this.bom - 1], 37);
-          }
-          //爆炸的楼层 
-          this.LayerOne.setTileGID(40, (i + 1), arr[(this.bom - 2)], 40);
-
-        }
         console.log(this.xFloor)
         //如果上一层没有人就赢了  否则 输了
         if (this.n1 != 0) { //后面有人就输了
           console.log('你输了')
-          // this.WinLoseData(2)
+          this.WinLoseData(2)
           return;
         } else {
-          // this.WinLoseData(1)
+          this.WinLoseData(1)
           console.log('你赢了')
           return;
         }
@@ -648,9 +697,12 @@ cc.Class({
           return;
         }
       }
-      if (dot && this.xFloor != this.bom) {
+      if (dot && this.xFloor != this.bom && this.n2 == 0 && this.n1 == 0) {
         this.WinLoseData(1)
         console.log('你赢了3')
+      }else{
+        this.WinLoseData(2)
+        console.log('你输了3')
       }
     }
     /***
@@ -662,7 +714,7 @@ cc.Class({
     if (this.bom == 0 && x == 9) {
       //位置  人物坐标  瓦片位置
       if (this.xFloor == f) {
-        // this.WinLoseData(1)
+        this.WinLoseData(1)
         console.log('你赢了')
       } else {
         console.log('你输了2')
