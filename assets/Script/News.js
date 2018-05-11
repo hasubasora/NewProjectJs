@@ -64,7 +64,6 @@ cc.Class({
         this.SetInfo()          //设置用户数据
         this.contentLeft = this.scrollContent.content
         this.contentRight = this.scrollContentRight.content
-        console.log(this.scrollContent.content)
 
     },
     GetHallMsgFn() {
@@ -107,13 +106,13 @@ cc.Class({
                             btn1[1].node.on(cc.Node.EventType.TOUCH_START, event => {
                                 // console.log( newNode.getChildByName('ImgSprite').getComponentInChildren(cc.Button).normalSprite)
                                 // console.log(new cc.SpriteFrame(cc.url.raw("resources/news/ysc.png")))
-                                console.log('已经关注！')
+                                // console.log('已经关注！')
                                 this.DelFollow(lists.UserId) //发送关注的id
                                 btn1[0].node.scale = 1
                                 btn1[1].node.scale = 0
                             })
                             btn1[0].node.on(cc.Node.EventType.TOUCH_START, event => {
-                                console.log('这是真的还没关注')
+                                // console.log('这是真的还没关注')
                                 this.SaveUser(lists.UserId)
                                 btn1[0].node.scale = 0
                                 btn1[1].node.scale = 1
@@ -172,7 +171,8 @@ cc.Class({
             }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + this.AddFollowUrl, _data, e => {
             let AddFollowObj = JSON.parse(e)
-            console.log(AddFollowObj)
+            this.GetHallMsgFn()
+            // console.log(AddFollowObj)
         })
     },
     //关注用户
@@ -185,7 +185,8 @@ cc.Class({
             }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + this.DelFollowUrl, _data, e => {
             let AddFollowObj = JSON.parse(e)
-            console.log(AddFollowObj)
+            this.GetHallMsgFn()
+            // console.log(AddFollowObj)
         })
     },
     //转赠金币
@@ -199,7 +200,7 @@ cc.Class({
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + this.AddWithdrawalUrl, _data, e => {
             let AddWithdrawal = JSON.parse(e)
             Global.alertWindw(AddWithdrawal.message)
-            console.log(AddWithdrawal)
+            // console.log(AddWithdrawal)
         })
     },
     start() {
@@ -234,7 +235,7 @@ cc.Class({
             this.GetHallMsgFn()
             this.addMsgs.string=''
             this.addMsgsBtn.interactable = false
-            console.log(AddWithdrawal)
+            // console.log(AddWithdrawal)
         })
     },
     changeAddMyMsg() {

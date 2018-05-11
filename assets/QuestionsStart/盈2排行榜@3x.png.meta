@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "49281945-f534-408f-99d3-a7ae22748b26",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "盈2排行榜@3x": {
+      "ver": "1.0.3",
+      "uuid": "73843239-3101-4490-9af6-3f607c201d07",
+      "rawTextureUuid": "49281945-f534-408f-99d3-a7ae22748b26",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 461,
+      "height": 102,
+      "rawWidth": 461,
+      "rawHeight": 102,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

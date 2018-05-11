@@ -5,9 +5,7 @@ module.exports = {
         if (d == 'undefined') {
             return false;
         }
-        if (!d) {
-            return false;
-        } else {
+        if (d) {
             let ds = JSON.parse(decodeURIComponent(d))
             let _data = {
                 token: ds.Token,
@@ -64,14 +62,16 @@ module.exports = {
     },
     // 场景跳转
     GoLoadScene(d) {
+        // cc.sys.localStorage.removeItem('SJ')
         cc.director.loadScene(d);
     },
-
-
 }
 // Global.streamXHREventsToLabel(xhr, "POST",Global.serverUrl + "/account/GetWebSocket", JSON.stringify(data),e=>{})
 window.Global = {
-    serverUrl: 'http://localhost:11072',
+    // serverUrl: 'http://192.168.1.200:819',
+    // serverUrl: 'http://192.168.1.168:819',
+    serverUrl: 'http://h5.dsstyles.cn',
+    // serverUrl: 'http://localhost:11072',
     streamXHREventsToLabel: function (xhr, method, url, _data, _fn, async = true) {
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status < 400)) {
@@ -96,11 +96,9 @@ window.Global = {
         swsUrl: ''
     },
     getDataUsers() {
-
         let ds = JSON.parse(decodeURIComponent(cc.sys.localStorage.getItem('SJ')))
         console.log(ds)
-
-        if (ds != 'undefined' && ds != null) {
+        if (ds) {
             Global.DataUsers.sBalance = ds.Balance;
             Global.DataUsers.sNickName = ds.NickName;
             Global.DataUsers.sInvitationCode = ds.InvitationCode;
@@ -110,6 +108,7 @@ window.Global = {
             Global.DataUsers.sUserId = ds.UserId;
             Global.DataUsers.sUserName = ds.UserName;
             Global.DataUsers.wsUrl = ds.wsUrl
+            Global.lobbySocket()
         }
         if (ds == null) {
             module.exports.GoLoadScene('Home')
@@ -126,7 +125,7 @@ window.Global = {
     GameRoomData: '',
     //保存金额列表
     _Golds: '',
-
+    questions: 0,
     alertWindw(msg) {
         let windowLabel = new cc.Node('Label');
         let wLabel = windowLabel.addComponent(cc.Label);
@@ -143,6 +142,54 @@ window.Global = {
             cc.fadeOut(1),
             cc.tintTo(2, 255, 255, 255)
         ));
-    }
+    },
+    socketMsg: '恭喜玩家空空获得1210金币',
+    lobbySocket() {
+        var ws = new WebSocket(Global.DataUsers.wsUrl);
+        ws.onopen = (event) => {
+            console.log("サーバー　オペ");
+            if (ws.readyState === WebSocket.OPEN) {
+                // var room = {
+                //     Code: 100,
+                //     Data: Global.DataUsers.sUserId,
+                //     Message: "用户登录"
+                // };
+
+                // ws.send(JSON.stringify(room));
+                console.log("WebSocket 用户登录...！");
+            } else {
+                console.log("WebSocket 准备好用户登录...！");
+            }
+        };
+        ws.onmessage = (event) => {
+            let evMsg = JSON.parse(event.data)
+            if (evMsg.Code == 103) {
+                Global.socketMsg = '恭喜玩家' + evMsg.Data.UserDisplayName + '获得' + evMsg.Data.Profit+'金币'
+            }
+            console.log("サーバーのメッセージ: " + event.data);
+            if (event.data == "登录超时，请重新登录") {
+                cc.sys.localStorage.removeItem('SJ')
+                module.exports.GoLoadScene('Home')
+                return
+            }
+            if (evMsg.Code == 100) {
+                module.exports.GoLoadScene('Home')
+                return
+
+            }
+        };
+        ws.onerror = (event) => {
+            console.log("メッセージ エッロ！！");
+            // this.schedule(function () {
+            //   // 这里的 this 指向 component
+            //   this.doSomething();
+            // }, 1, 99, 0);
+        };
+        ws.onclose = (event) => {
+            console.log("サーバー　オフ.");
+
+        };
+
+    },
 };
 

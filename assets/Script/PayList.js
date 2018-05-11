@@ -38,7 +38,6 @@ cc.Class({
             for (let i = 0; i < this.object.length; i++) {
                 this.radioTabPay[i].node.scale = 1
                 this.radioTabPay[i].getComponentInChildren(cc.Label).string = this.object[i].MerchantName
-                
             }
             this.PayTypeID = this.object[0].PayTypeID
             for (const iterator of this.object[0].Moneys) {
@@ -51,13 +50,11 @@ cc.Class({
                         this.SavePay(event.target.index_target)
                     })
                     this.moneybk.addChild(newNode);
-                    
                 });
             }
          
         })
     },
-
     SavePay(money) {
         let xhr = cc.loader.getXMLHttpRequest()
         if (this.PayTypeID!=0) {
@@ -69,7 +66,10 @@ cc.Class({
             }
             Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Transaction/Pay", _data, e => {
                 console.log(e)
-
+                var div = document.createElement("div");
+                div.innerHTML = JSON.parse(e).object
+                document.body.appendChild(div);
+                // window.location.href = JSON.parse(e).code_url
             })
         }
        

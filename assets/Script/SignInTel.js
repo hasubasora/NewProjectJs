@@ -19,10 +19,7 @@ cc.Class({
       default: null,
       type: cc.EditBox
     },
-    SubmitBtn: {
-      default: null,
-      type: cc.Node
-    },
+
 
     RedLabel: cc.Label,
     GetImgCodes: cc.Sprite,
@@ -31,9 +28,7 @@ cc.Class({
     TimesOutBtn: cc.Button,
     TimesOut: cc.Label,
     // xhr:cc.loader.getXMLHttpRequest(),
-    GetCodeUrl: Global.serverUrl + "/account/getcode",
-    SetUserUrl: Global.serverUrl + "/account/loginorregister",
-    GetUserDataUrl: Global.serverUrl + "/account/loginorregister",
+    GetUserDataUrl: "/account/loginorregister",
     WebUrl: {
       default: null,
       type: cc.Sprite
@@ -68,9 +63,10 @@ cc.Class({
             "imgcode": this.SecurityCode.string
           }
 
-          Global.streamXHREventsToLabel(xhr, "POST", this.GetCodeUrl, data, e => {
+
+          Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/account/getcode", data, e => {
             let code = JSON.parse(e)
-            if (code.code!=12000) {
+            if (code.code != 12000) {
               this.RedLabels(code.message)
               return;
             }
@@ -91,7 +87,7 @@ cc.Class({
             "vcode": this.Messages.string,
             "code": "",
           }
-          Global.streamXHREventsToLabel(xhr, "POST", this.SetUserUrl, data, e => {
+          Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/account/loginorregister", data, e => {
             let _e = JSON.parse(e)
             if (_e.code != 12000) {
               this.RedLabels(_e.message)
@@ -111,6 +107,7 @@ cc.Class({
               this.node.destroy()
               cc.sys.localStorage.setItem("SJ", encodeURIComponent(JSON.stringify(_e.object)));
               GetUserDatas()
+
             }
           })
         }
@@ -147,7 +144,6 @@ cc.Class({
   },
   onLoad() {
     console.log("/执行穿越模式/");
-    this.SubmitBtn.on("touchstart", this.SendMessages, this);
     // let background = this.node.parent.getChildByName('background')
     // let find = cc.find("top/InfoBox", background)
     // let U_name = find.getComponentInChildren(cc.Label).string

@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "47e6b655-1a23-45a9-959a-d978fde3cc30",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "预期收入bg@3x": {
+      "ver": "1.0.3",
+      "uuid": "3901f0d2-c034-4914-a560-bfd50acfa31e",
+      "rawTextureUuid": "47e6b655-1a23-45a9-959a-d978fde3cc30",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 618,
+      "height": 195,
+      "rawWidth": 618,
+      "rawHeight": 195,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

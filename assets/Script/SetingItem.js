@@ -266,12 +266,14 @@ cc.Class({
     Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Address/GetUserAddressList", _data, e => {
    
       let obj = JSON.parse(e).object
-      this.address.string = obj[0].DetailAddress
-      this.addressName.string = obj[0].contactName
-      this.addressTel.string = obj[0].MobilePhone
-      this.Sheng.getComponentInChildren(cc.Label).string = obj[0].ProvinceName
-      this.Shi.getComponentInChildren(cc.Label).string = obj[0].CityName
-      this.Qu.getComponentInChildren(cc.Label).string = obj[0].AreaName
+      if (!obj) {
+        this.address.string = obj[0].DetailAddress
+        this.addressName.string = obj[0].contactName
+        this.addressTel.string = obj[0].MobilePhone
+        this.Sheng.getComponentInChildren(cc.Label).string = obj[0].ProvinceName
+        this.Shi.getComponentInChildren(cc.Label).string = obj[0].CityName
+        this.Qu.getComponentInChildren(cc.Label).string = obj[0].AreaName
+      }
     })
   },
   // 地址 end

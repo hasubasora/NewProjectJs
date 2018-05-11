@@ -734,7 +734,7 @@ cc.Class({
       let lists = _e.object.List
 
       lists.forEach((v, i) => {
-        if (v.UserID == Global.DataUsers.sUserId) {
+        // if (v.UserID == Global.DataUsers.sUserId) {
           //设置人物位置数据
           if (states == 1) {
             this.loaderViewWin(v.PlusAmount)
@@ -742,7 +742,7 @@ cc.Class({
           if (states == 2) {
             this.loaderViewWinLost(v.PlusAmount)
           }
-        }
+        // }
 
       })
     })

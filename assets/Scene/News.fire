@@ -1260,7 +1260,7 @@
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 1706.31
+      "y": 1709.66
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -1274,7 +1274,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": -445,
-      "y": 195717.281
+      "y": 196101.7605
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1338,7 +1338,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 116.74000000000001,
-      "y": -195773.6205
+      "y": -196158.1
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1612,7 +1612,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 47.739999999999945,
-      "y": -195774.6205
+      "y": -196159.1
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -2063,7 +2063,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 152.73999999999995,
-      "y": -195748.6205
+      "y": -196133.1
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -5596,7 +5596,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 561,
+      "width": 628,
       "height": 160
     },
     "_rotationX": 0,
@@ -5605,7 +5605,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 416,
+      "x": 450,
       "y": 39
     },
     "_skewX": 0,
@@ -5674,7 +5674,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 561,
+      "width": 659,
       "height": 160
     },
     "_rotationX": 0,
@@ -5683,7 +5683,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -416,
+      "x": -465,
       "y": 41
     },
     "_skewX": 0,
@@ -6575,8 +6575,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1334,
-      "height": 750
+      "width": 1565,
+      "height": 880
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -6584,8 +6584,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
+      "x": -16,
+      "y": 6
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -6606,7 +6606,7 @@
       "__uuid__": "4bb8b05b-55e1-4f01-b3a3-00996ab6678d"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
