@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "7811d088-ab0c-4636-9544-4fd5662b431a",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "佩奇人物@3x": {
+      "ver": "1.0.3",
+      "uuid": "69865893-76ec-4213-ac13-e006021d3e02",
+      "rawTextureUuid": "7811d088-ab0c-4636-9544-4fd5662b431a",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 3,
+      "trimY": 3,
+      "width": 84,
+      "height": 108,
+      "rawWidth": 90,
+      "rawHeight": 114,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

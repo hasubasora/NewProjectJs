@@ -36,11 +36,26 @@ cc.Class({
     start() {
         let newNode = cc.director.getScene().getChildByName('Canvas')
         let WebView = cc.find("bg/WebView", newNode).getComponent(cc.WebView)
-        WebView.url = 'http://localhost:6667/?tok=' + Global.DataUsers.sToken + '&usid=' + Global.DataUsers.sUserId + '&uname=' + Global.DataUsers.sUserName
+        let xhr = cc.loader.getXMLHttpRequest()
+        let _data = {
+            client: 1,
+            clientVersion: '0.0.1'
+        }
+        Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Common/getversion", _data, e => {
+            let json = JSON.parse(e)
+
+            console.log(json.object.circleUrl);
+            // WebView.url = json.object.circleUrl + '/?tok=' + Global.DataUsers.sToken + '&usid=' + Global.DataUsers.sUserId
+            // WebView.url = 'http://localhost:6667/?tok=' + Global.DataUsers.sToken + '&usid=' + Global.DataUsers.sUserId
+            WebView.url = 'http://192.168.1.106:802/?tok=' + Global.DataUsers.sToken + '&usid=' + Global.DataUsers.sUserId
             console.log(WebView.url)
-        console.log('--------------------------------------------------')
+            console.log('--------------------------------------------------')
+        })
+
+
+
 
     },
-  
+
     // update (dt) {},
 });

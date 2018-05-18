@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "4917efec-59f8-4318-8aef-d2e88becf65f",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "排名6@3x": {
+      "ver": "1.0.3",
+      "uuid": "55deebff-ab63-4aad-b76d-b859de8c3469",
+      "rawTextureUuid": "4917efec-59f8-4318-8aef-d2e88becf65f",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 1,
+      "offsetY": -1.5,
+      "trimX": 3,
+      "trimY": 3,
+      "width": 70,
+      "height": 95,
+      "rawWidth": 74,
+      "rawHeight": 98,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

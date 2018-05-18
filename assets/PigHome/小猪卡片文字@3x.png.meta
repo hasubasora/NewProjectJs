@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "9ce56221-c08e-4200-b417-4d3e5f0686e9",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "小猪卡片文字@3x": {
+      "ver": "1.0.3",
+      "uuid": "1a72a823-490b-4ae3-b480-d56d50733d87",
+      "rawTextureUuid": "9ce56221-c08e-4200-b417-4d3e5f0686e9",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0.5,
+      "offsetY": -2.5,
+      "trimX": 1,
+      "trimY": 6,
+      "width": 46,
+      "height": 158,
+      "rawWidth": 47,
+      "rawHeight": 165,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

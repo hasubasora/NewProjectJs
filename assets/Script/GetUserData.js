@@ -27,6 +27,7 @@ module.exports = {
         if (outCode != 12000) {
             cc.sys.localStorage.removeItem('SJ')
             module.exports.GoLoadScene('Home')
+            Global.ws.close()
             return;
         }
     },
@@ -108,7 +109,9 @@ window.Global = {
             Global.DataUsers.sUserId = ds.UserId;
             Global.DataUsers.sUserName = ds.UserName;
             Global.DataUsers.wsUrl = ds.wsUrl
-            Global.lobbySocket()
+            if (Global.DataUsers.wsUrl !='undefined') {
+                Global.lobbySocket()
+            }
         }
         if (ds == null) {
             module.exports.GoLoadScene('Home')
@@ -117,6 +120,7 @@ window.Global = {
             module.exports.GoLoadScene('Home')
         }
     },
+    online: 0,
     RoomUserLen: 0,
     Audios: '',
     //房间数据
@@ -144,52 +148,67 @@ window.Global = {
         ));
     },
     socketMsg: '恭喜玩家空空获得1210金币',
+    ws: '',
     lobbySocket() {
-        var ws = new WebSocket(Global.DataUsers.wsUrl);
-        ws.onopen = (event) => {
+        Global.ws = new WebSocket(Global.DataUsers.wsUrl);
+        Global.ws.onopen = (event) => {
             console.log("サーバー　オペ");
-            if (ws.readyState === WebSocket.OPEN) {
+            if (Global.ws.readyState === WebSocket.OPEN) {
                 // var room = {
                 //     Code: 100,
                 //     Data: Global.DataUsers.sUserId,
                 //     Message: "用户登录"
                 // };
 
-                // ws.send(JSON.stringify(room));
+                //Global.ws.send(JSON.stringify(room));
                 console.log("WebSocket 用户登录...！");
             } else {
                 console.log("WebSocket 准备好用户登录...！");
             }
         };
-        ws.onmessage = (event) => {
+        Global.ws.onmessage = (event) => {
             let evMsg = JSON.parse(event.data)
-            if (evMsg.Code == 103) {
-                Global.socketMsg = '恭喜玩家' + evMsg.Data.UserDisplayName + '获得' + evMsg.Data.Profit+'金币'
-            }
             console.log("サーバーのメッセージ: " + event.data);
-            if (event.data == "登录超时，请重新登录") {
-                cc.sys.localStorage.removeItem('SJ')
-                module.exports.GoLoadScene('Home')
-                return
-            }
-            if (evMsg.Code == 100) {
-                module.exports.GoLoadScene('Home')
-                return
+            Global.lobbyGetStatus(evMsg.Code, evMsg)
 
-            }
         };
-        ws.onerror = (event) => {
+        Global.ws.onerror = (event) => {
             console.log("メッセージ エッロ！！");
             // this.schedule(function () {
             //   // 这里的 this 指向 component
             //   this.doSomething();
             // }, 1, 99, 0);
         };
-        ws.onclose = (event) => {
+        Global.ws.onclose = (event) => {
             console.log("サーバー　オフ.");
-
         };
 
+    },
+    lobbyGetStatus(x, evMsg) { //sk里面的id
+        switch (x) {
+            case 100:
+                module.exports.GoLoadScene('Home')
+                break;
+            case 101:
+                console.log('101')
+                break;
+            case 102:
+                console.log('102')
+                break;
+            case 103:
+                Global.socketMsg = '恭喜玩家' + evMsg.Data.UserDisplayName + '获得' + evMsg.Data.Profit + '金币'
+                break;
+            case 104:
+                console.log('104')
+                // { "Success": true, "Data": 3, "Code": 104, "Message": "当前在线人数" }
+                Global.ws.close()
+
+                break;
+            default:
+                cc.sys.localStorage.removeItem('SJ')
+                module.exports.GoLoadScene('Home')
+                break;
+        }
     },
 };
 
