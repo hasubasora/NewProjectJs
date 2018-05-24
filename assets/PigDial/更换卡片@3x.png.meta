@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "91db7e25-6d22-4475-842f-2a5025ace36e",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "更换卡片@3x": {
+      "ver": "1.0.3",
+      "uuid": "f5b6b0ea-4b21-44f8-b8a5-3e0624d8c40c",
+      "rawTextureUuid": "91db7e25-6d22-4475-842f-2a5025ace36e",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 3,
+      "trimY": 3,
+      "width": 143,
+      "height": 45,
+      "rawWidth": 149,
+      "rawHeight": 51,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

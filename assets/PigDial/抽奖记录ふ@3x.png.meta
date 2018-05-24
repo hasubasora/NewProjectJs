@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "9d7438c4-df6f-4c64-9ffc-ace8062c39e0",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "抽奖记录ふ@3x": {
+      "ver": "1.0.3",
+      "uuid": "c326005e-d4e6-4768-b53e-ae1ee38ef3bb",
+      "rawTextureUuid": "9d7438c4-df6f-4c64-9ffc-ace8062c39e0",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -0.5,
+      "offsetY": 0,
+      "trimX": 1,
+      "trimY": 1,
+      "width": 435,
+      "height": 124,
+      "rawWidth": 438,
+      "rawHeight": 126,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

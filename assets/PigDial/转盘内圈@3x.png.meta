@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "d57c0802-e392-4829-ac26-e38260b619f1",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "转盘内圈@3x": {
+      "ver": "1.0.3",
+      "uuid": "d05d7cae-e7d3-45c5-bfd1-56f6b833738f",
+      "rawTextureUuid": "d57c0802-e392-4829-ac26-e38260b619f1",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 755,
+      "height": 755,
+      "rawWidth": 755,
+      "rawHeight": 755,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

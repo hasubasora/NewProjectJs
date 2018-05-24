@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "d8f6f71a-d954-4ab9-8220-afbbdbd65a42",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "datika": {
+      "ver": "1.0.3",
+      "uuid": "e064f7bf-ffc1-4c87-9015-0692835cc141",
+      "rawTextureUuid": "d8f6f71a-d954-4ab9-8220-afbbdbd65a42",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -1,
+      "offsetY": 0,
+      "trimX": 29,
+      "trimY": 64,
+      "width": 390,
+      "height": 322,
+      "rawWidth": 450,
+      "rawHeight": 450,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

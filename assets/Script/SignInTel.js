@@ -60,7 +60,8 @@ cc.Class({
           }
           let data = {
             "mobilephone": this.Phone.string,
-            "imgcode": this.SecurityCode.string
+            "imgcode": this.SecurityCode.string,
+            "clientid": Global.clientid
           }
 
 
@@ -155,7 +156,9 @@ cc.Class({
   WebUrlText() {
     var _this = this
     // console.log(Global.serverUrl + "/common/getimgcode")
-    cc.loader.load({ url: Global.serverUrl + "/common/getimgcode" + '?' + Math.random(), type: 'png' }, function (err, tex) {
+    // console.log(Global.serverUrl + "/common/getimgcode" + '?clientid=' + Global.clientid + '&t=' + Math.random());
+
+    cc.loader.load({ url: Global.serverUrl + "/common/getimgcode" + '?clientid=' + Global.clientid + '&t=' + Math.random(), type: 'png' }, function (err, tex) {
       // console.log('Should load a texture from RESTful API by specify the type: ' + (tex instanceof cc.Texture2D));
       _this.WebUrl.spriteFrame.setTexture(tex);
     });

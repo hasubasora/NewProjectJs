@@ -129,6 +129,7 @@ window.Global = {
     GameRoomData: '',
     //保存金额列表
     _Golds: '',
+    clientid:'',
     questions: 0,
     alertWindw(msg) {
         let windowLabel = new cc.Node('Label');
@@ -168,7 +169,7 @@ window.Global = {
         };
         Global.ws.onmessage = (event) => {
             let evMsg = JSON.parse(event.data)
-            console.log("サーバーのメッセージ: " + event.data);
+            // console.log("サーバーのメッセージ: " + event.data);
             Global.lobbyGetStatus(evMsg.Code, evMsg)
 
         };

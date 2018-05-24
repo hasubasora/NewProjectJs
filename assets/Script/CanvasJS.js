@@ -76,6 +76,7 @@ cc.Class({
   // LIFE-CYCLE CALLBACKS:
 
   onLoad() {
+    this.getversion()
     // document.body.style.position='fixed'
     // document.getElementById('GameCanvas').height=375
     // 添加事件监听
@@ -193,4 +194,19 @@ cc.Class({
   update(dt) {
     this.sMsg.string = Global.socketMsg
   },
+  getversion() {
+    var xhr = cc.loader.getXMLHttpRequest()
+    let data = {
+      "clientVersion": '0.0.1',
+      "client": 0
+    }
+    Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/common/getversion", data, e => {
+      let code = JSON.parse(e)
+
+      if (code.code == 12000) {
+
+        Global.clientid = code.object.clientid
+      }
+    })
+  }
 });
