@@ -145,7 +145,7 @@ cc.Class({
         Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/LittlePigPeky/GetLstCharacterCondition", _data, e => {
             let _task = JSON.parse(e);
 
-            console.log(_task.object)
+            // console.log(_task.object)
 
             for (const iterator of _task.object) {
                 this.loadPre(iterator)
@@ -253,20 +253,8 @@ cc.Class({
             let _egg = JSON.parse(e);
         })
     },
-    //获取人物列表
-    //获取转盘用户人物
-    GetRoundabout() {
-        let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
-        }
-        Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/LittlePigPeky/GetRoundabout", _data, e => {
-            let _egg = JSON.parse(e);
 
-            console.log(_egg.IsWinning)
-
-        })
-    },
+  
 
     //获取签到信息
     GetSignIn() {
@@ -277,12 +265,12 @@ cc.Class({
         Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/Sign/getsign", _data, e => {
             let _GetSignIn = JSON.parse(e);
             let _object = _GetSignIn.object
-            console.log(_GetSignIn)
+            // console.log(_GetSignIn)
             if (_GetSignIn.IsSign) {
                 this.accompBtn.interactable = false
             }
             this.everyDay.forEach((iterator, index) => {
-                console.log(_object[index].Value)
+                // console.log(_object[index].Value)
                 if (_object[index].IsSign == 1) {
                     iterator.getChildByName('getBox').scale = 1
                 }
@@ -347,7 +335,7 @@ cc.Class({
         })
     },
     radioButtonClicked: function (e, toggle) {
-        console.log(toggle);
+        // console.log(toggle);
         switch (toggle) {
             case 0:
                 title += "1";
@@ -383,7 +371,7 @@ cc.Class({
             let _egg = JSON.parse(e);
             this.eggNumber.string = this.eggNumber.string - 1
             this.getEggbtn.interactable = false
-            console.log(_egg.IsWinning)
+            // console.log(_egg.IsWinning)
             if (_egg.IsWinning == 0) {
                 this.PigText = _egg.IsWinning 
                 this.chuiziAnima.play()

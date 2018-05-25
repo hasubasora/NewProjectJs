@@ -59,7 +59,7 @@ cc.Class({
     },
     GuldsSetings: {
       default: null,
-      type: cc.Prefab
+      type: cc.Node
     },
     Gold: cc.Label,
     Audios: cc.AudioSource,
@@ -74,7 +74,9 @@ cc.Class({
   },
 
   // LIFE-CYCLE CALLBACKS:
-
+  closeGuldsSetings(){
+    this.GuldsSetings.scale=0
+  },
   onLoad() {
     this.getversion()
     // document.body.style.position='fixed'
@@ -151,7 +153,7 @@ cc.Class({
 
   },
   AddWindows() {
-    AddWindow(this.node, this.GuldsSetings)
+    this.GuldsSetings.scale = 1
   },
   UserInfos() {
     let Infos = cc.instantiate(this.UserInfo);

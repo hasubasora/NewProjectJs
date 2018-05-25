@@ -36,9 +36,11 @@ cc.Class({
         moneyEnough: cc.Node,
         ClientLog: cc.Node,
         Regulation: cc.Node,
-        RankingList:cc.Node,
+        RankingList: cc.Node,
         RankingLists: cc.ScrollView,
-        GameLists: cc.ScrollView
+        GameLists: cc.ScrollView,
+        misNumber: 0,
+        misWindow: cc.Node,  //答题卡
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -55,6 +57,7 @@ cc.Class({
         this.ClientLogs()
         this.regulations()
         this.GetlsexamprofitrankingInfo()
+        this.getvouchernumber()
     },
     closeMoneyEnough() {
         this.moneyEnough.scale = 0
@@ -65,16 +68,40 @@ cc.Class({
             this.moneyEnough.scale = 1
             return
         }
-        this.GetInroom()
-    },
 
-    //りんっぐ
-    GetInroom() {
+        if (this.misNumber != 0) {
+            this.misWindow.scale = 1
+            return
+        }
+        this.GetInroom(0)
+    },
+    closemisWindow() {
+        this.misWindow.scale = 0
+    },
+    //积分卡
+    getvouchernumber() {
         let xhr = cc.loader.getXMLHttpRequest()
         let _data = {
             Userid: Global.DataUsers.sUserId,
             Token: Global.DataUsers.sToken,
-            ExamRoomID: 0
+        }
+        Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/exam/getvouchernumber", _data, e => {
+            let mid = JSON.parse(e)
+            if (mid.code == 12000) {
+                this.misNumber = mid.Number
+            }
+        })
+    },
+    //りんっぐ
+    GetInroom(e, sms) {
+        console.log(sms);
+
+        let xhr = cc.loader.getXMLHttpRequest()
+        let _data = {
+            Userid: Global.DataUsers.sUserId,
+            Token: Global.DataUsers.sToken,
+            ExamRoomID: 0,
+            IsAnswerSheet: sms  //是否使用答题卡（0:否，1：是）
         }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/exam/inroom", _data, e => {
             let mid = JSON.parse(e)
@@ -109,7 +136,7 @@ cc.Class({
         })
     },
     loaderFab(mo, index, idx) {
-    
+
         var newNode, rangLabel, timeLabel, moneyLabel, moneysLabel
         cc.loader.loadRes("/prefab/Sprite2", (err, fab) => {
             if (err) {
@@ -206,11 +233,11 @@ cc.Class({
     },
     winClose3(e, num) {
         this.RankingList.scale = num
-        if (num==1) {
+        if (num == 1) {
             this.GetlsexamprofitrankingInfo()
         }
     },
-    GetlsexamprofitrankingInfo(){
+    GetlsexamprofitrankingInfo() {
         this.RankingLists.content.removeAllChildren()
         let xhr = cc.loader.getXMLHttpRequest()
         let _data = {

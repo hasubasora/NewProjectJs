@@ -35,44 +35,63 @@ cc.Class({
         }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Transaction/GetPayList", _data, e => {
             this.object = JSON.parse(e).object
+            console.log(this.object);
+
             for (let i = 0; i < this.object.length; i++) {
-                this.radioTabPay[i].node.scale = 1
-                this.radioTabPay[i].getComponentInChildren(cc.Label).string = this.object[i].MerchantName
+                // this.radioTabPay[i].node.scale = 1
+                console.log(this.radioTabPay[i].node.getChildByName('mLabel'));
+                this.radioTabPay[i].node.getChildByName('mLabel').getComponent(cc.Label).string = this.object[i].MerchantName
+
+                for (const iterator of this.object[i].Moneys) {
+                    cc.loader.loadRes("/prefab/jbpre", (err, prefab) => {
+                        let iterators = iterator / 10
+                        let PayTypeID = this.object[i].PayTypeID
+
+                        var newNode = cc.instantiate(prefab);
+                        console.log(newNode);
+                        newNode.getChildByName('jbLabel').getComponent(cc.Label).string = iterator + '金币'
+                        newNode.getChildByName('jbm').getComponent(cc.Label).string = '￥' + iterators
+                        newNode.on(cc.Node.EventType.TOUCH_END, (event) => {
+                            // console.log(iterators);
+                            this.SavePay(iterators, PayTypeID)
+                        })
+                        this.moneybk.addChild(newNode);
+                    });
+                }
             }
-            this.PayTypeID = this.object[0].PayTypeID
-            for (const iterator of this.object[0].Moneys) {
-                cc.loader.loadRes("/prefab/money", (err, prefab) => {
-                    var newNode = cc.instantiate(prefab);
-                    newNode.getComponentInChildren(cc.Label).string = iterator
-                    newNode.index_target = iterator
-                    newNode.on(cc.Node.EventType.TOUCH_END, (event) => {
-                        // console.log(event.target.index_target);
-                        this.SavePay(event.target.index_target)
-                    })
-                    this.moneybk.addChild(newNode);
-                });
-            }
-         
+
+
         })
     },
-    SavePay(money) {
+
+    SavePay(money, PayTypeID) {
+        console.log(money, PayTypeID);
+        // window.location.href="http://www.baidu.com"
         let xhr = cc.loader.getXMLHttpRequest()
-        if (this.PayTypeID!=0) {
+        if (PayTypeID != 0) {
             let _data = {
                 Userid: Global.DataUsers.sUserId,
                 Token: Global.DataUsers.sToken,
                 Money: money,
-                PayTypeID: this.PayTypeID
+                PayTypeID: PayTypeID
             }
             Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Transaction/Pay", _data, e => {
-                console.log(e)
+               
                 var div = document.createElement("div");
+                div.className='wojiuzhidaohuigai'
                 div.innerHTML = JSON.parse(e).object
                 document.body.appendChild(div);
+                document.PayForm.submit();
+
+                this.scheduleOnce(function () {
+                    document.getElementsByClassName('wojiuzhidaohuigai')[0].remove()
+                }, 2);
+                
+                return
                 // window.location.href = JSON.parse(e).code_url
             })
         }
-       
+
     },
     radioTabs(toggle) {
         this.moneybk.removeAllChildren();
@@ -96,7 +115,7 @@ cc.Class({
                 break;
             case 1:
                 console.log('1')
-               this.prefabMoney(1)
+                this.prefabMoney(1)
                 break;
             case 2:
                 console.log('2')
@@ -121,7 +140,7 @@ cc.Class({
                 break;
         }
     },
-    prefabMoney(n){
+    prefabMoney(n) {
         this.PayTypeID = this.object[n].PayTypeID
         for (const iterator of this.object[n].Moneys) {
             cc.loader.loadRes("/prefab/money", (err, prefab) => {

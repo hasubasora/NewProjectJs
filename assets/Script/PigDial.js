@@ -52,7 +52,11 @@ cc.Class({
         PigArray: [],
         LottleList: cc.ScrollView,
         runtime: 0,  //已经被旋转的角度
-        ShowBoxWindow:cc.Node
+        ShowBoxWindow: cc.Node,
+        run: 10,
+        sim: 5,
+        startBtn: cc.Button,
+        winNode: cc.Node
     },
     SetInfo() {
         Global.getDataUsers()
@@ -281,10 +285,7 @@ cc.Class({
             let _pointer = JSON.parse(e);
             console.log(_pointer);
             if (_pointer.code == 12000) {
-                console.log(_pointer.prize.no);
-                console.log(_pointer.prize.prizeName);
-                console.log(_pointer.prize.prizeNumber);
-                console.log(_pointer.prize.prizeType);
+                this.pointerTitle.string = this.pointerTitle.string - 1
                 console.log(_pointer.prize.path);
                 console.log(_pointer.prize.prompt);
                 this.turntableStart(_pointer.prize.prizeType)
@@ -298,14 +299,16 @@ cc.Class({
 
     //转盘旋转功能
     turntableFn() {
+        this.startBtn.interactable = false;
         this.PigArray = []
         this.PigList.forEach((ele, index) => {
-            console.log(ele.isChecked);
+            // console.log(ele.isChecked);
             ele.isChecked ? this.PigArray.push(index + 1) : '';
         });
         console.log(this.PigArray.toString());
         if (this.PigArray.length < this.SaveNumber) {
-            alert('抽奖卡片不够')
+            this.closeWinNode(1)
+            this.startBtn.interactable = true
             return
         }
         this.loadMsgPointer(this.PigArray.toString())
@@ -340,7 +343,7 @@ cc.Class({
 
         // 移动 360 京东卡
 
-        // 1金币
+
         let a1 = parseInt(Math.random() * 35 + 25)
         // let a2 = parseInt(Math.random() * 35 + 105)
         let a3 = parseInt(Math.random() * 35 + 64)
@@ -351,25 +354,21 @@ cc.Class({
         // console.log(this.runtime);
         // console.log('----------这次的角度------------');
         // console.log(this.runtime + a3);
-
+        // 1金币
         // 2人物
         // 3答题卡
         // 4再抽一次奖
         // 5谢谢参与
         // 6小猪佩奇砸金蛋机会
-        let run = 10
-        let sim = 2
-
+        let sim = this.sim
+        let run = this.run
         switch (numberSave) {
             case 1:
                 var actionBy = cc.rotateBy(sim, 360 * run + (this.runtime + a1)).easing(cc.easeCubicActionOut());
                 this.runtime = 360 - a1
                 // 执行动作
-                
                 this.pointer.node.runAction(actionBy);
-            
                 this.ShowBox(numberSave, 'bit')
-                
                 //显示获奖信息
                 break;
             case 2:
@@ -384,7 +383,6 @@ cc.Class({
                 this.runtime = 360 - a3
                 this.pointer.node.runAction(actionBy);
                 this.ShowBox(numberSave, 'datika')
-                
                 break;
             case 4:
                 var actionBy = cc.rotateBy(sim, 360 * run + (this.runtime + a4)).easing(cc.easeCubicActionOut());
@@ -399,7 +397,7 @@ cc.Class({
                 this.runtime = 360 - a5
                 this.pointer.node.runAction(actionBy);
                 this.ShowBox(numberSave, 'xiexie')
-                
+
                 break;
             case 6:
                 var actionBy = cc.rotateBy(sim, 360 * run + (this.runtime + a6)).easing(cc.easeCubicActionOut());
@@ -411,7 +409,7 @@ cc.Class({
             default:
                 break;
         }
-       
+
 
         // 停止一个动作
         // node.stopAction(action);
@@ -419,13 +417,32 @@ cc.Class({
         // node.stopAllActions();
     },
     ShowBox(num, img) {
-        this.scheduleOnce( ()=> {
+        if (num == 1 || num == 2 || num == 4 || num == 5) {
+            this.ShowBoxWindow.getChildByName('queding').setPosition(cc.v2(0, -216))
+            this.ShowBoxWindow.getChildByName('liji').scale = 0
+        }
+        if (num == 3 || num == 6) {
+            this.ShowBoxWindow.getChildByName('queding').setPosition(cc.v2(-146, -216))
+            this.ShowBoxWindow.getChildByName('liji').scale = 1
+            if (num == 3) {
+                this.ShowBoxWindow.getChildByName('liji').on(cc.Node.EventType.TOUCH_END, () => {
+                    cc.director.loadScene('QuestionsStart')
+                })
+            }
+            if (num == 6) {
+                this.ShowBoxWindow.getChildByName('liji').on(cc.Node.EventType.TOUCH_END, () => {
+                    cc.director.loadScene('PigHome')
+                })
+            }
+        }
+        this.scheduleOnce(() => {
             this.ShowBoxWindow.scale = 1
+            this.startBtn.interactable = true
             for (const radio of this.radioButton) {
                 radio.interactable = true
             }
-        }, 2);
-       
+        }, this.sim);
+
         cc.loader.loadRes("/Qus/" + img, (err, spriteFrame) => {
             if (err) {
                 console.log(err);
@@ -433,13 +450,15 @@ cc.Class({
             }
             this.ShowBoxWindow.getChildByName('nSprite').getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(spriteFrame)
         })
-        console.log();
-        
-    },
-    closeShowBoxWindow(){
-        this.ShowBoxWindow.scale = 0
-    }
 
+
+    },
+    closeShowBoxWindow() {
+        this.ShowBoxWindow.scale = 0
+    },
+    closeWinNode(num) {
+        this.winNode.scale = num
+    }
 
 })
 
