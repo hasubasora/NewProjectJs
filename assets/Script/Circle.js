@@ -47,7 +47,7 @@ cc.Class({
             console.log(json.object.circleUrl);
             // WebView.url = json.object.circleUrl + '/?tok=' + Global.DataUsers.sToken + '&usid=' + Global.DataUsers.sUserId
             // WebView.url = 'http://localhost:6667/?tok=' + Global.DataUsers.sToken + '&usid=' + Global.DataUsers.sUserId
-            WebView.url = 'http://192.168.1.106:802/?tok=' + Global.DataUsers.sToken + '&usid=' + Global.DataUsers.sUserId
+            WebView.url = 'http://192.168.1.106:802/?tok=' + Global.DataUsers.sToken + '&usid=' + Global.DataUsers.sUserId+'&type='+ 10001
             console.log(WebView.url)
             console.log('--------------------------------------------------')
         })

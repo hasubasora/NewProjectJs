@@ -162,8 +162,8 @@ cc.Class({
                         } else {
                             console.log(this.isCuo);
                         }
-                        // http://examimgftp.dsstyles.cn/UploadFile/Exam/20180510/14/3714dcef-0d73-45ef-8668-60a74404e4f8.png
-                        // cc.loader.load('http://examimgftp.dsstyles.cn/UploadFile/Exam/20180510/14/3714dcef-0d73-45ef-8668-60a74404e4f8.png', function (err, tex) {
+                        // http://examimgftp.hd4yx0.cn/UploadFile/Exam/20180510/14/3714dcef-0d73-45ef-8668-60a74404e4f8.png
+                        // cc.loader.load('http://examimgftp.hd4yx0.cn/UploadFile/Exam/20180510/14/3714dcef-0d73-45ef-8668-60a74404e4f8.png', function (err, tex) {
                         if (this.ten) {
                             this.prepareGame.node.scale = 0
                             this.loadImg(mid.object.Question.QuestionUrl)

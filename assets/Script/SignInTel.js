@@ -156,7 +156,7 @@ cc.Class({
   WebUrlText() {
     var _this = this
     // console.log(Global.serverUrl + "/common/getimgcode")
-    // console.log(Global.serverUrl + "/common/getimgcode" + '?clientid=' + Global.clientid + '&t=' + Math.random());
+    console.log(Global.serverUrl + "/common/getimgcode" + '?clientid=' + Global.clientid + '&t=' + Math.random());
 
     cc.loader.load({ url: Global.serverUrl + "/common/getimgcode" + '?clientid=' + Global.clientid + '&t=' + Math.random(), type: 'png' }, function (err, tex) {
       // console.log('Should load a texture from RESTful API by specify the type: ' + (tex instanceof cc.Texture2D));

@@ -71,8 +71,7 @@ module.exports = {
 window.Global = {
     // serverUrl: 'http://192.168.1.200:819',
     // serverUrl: 'http://192.168.1.168:819',
-    serverUrl: 'http://h5.dsstyles.cn',
-    // serverUrl: 'http://localhost:11072',
+    serverUrl: 'http://h5.hd4yx0.cn',
     streamXHREventsToLabel: function (xhr, method, url, _data, _fn, async = true) {
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status < 400)) {

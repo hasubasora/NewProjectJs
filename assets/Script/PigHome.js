@@ -35,7 +35,7 @@ cc.Class({
 
         chuiziAnima: cc.Animation,             //   垂子动画
 
-        GetEggPig:cc.Node,                      //获得饺子的窗口
+        GetEggPig: cc.Node,                      //获得饺子的窗口
 
         eggNumber: cc.Label,
 
@@ -53,7 +53,9 @@ cc.Class({
         UserPic: cc.Sprite,
 
         Winners: cc.Node,                       //获奖名单
-        PigText:0, //记录蛋蛋
+        PigText: 0, //记录蛋蛋
+
+        ViewWeb:cc.WebView
     },
     //用户数据
     SetInfo() {
@@ -62,6 +64,7 @@ cc.Class({
         this.User_Id.string = 'ID:' + Global.DataUsers.sLogin;
         this.loaderUserIcon(Global.DataUsers.sUserIcon, this.UserPic)
         this.GetLstUserCharacterInfo()
+        this.getView()
     },
     loaderUserIcon(mo, nSprite) {
         cc.loader.load(mo, function (err, tex) {
@@ -89,6 +92,7 @@ cc.Class({
         // egg.play()
         // chuizi.play()
         // console.log(egg);
+
     },
 
     start() {
@@ -123,7 +127,7 @@ cc.Class({
     closeEveryday() {
         this.everydaySignIn.scale = 0
     },
-    closeEverydayPir(){
+    closeEverydayPir() {
         this.GetSignIn()
         this.accomplishEverydaySignIn.scale = 0
     },
@@ -254,7 +258,7 @@ cc.Class({
         })
     },
 
-  
+
 
     //获取签到信息
     GetSignIn() {
@@ -321,12 +325,12 @@ cc.Class({
                     RichText.fontSize = 24
                     RichText.lineHeight = 37
                     // console.log(this.Winners.getChildren().length);
-               
-                    if (this.Winners.getChildren().length>2) {
-                        break   
-                    }else{
+
+                    if (this.Winners.getChildren().length > 2) {
+                        break
+                    } else {
                         this.Winners.addChild(node)
-                        
+
                     }
                 }
 
@@ -373,13 +377,13 @@ cc.Class({
             this.getEggbtn.interactable = false
             // console.log(_egg.IsWinning)
             if (_egg.IsWinning == 0) {
-                this.PigText = _egg.IsWinning 
+                this.PigText = _egg.IsWinning
                 this.chuiziAnima.play()
                 this.chuiziAnima.on('finished', this.onFinished, this);
 
             }
             if (_egg.IsWinning == 1) {
-                this.PigText = _egg.IsWinning 
+                this.PigText = _egg.IsWinning
                 this.chuiziAnima.play()
                 this.chuiziAnima.on('finished', this.onFinished, this);
             }
@@ -392,7 +396,7 @@ cc.Class({
     openThisEgg() {
         this.scheduleOnce(function () {
             // 这里的 this 指向 component
-            if (this.PigText==0) {
+            if (this.PigText == 0) {
                 this.hintWindow.scale = 1
             }
             if (this.PigText == 1) {
@@ -411,9 +415,27 @@ cc.Class({
         this.hintWindow.scale = 0
         this.openTask()
     },
-    GetEggPigFn(){
+    GetEggPigFn() {
         this.GetEggPig.scale = 0
         this.GetLstUserCharacterInfo()
+    },
+    getView() {
+        let xhr = cc.loader.getXMLHttpRequest()
+        let _data = {
+            client: 1,
+            clientVersion: '0.0.1'
+        }
+        Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Common/getversion", _data, e => {
+            let json = JSON.parse(e)
+
+            console.log(json.object.circleUrl);
+            console.log(this.ViewWeb);
+            // WebView.url = json.object.circleUrl + '/?tok=' + Global.DataUsers.sToken + '&usid=' + Global.DataUsers.sUserId
+            // WebView.url = 'http://localhost:6667/?tok=' + Global.DataUsers.sToken + '&usid=' + Global.DataUsers.sUserId
+            this.ViewWeb.url = 'http://192.168.1.106:802/?tok=' + Global.DataUsers.sToken + '&usid=' + Global.DataUsers.sUserId + '&type=' + 7
+            console.log(this.ViewWeb.url)
+            console.log('--------------------------------------------------')
+        })
     }
 
 
