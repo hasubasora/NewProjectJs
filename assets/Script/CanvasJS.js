@@ -70,12 +70,32 @@ cc.Class({
     TurnTheScreen: cc.Node,
 
     screenOrientation: '',
-    sMsg: cc.Label
+    sMsg: cc.Label,
+
+    Invitations: cc.Node,//邀请
+
+    // 二维码
+    QcCode: cc.Sprite,
+    buttomMsg: cc.Label,
+    User_n: cc.Label,
+    User_id: cc.Label,
+    User_pic: cc.Sprite,
+
+    TotalAmount: cc.Label,
+    DirectlyUnderAmount: cc.Label,
+    LowerMemberAmount: cc.Label,
+    TotalCommission: cc.Label,
+    DirectlyUnderCommission: cc.Label,
+    LowerMemberCommission: cc.Label,
+
+
+
+
   },
 
   // LIFE-CYCLE CALLBACKS:
-  closeGuldsSetings(){
-    this.GuldsSetings.scale=0
+  closeGuldsSetings() {
+    this.GuldsSetings.scale = 0
   },
   onLoad() {
     this.getversion()
@@ -99,6 +119,9 @@ cc.Class({
     //判断有没有账户
     // GetUserDatas() ? this.SetInfo() : SignInBoxRight(this.node, this.SignIn);
     GetUserDatas() ? this.SetInfo() : this.loginBox.scale = 1;
+
+
+    this.GetInvitation()
   },
   addEventListeners() {
     this.checkOrient();
@@ -136,6 +159,9 @@ cc.Class({
     this.UserInfoId.string = 'ID:' + Global.DataUsers.sLogin;
     this.Gold.string = Global.DataUsers.sBalance;
 
+  },
+  Invitation(e, n) {
+    this.Invitations.scale = n
   },
   Shops() {
     cc.director.loadScene("Shop");
@@ -207,8 +233,120 @@ cc.Class({
 
       if (code.code == 12000) {
 
-        Global.clientid = code.object.clientid
+
       }
     })
-  }
+  },
+  //huoqu                                                                               %.65获取代理本周佣金
+  GetInvitation() {
+    var xhr = cc.loader.getXMLHttpRequest()
+    let data = {
+      Userid: Global.DataUsers.sUserId,
+      Token: Global.DataUsers.sToken,
+    }
+    Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Agent/GetWeeklyTransaction", data, e => {
+      let code = JSON.parse(e)
+      console.log(code);
+      if (code.AccountType == 1) {
+        this.ApplicationBroker()
+      }
+      if (code.code == 12000 && code.AccountType == 2) {
+        console.log(code.model);
+        console.log(code.user);
+        console.log(code.tips);
+        let mo = code.model
+        let ser = code.user
+        let tips = code.tips
+        this.User_n.string = ser.UserName
+        this.User_id.string = ser.UserID
+        this.TotalAmount.string = mo.TotalAmount
+        this.DirectlyUnderAmount.string = mo.DirectlyUnderAmount
+        this.LowerMemberAmount.string = mo.LowerMemberAmount
+        this.TotalCommission.string = mo.TotalCommission
+        this.DirectlyUnderCommission.string = mo.DirectlyUnderCommission
+        this.LowerMemberCommission.string = mo.LowerMemberCommission
+        this.buttomMsg.string = tips[0] +tips[1]
+
+      }
+    })
+  },
+  //                                                                                       %.64成为超级玩家
+  ApplicationBroker() {
+    var xhr = cc.loader.getXMLHttpRequest()
+    let data = {
+      Userid: Global.DataUsers.sUserId,
+      Token: Global.DataUsers.sToken,
+    }
+    Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Agent/ApplicationBroker", data, e => {
+      let code = JSON.parse(e)
+      console.log(code);
+      if (code.code == 12000) {
+
+      }
+    })
+  },
+  //%.                                                                                      66获取代理周数据统计
+  GetAgentDataStatisticsInfo() {
+    var xhr = cc.loader.getXMLHttpRequest()
+    let data = {
+      "clientVersion": '0.0.1',
+      "client": 0
+    }
+    Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Agent/GetAgentDataStatisticsInfo", data, e => {
+      let code = JSON.parse(e)
+
+      if (code.code == 12000) {
+
+
+      }
+    })
+  },
+  // % .67获取直属代理
+  GetParentAgentWeeklyTransaction() {
+    var xhr = cc.loader.getXMLHttpRequest()
+    let data = {
+      "clientVersion": '0.0.1',
+      "client": 0
+    }
+    Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Agent/GetParentAgentWeeklyTransaction", data, e => {
+      let code = JSON.parse(e)
+
+      if (code.code == 12000) {
+
+
+      }
+    })
+  },
+  //%.68获取直属会员
+  GetUserList() {
+    var xhr = cc.loader.getXMLHttpRequest()
+    let data = {
+      "clientVersion": '0.0.1',
+      "client": 0
+    }
+    Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Agent/GetUserList", data, e => {
+      let code = JSON.parse(e)
+
+      if (code.code == 12000) {
+
+
+      }
+    })
+  },
+  //%.69获取佣金规则
+  GetAgentRule() {
+    var xhr = cc.loader.getXMLHttpRequest()
+    let data = {
+      "clientVersion": '0.0.1',
+      "client": 0
+    }
+    Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Agent/GetAgentRule", data, e => {
+      let code = JSON.parse(e)
+
+      if (code.code == 12000) {
+
+
+      }
+    })
+  },
 });

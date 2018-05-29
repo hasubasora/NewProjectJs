@@ -55,7 +55,7 @@ cc.Class({
         Winners: cc.Node,                       //获奖名单
         PigText: 0, //记录蛋蛋
 
-        ViewWeb:cc.WebView
+        ViewWeb: cc.WebView
     },
     //用户数据
     SetInfo() {
@@ -98,7 +98,9 @@ cc.Class({
     start() {
 
     },
-
+    ruleWindowBtn(e,num) {
+        this.ruleWindow.scale = num
+    },
 
     //获奖名单
     //鸡蛋动画

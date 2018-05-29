@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "3981796f-01ee-4ed4-95c1-580ff10d79a9",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "二维码图片@3x": {
+      "ver": "1.0.3",
+      "uuid": "8b2df1db-1e52-4cc4-a6e0-4f871f32fbe5",
+      "rawTextureUuid": "3981796f-01ee-4ed4-95c1-580ff10d79a9",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 249,
+      "height": 444,
+      "rawWidth": 249,
+      "rawHeight": 444,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
