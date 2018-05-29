@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "确定@3x",
+    "texture": "assets/resources/win/确定@3x.png",
+    "rect": [
+      0,
+      0,
+      350,
+      122
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      350,
+      122
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "hikari",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 0.12,
+  "sample": 10,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "8f5c53ec-96ed-4ec4-afd4-d1b8d7b17100"
+            }
+          }
+        ]
+      }
+    },
+    "props": {
+      "rotation": [
+        {
+          "frame": 0,
+          "value": 0
+        },
+        {
+          "frame": 0.1,
+          "value": 19
+        }
+      ]
+    }
+  },
+  "events": []
+}

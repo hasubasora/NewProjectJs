@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "没选中状态背景@3x",
+    "texture": "assets/Activity/没选中状态背景@3x.png",
+    "rect": [
+      0,
+      0,
+      356,
+      173
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      356,
+      173
+    ]
+  }
+}

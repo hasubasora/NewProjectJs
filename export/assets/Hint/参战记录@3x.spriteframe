@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "参战记录@3x",
+    "texture": "assets/Hint/参战记录@3x.png",
+    "rect": [
+      0,
+      0,
+      231,
+      71
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      231,
+      71
+    ]
+  }
+}

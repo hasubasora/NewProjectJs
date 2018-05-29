@@ -13,6 +13,10 @@ cc.Class({
       default: null,
       type: cc.TiledLayer
     },
+    LayerOne: {
+      default: null,
+      type: cc.TiledLayer
+    },
     // 上楼按钮
     GotoUp: {
       default: null,
@@ -62,20 +66,26 @@ cc.Class({
     sTimes: 0,                //开始时间
     eTimes: 0,                //结束时间
     eTneTime: 10,             //十秒的倒计时
-    eThreeTime: 3,            //三秒
+    eThreeTime: '--',            //三秒
     tName: cc.Label,          //倒计时的文字
     n1: 0,                    //爆炸上一楼有多少人
     n2: 0,                    //爆炸此楼有多少人
     bom: 0,                   //保存炸弹的楼层
-    sNumber1: 0,                     //保存某层有多少人
-    sNumber2: 0,                     //保存某层有多少人
-    sNumber3: 0,                     //保存某层有多少人
 
+    anim: cc.Animation,
+    animbom: cc.Animation,
+    animOver: cc.Animation,
+    anim1: cc.Node,
+    anim2: cc.Node,
+    anim3: cc.Node
   },
 
   // LIFE-CYCLE CALLBACKS:
 
   onLoad() {
+    // for (let i = 2; i < 12; i++) {
+    //   this.Player.setTileGID(0, i, 14, 0);
+    // }
 
     console.log('进入游戏界面')
     this.GetBaseRoom()
@@ -83,8 +93,6 @@ cc.Class({
     this.GetServerTimes()   //获取服务器时间接口
     this.SetServerTimes()   //服务器时间自动计时
     //判断有没有账户
-
-
     //音乐初始化
     Global.Audios = this.Audios;
     Global.Audios.volume = cc.sys.localStorage.getItem("Mic");
@@ -94,16 +102,32 @@ cc.Class({
     let pos2 = this.Player.getPositionAt(3, 13); //Vec2 {x: 100, y: 425}
     let pos3 = this.Player.getPositionAt(3, 12); //Vec2 {x: 150, y: 450}
 
+
     // this.Player.setTileGID(pos1, 3, 14, gid);
     // console.log(this.Player.setTexture()) //setTexture 设置纹理。
     //选择人物前面+1 移动后面-1
 
     //获取GID 没有就是0 用来判断地雷
+
+    // let three = 3
+    // this.T3 = function () {
+    //   if (three < 1) {
+    //     this.unschedule(this.T3);
+    //     this.anim.stop();
+    //   } else {
+    //     three--;
+    //   }
+    // };
+    // this.schedule(this.T3, 1);
+
+
   },
+
   start() {
     this.Prepare()          //获取房间数据
     this.nSocket()
   },
+
   //获取规则
   GetBaseRoom() {
     let _data = {
@@ -120,44 +144,26 @@ cc.Class({
   },
 
   loaderViewWin(gold) {
-    console.log(gold)
-    cc.loader.loadRes("/prefab/Win", function (err, Win) {
+    this.SetPrefab('Win', gold)
+  },
+
+  loaderViewWinLost(gold) {
+    this.SetPrefab('lose', gold)
+
+  },
+  SetPrefab(fab, gold) {
+    cc.loader.loadRes("/prefab/" + fab, function (err, fab) {
       if (err) {
         console.log(err)
         return;
       }
-      var newNode = cc.instantiate(Win);
+      var newNode = cc.instantiate(fab);
       cc.director.getScene().addChild(newNode);
       let _newNode = cc.find("sl/winText", newNode)
       _newNode.getComponentsInChildren(cc.Label)[0].string = gold;
     });
   },
 
-  loaderViewWinLost() {
-    cc.loader.loadRes("/prefab/lose", function (err, lost) {
-      if (err) {
-        console.log(err)
-        return;
-      }
-      var newNode = cc.instantiate(lost);
-      cc.director.getScene().addChild(newNode);
-      let _newNode = cc.find("sl/winText", newNode)
-      _newNode.getComponentsInChildren(cc.Label)[0].string = '输了就点确定';
-
-    });
-  },
-  loaderViewText(gold) {
-    cc.loader.loadRes("/prefab/iView", function (err, iView) {
-      if (err) {
-        console.log(err)
-        return;
-      }
-      var newNode = cc.instantiate(iView);
-      cc.director.getScene().addChild(newNode);
-      // let _newNode = cc.find("sl/winText", newNode)
-      // _newNode.getComponentsInChildren(cc.Label)[0].string = gold;
-    });
-  },
 
   // 获取准备房间信息 等待开始 60  
   Prepare() {
@@ -172,10 +178,14 @@ cc.Class({
       let _StageData = JSON.parse(e);
       if (_StageData.code == 12000) {
         cc.sys.localStorage.setItem('_StageData', e);
-        // console.log(cc.sys.localStorage.getItem("_StageData"))
         let D = _StageData.object
         this.eTimes = D.EndTimestamps;
         this.sTimes = D.CurrentTimestamps
+        this.Gold.string = _StageData.Balance
+        Global.RoomUserLen = D.RoomUser.length
+        Global.GameRoomData = D.RoomUser;
+        this.CalculateAllGold()
+        this.SetGameRoomData()
         // console.log(this.sThirty)
         // console.log('设置结束时间：' + D.EndTimestamps)
         // console.log('设置开始时间：' + D.CurrentTimestamps)
@@ -188,7 +198,7 @@ cc.Class({
           this.StartTimeOuts()
         }
         if (D.CountdownType == 2) {
-          this.tName.string = '扫雷开始'
+          this.tName.string = '上一层'
           this.eTneTime = D.EndTimestamps - D.CurrentTimestamps
           // this.eTneTime = 10
           this.unschedule(this.T2);
@@ -196,18 +206,14 @@ cc.Class({
         }
         if (D.CountdownType == 3) {
           this.tName.string = '排雷中...'
-          this.eThreeTime = D.EndTimestamps - D.CurrentTimestamps
+          this.TimesOut.string = '--';
           // this.eThreeTime = 3
           this.unschedule(this.T2); //爆炸的时候清除第二个定时器
-          this.unschedule(this.T3);
-          this.BomTimeOuts()
+          // this.unschedule(this.T3);
+          // this.BomTimeOuts()
         }
         console.log('参的咸鱼')
         console.log(D.RoomUser)
-        Global.RoomUserLen = D.RoomUser.length
-        Global.GameRoomData = D.RoomUser;
-        this.CalculateAllGold()
-        this.SetGameRoomData()
       } else {
         console.log('GetRoom 错误，在房间躺枪了')
       }
@@ -220,9 +226,15 @@ cc.Class({
         //设置人物位置数据
         this.xUserNum = i + 2;
         this.xplayer = (15 - v.CurrentFloor)
-        console.log('楼层赋值')
+        this.Player.setTileGID(38, this.xUserNum, v.CurrentFloor != 0 ? this.xplayer : 14, 38);
+        console.log('楼层赋值' + this.xUserNum)
       }
-
+      // if (v.UserId != Global.DataUsers.sUserId) {
+      //   //设置人物位置数据
+      //   this.xplayer = (15 - v.CurrentFloor)
+      //   this.Player.setTileGID(28, (i + 2), v.CurrentFloor != 0 ? this.xplayer : 14, 28);
+      //   console.log('楼层赋值')
+      // }
     })
   },
 
@@ -249,15 +261,12 @@ cc.Class({
   //前进
   ClickGotoUp(e, n) {
     console.log("前进");
-    if (this.xplayer > 2) {
-      // this.sNumber1++
-      this.GoToUpFn(n)
-      this.xFloor++
-      this.moveToPlayer(this.xUserNum, this.xplayer);
-      this.ButtonType(2)
-      this.CalculateAllGold()
-      this.CalculateGold()
-    }
+    this.GoToUpFn(n)
+    this.xFloor++
+    this.moveToPlayer(this.xUserNum, this.xplayer);
+    this.ButtonType(2)
+    this.CalculateAllGold()
+    this.CalculateGold()
   },
   //不走
   StopPlayer(e, n) {
@@ -272,8 +281,11 @@ cc.Class({
     let players = this.Player.getTileAt(n, x);
     //获取玩家GID
     let gid = this.Player.getTileGIDAt(n, x);
+    console.log(gid)
+
     // 设置玩家运动
-    let moveTo = cc.moveBy(1, cc.p(50, 25)); //x=50 y=25 z=50
+    // let moveTo = cc.moveBy(1, cc.p(50, 25)); //x=50 y=25 z=50
+    let moveTo = cc.moveBy(0.1, cc.p(10, 100)); //x=50 y=25 z=50
     //回调切换位置
     let finish = cc.callFunc(() => {
       //删除原坐标
@@ -317,8 +329,6 @@ cc.Class({
       let obj = JSON.parse(e)
       this.ServerTimes = obj.CurrentTime
       // console.log('获取服务器时间：' + obj.CurrentTime)
-
-      // console.log(new Date(b.CountdownEndTime).getTime() - new Date(b.CurrentTime).getTime())
     })
   },
 
@@ -355,6 +365,7 @@ cc.Class({
       if (this.eThreeTime < 1) {
         // this.GetServerTimes()
         this.unschedule(this.T3);
+        this.anim.stop();
       } else {
         // this.unschedule(this.T3);
         let x = this.eThreeTime - 1;
@@ -377,12 +388,10 @@ cc.Class({
     })
     this.allGold.string = s;
     this.SaveGolds = s
-    console.log('總額：' + s)
     this.CalculateForm()
   },
 
   CalculateForm() {
-    console.log('總額2：' + this.SaveGolds)
     let numbs = 0, frome = 0, next = 0;
     Global.GameRoomData.forEach((v, i) => {
       if (this.xFloor == v.CurrentFloor) {
@@ -412,17 +421,6 @@ cc.Class({
       }
     }
 
-    // for (let i = 11; i > 1; i--) {
-    //   let gid = this.Player.getTileGIDAt(i, numb);
-    //   // console.log('坐标' + i + 'GID:' + gid)
-    //   if (gid != 0) {
-    //     this.floorForme.string = gold;
-    //     this.floorNext.string = 120;
-    //   }
-    //   // console.log(Json[0].Floor)
-    //   // console.log(Json[0].Chip)
-
-    // }
 
   },
 
@@ -436,7 +434,8 @@ cc.Class({
     Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/caileigame/outroom", _data, e => {
       let _StageData = JSON.parse(e);
       GoLoadScene("Home")
-
+      this.unschedule(this.T1);
+      this.unschedule(this.T2);
       if (_StageData.Success) {
         console.log(_StageData.Message)
       } else {
@@ -470,16 +469,15 @@ cc.Class({
  * 设置按钮
  */
   SetingBox() {
-    AddWindow(this.node.parent, this.Setings);
+    AddWindow(this.node.parent, this.Setings, 0,0);
   },
   // 账户数据设置
   SetInfo() {
     Global.getDataUsers()
     this.User_Name.string = Global.DataUsers.sNickName;
     this.User_Id.string = 'ID:' + Global.DataUsers.sLogin;
-    this.Gold.string = Global.DataUsers.sBalance;
   },
-  nSocket(_fnRun) {
+  nSocket() {
     var ws = new WebSocket(Global.DataUsers.wsUrl);
     ws.onopen = (event) => {
       this.unschedule(this.T4);
@@ -495,7 +493,7 @@ cc.Class({
         };
 
         ws.send(JSON.stringify(room));
-        console.log("WebSocket 卫星发射...！" + JSON.stringify(room));
+        console.log("WebSocket 卫星发射...！");
       } else {
         console.log("WebSocket 准备好卫星发射...！");
       }
@@ -520,6 +518,7 @@ cc.Class({
     };
 
   },
+
 
   GetStatus(x, u, f) { //sk里面的id
     switch (x) {
@@ -553,12 +552,14 @@ cc.Class({
             //设置人物位置数据
             this.moveToPlayer((i + 2), (15 - v.CurrentFloor));
             this.CalculateGold()
-            this.sNumber1++
           }
         })
         break;
       case 7:
         console.log('停住')
+        if (u == Global.DataUsers.sUserId) {
+          this.IsStop = 1
+        }
         break;
       case 8:
         console.log('退出游戏')
@@ -567,12 +568,16 @@ cc.Class({
         this.ButtonType(2)
         console.log('游戏结束')
         this.Prepare()
-        this.Bomfn(x, f)
+        this.scheduleOnce(() => {
+          // 这里的 this 指向 component
+          this.Bomfn(x, f)
+        }, 4);
         break;
       case 10:
         console.log('解散房间')
         break;
       case 11:
+        this.aAnimationTimes()
         this.ButtonType(2)
         this.Prepare()  //获取爆炸倒计时
         console.log('要爆炸了')
@@ -580,9 +585,11 @@ cc.Class({
       case 12:
         console.log('爆炸了')
         this.bom = f
+        this.aAnimationBom()
         break;
       case 13:
         console.log('没死人')
+        this.aAnimationTimesOver()
         this.ButtonType(1)
         this.Prepare()
         break;
@@ -597,6 +604,55 @@ cc.Class({
         break;
     }
   },
+  //动画1
+  aAnimationTimes() {
+    let aAnimation1 = this.anim.play();
+    aAnimation1.repeatCount = 1;
+    this.anim1.runAction(cc.sequence(
+      cc.delayTime(0.1),
+      cc.fadeIn(0.5),
+      cc.delayTime(1),
+      cc.fadeOut(1),
+      cc.tintTo(2, 255, 255, 255)
+    ));
+  },
+  aAnimationBom() {
+    let aAnimation1 = this.animbom.play();
+    aAnimation1.repeatCount = 1;
+    this.anim2.runAction(cc.sequence(
+      cc.delayTime(0.5),
+      cc.fadeIn(1),
+      cc.delayTime(1),
+      cc.fadeOut(1),
+      cc.tintTo(2, 255, 255, 255)
+
+    ))
+    this.scheduleOnce(() => {
+      //咸鱼在当前的爆炸层
+      const arr = [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4]
+      for (let i = 11; i > 1; i--) {
+        let gid = this.Player.getTileGIDAt(i, arr[this.bom - 1]);
+        if (gid != 0) {
+          this.Player.removeTileAt(i, arr[this.bom - 1]);
+          this.Player.setTileGID(37, i, arr[this.bom - 1], 37);
+        }
+        //爆炸的楼层 
+        this.LayerOne.setTileGID(40, (i + 1), arr[(this.bom - 2)], 40);
+      }
+    }, 2.2);
+  },
+  aAnimationTimesOver() {
+    let aAnimation1 = this.animOver.play();
+    aAnimation1.repeatCount = 1;
+    this.anim3.runAction(cc.sequence(
+      cc.delayTime(0),
+      cc.fadeIn(0.5),
+      cc.delayTime(0),
+      cc.fadeOut(1),
+      cc.tintTo(2, 255, 255, 255)
+    ));
+
+  },
   //1 释放按钮  2 禁止按钮 && this.IsStop != 1
   ButtonType(a) {
     if (a == 1 && this.IsStop != 1) {
@@ -610,7 +666,7 @@ cc.Class({
   },
   Bomfn(x, f) {
     let dot = false;
-    let _f
+    let _f;
     /***
      * 爆炸的输赢逻辑
      */
@@ -622,40 +678,74 @@ cc.Class({
         i < 1 ? dot = true : ''
       })
       if (dot && this.xFloor == this.bom) {
-        //咸鱼在当前的爆炸层
         console.log(this.xFloor)
         //如果上一层没有人就赢了  否则 输了
         if (this.n1 != 0) { //后面有人就输了
           console.log('你输了')
-          this.loaderViewWinLost()
+          this.WinLoseData(2)
           return;
         } else {
-          this.loaderViewWin('111')
+          this.WinLoseData(1)
           console.log('你赢了')
           return;
         }
       }
       if (dot && this.xFloor == _f) {
         if (this.n2 > 0) { //你前面有人
-          this.loaderViewWin()
+          this.WinLoseData(1)
           console.log('就赢了2')
           return;
         }
       }
+      if (dot && this.xFloor != this.bom && this.n2 == 0 && this.n1 == 0) {
+        this.WinLoseData(1)
+        console.log('你赢了3')
+      }else{
+        this.WinLoseData(2)
+        console.log('你输了3')
+      }
     }
     /***
      * 没爆炸的逻辑
+     * 爆発の階段　bomb　　
+     * 状態階段ｘ
      */
-    if (this.bom == 0 && x == 9) {
 
+    if (this.bom == 0 && x == 9) {
+      //位置  人物坐标  瓦片位置
       if (this.xFloor == f) {
-        this.loaderViewWin('222')
+        this.WinLoseData(1)
         console.log('你赢了')
       } else {
-        console.log('你输了')
-        this.loaderViewWinLost()
+        console.log('你输了2')
+        this.WinLoseData(2)
       }
     }
+
+  },
+  WinLoseData(states) {
+    let _data = {
+      token: Global.DataUsers.sToken,
+      userid: Global.DataUsers.sUserId,
+      roomnumberid: Global._StageData.Data
+    }
+    Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/caileigame/GetThunderTradesByThunderRoomID", _data, e => {
+      let _e = JSON.parse(e);
+      let lists = _e.object.List
+
+      lists.forEach((v, i) => {
+        if (v.UserID == Global.DataUsers.sUserId) {
+          //设置人物位置数据
+          if (states == 1) {
+            this.loaderViewWin(v.PlusAmount)
+          }
+          if (states == 2) {
+            this.loaderViewWinLost(v.PlusAmount)
+          }
+        }
+
+      })
+    })
   },
   update(dt) {
 
@@ -683,9 +773,9 @@ cc.Class({
 // console.log(this.Player.getProperty()) //getProperty 获取指定属性名的值。
 // console.log(this.Player.getPositionAt(0,0)) //getPositionAt 获取指定 tile 的像素坐标。
 // console.log(this.Player.removeTileAt()) //removeTileAt 删除指定坐标上的 tile。
-// console.log(this.Player.setTileGID()) //setTileGID 设置给定坐标的 tile 的 gid (gid = tile 全局 id)， tile 的 GID 可以使用方法 “tileGIDAt” 来获得。如果一个 tile 已经放在那个位置，那么它将被删除。
+// console.log(this.Player.setTileGID(2, 14)) //setTileGID 设置给定坐标的 tile 的 gid (gid = tile 全局 id)， tile 的 GID 可以使用方法 “tileGIDAt” 来获得。如果一个 tile 已经放在那个位置，那么它将被删除。
 // console.log(this.Player.getTileGIDAt(2,14)) //getTileGIDAt 通过给定的 tile 坐标、flags（可选）返回 tile 的 GID. 如果它返回 0，则表示该 tile 为空。该方法要求 tile 地图之前没有被释放过(如：没有调用过layer.releaseMap()).
-// console.log(this.Player.getTileAt()) //getTileAt 通过指定的 tile 坐标获取对应的 tile(Sprite)。 返回的 tile(Sprite) 应是已经添加到 TMXLayer，请不要重复添加。 这个 tile(Sprite) 如同其他的 Sprite 一样，可以旋转、缩放、翻转、透明化、设置颜色等。 你可以通过调用以下方法来对它进行删除:layer.removeChild(sprite, cleanup); 或 layer.removeTileAt(cc.v2(x,y));
+// console.log(this.Player.getTileAt(2,14)) //getTileAt 通过指定的 tile 坐标获取对应的 tile(Sprite)。 返回的 tile(Sprite) 应是已经添加到 TMXLayer，请不要重复添加。 这个 tile(Sprite) 如同其他的 Sprite 一样，可以旋转、缩放、翻转、透明化、设置颜色等。 你可以通过调用以下方法来对它进行删除:layer.removeChild(sprite, cleanup); 或 layer.removeTileAt(cc.v2(x,y));
 // console.log(this.Player.releaseMap()) //releaseMap 从内存中释放包含 tile 位置信息的地图。除了在运行时想要知道 tiles 的位置信息外，你都可安全的调用此方法。如果你之后还要调用 layer.tileGIDAt(), 请不要释放地图.
 // console.log(this.Player.setContentSize()) //setContentSize 设置未转换的 layer 大小。
 // console.log(this.Player.getTexture()) //getTexture 获取纹理。

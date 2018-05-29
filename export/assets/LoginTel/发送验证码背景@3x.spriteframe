@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "发送验证码背景@3x",
+    "texture": "assets/LoginTel/发送验证码背景@3x.png",
+    "rect": [
+      0,
+      0,
+      299,
+      95
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      299,
+      95
+    ]
+  }
+}

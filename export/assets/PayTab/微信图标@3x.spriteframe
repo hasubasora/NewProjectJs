@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "微信图标@3x",
+    "texture": "assets/PayTab/微信图标@3x.png",
+    "rect": [
+      0,
+      0,
+      57,
+      50
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      57,
+      50
+    ]
+  }
+}

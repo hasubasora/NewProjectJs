@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "b922c1c1-e149-46d3-b8c9-af2ff65e75c7",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "砸蛋按钮@3x": {
+      "ver": "1.0.3",
+      "uuid": "24a4653c-c8e6-4041-8383-ffd8cdae9dd0",
+      "rawTextureUuid": "b922c1c1-e149-46d3-b8c9-af2ff65e75c7",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 443,
+      "height": 198,
+      "rawWidth": 443,
+      "rawHeight": 198,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "bkbxz@3x",
+    "texture": "assets/Shop/bkbxz@3x.png",
+    "rect": [
+      0,
+      0,
+      348,
+      150
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      348,
+      150
+    ]
+  }
+}

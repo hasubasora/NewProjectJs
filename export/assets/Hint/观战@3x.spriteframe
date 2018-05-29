@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "观战@3x",
+    "texture": "assets/Hint/观战@3x.png",
+    "rect": [
+      0,
+      2,
+      353,
+      141
+    ],
+    "offset": [
+      0,
+      -1
+    ],
+    "originalSize": [
+      353,
+      143
+    ]
+  }
+}

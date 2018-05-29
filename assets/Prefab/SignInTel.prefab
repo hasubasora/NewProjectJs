@@ -2641,9 +2641,6 @@
     "Messages": {
       "__id__": 64
     },
-    "SubmitBtn": {
-      "__id__": 20
-    },
     "RedLabel": {
       "__id__": 34
     },
@@ -2657,9 +2654,9 @@
     "TimesOut": {
       "__id__": 68
     },
-    "GetCodeUrl": "http://localhost:11072/account/getcode",
-    "SetUserUrl": "http://localhost:11072/account/loginorregister",
-    "GetUserDataUrl": "http://localhost:11072/account/loginorregister",
+    "GetCodeUrl": "/account/getcode",
+    "SetUserUrl": "/account/loginorregister",
+    "GetUserDataUrl": "/account/loginorregister",
     "WebUrl": {
       "__id__": 43
     },

@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "文字@3x",
+    "texture": "assets/Home/文字@3x.png",
+    "rect": [
+      0,
+      0,
+      95,
+      32
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      95,
+      32
+    ]
+  }
+}

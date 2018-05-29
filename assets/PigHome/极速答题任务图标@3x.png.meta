@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "b3ec4959-63c9-4aaf-bd2f-859d002205ef",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "极速答题任务图标@3x": {
+      "ver": "1.0.3",
+      "uuid": "a501ed7d-89d2-4f60-ba39-25758cec2ac2",
+      "rawTextureUuid": "b3ec4959-63c9-4aaf-bd2f-859d002205ef",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 171,
+      "height": 113,
+      "rawWidth": 171,
+      "rawHeight": 113,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "加载条外圈@3x",
+    "texture": "assets/GameStart/加载条外圈@3x.png",
+    "rect": [
+      0,
+      0,
+      900,
+      899
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      900,
+      899
+    ]
+  }
+}

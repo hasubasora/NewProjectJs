@@ -7,7 +7,7 @@
   "subMetas": {
     "确认发送@3x": {
       "ver": "1.0.3",
-      "uuid": "644353f7-5390-447e-ac3f-c1d692a25205",
+      "uuid": "36a38672-1bf8-432d-a9a4-5a9eaef0f28f",
       "rawTextureUuid": "1a2a92e1-0c79-4a8d-aa61-8733e4b9de54",
       "trimType": "auto",
       "trimThreshold": 1,
@@ -16,10 +16,10 @@
       "offsetY": 0,
       "trimX": 0,
       "trimY": 0,
-      "width": 252,
-      "height": 104,
-      "rawWidth": 252,
-      "rawHeight": 104,
+      "width": 273,
+      "height": 102,
+      "rawWidth": 273,
+      "rawHeight": 102,
       "borderTop": 0,
       "borderBottom": 0,
       "borderLeft": 0,

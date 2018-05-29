@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "图2@3x",
+    "texture": "assets/LoginTel/图2@3x.png",
+    "rect": [
+      473,
+      359,
+      885,
+      110
+    ],
+    "offset": [
+      -2.5,
+      76.5
+    ],
+    "originalSize": [
+      1836,
+      981
+    ]
+  }
+}

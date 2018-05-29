@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "加载条时间@3x",
+    "texture": "assets/GameStart/加载条时间@3x.png",
+    "rect": [
+      0,
+      0,
+      105,
+      105
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      105,
+      105
+    ]
+  }
+}

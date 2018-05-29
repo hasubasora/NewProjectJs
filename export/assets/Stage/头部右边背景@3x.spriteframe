@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "头部右边背景@3x",
+    "texture": "assets/Stage/头部右边背景@3x.png",
+    "rect": [
+      0,
+      0,
+      557,
+      146
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      557,
+      146
+    ]
+  }
+}

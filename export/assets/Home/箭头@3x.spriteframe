@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "箭头@3x",
+    "texture": "assets/Home/箭头@3x.png",
+    "rect": [
+      0,
+      0,
+      36,
+      18
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      36,
+      18
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "我的关注@3x",
+    "texture": "assets/News/我的关注@3x.png",
+    "rect": [
+      3,
+      4,
+      374,
+      73
+    ],
+    "offset": [
+      0,
+      -0.5
+    ],
+    "originalSize": [
+      380,
+      80
+    ]
+  }
+}

@@ -7,15 +7,15 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-// import { SignInBoxLeft } from "GetUserData";
+// import { GetPrefab } from "GetUserData";
 cc.Class({
   extends: cc.Component,
 
   properties: {
-    PhoneView: {
-      default: null,
-      type: cc.Prefab
-    }
+    // PhoneView: {
+    //   default: null,
+    //   type: cc.Prefab
+    // }
   },
 
   // LIFE-CYCLE CALLBACKS:
@@ -28,15 +28,30 @@ cc.Class({
   },
 
   Tel() {
-    console.log(this.node.parent.height)
-    let PhoneViews = cc.instantiate(this.PhoneView);
-    this.node.parent.addChild(PhoneViews, 101);
-    PhoneViews.setPosition(this.node.parent.width, 0);
-    // var ViewWidth = this.node.parent.width / 2 + this.PhoneView.width / 2;
-    var SignInBox = cc.moveBy(0.2, cc.p(-this.node.parent.width, 0));
-    PhoneViews.runAction(SignInBox);
-  },
-  start() { }
+    // console.log(this.node.parent.height)
+    // let PhoneViews = cc.instantiate(this.PhoneView);
+    // this.node.parent.addChild(PhoneViews, 101);
+    // PhoneViews.setPosition(this.node.parent.width, 0);
+    // // var ViewWidth = this.node.parent.width / 2 + this.PhoneView.width / 2;
+    // var SignInBox = cc.moveBy(0.2, cc.p(-this.node.parent.width, 0));
+    // PhoneViews.runAction(SignInBox);
 
+    this.GetPrefab('SignInTel')
+  },
+  start() { },
+  GetPrefab(fab) {
+    cc.loader.loadRes("/prefab/" + fab, (err, Prefab) => {
+      if (err) {
+        console.log(err)
+        return;
+      }
+      var newNode = cc.instantiate(Prefab);
+      // console.info(this.node)
+      newNode.setPosition(this.node.width / 2, this.node.height / 2);
+      cc.director.getScene().addChild(newNode);
+      // let _newNode = cc.find("sl/winText", newNode)
+      // _newNode.getComponentsInChildren(cc.Label)[0].string = gold;
+    });
+  },
   // update (dt) {},
 });

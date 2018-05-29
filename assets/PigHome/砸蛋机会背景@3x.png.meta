@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "1d0e6e1e-2b36-4398-bf08-fb4a19813785",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "砸蛋机会背景@3x": {
+      "ver": "1.0.3",
+      "uuid": "c29c64a1-f311-4e10-aefe-f8347b206f72",
+      "rawTextureUuid": "1d0e6e1e-2b36-4398-bf08-fb4a19813785",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 339,
+      "height": 141,
+      "rawWidth": 339,
+      "rawHeight": 141,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

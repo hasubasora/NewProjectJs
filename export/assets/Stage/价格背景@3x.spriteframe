@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "价格背景@3x",
+    "texture": "assets/Stage/价格背景@3x.png",
+    "rect": [
+      0,
+      0,
+      963,
+      114
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      963,
+      114
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "dq50@3x",
+    "texture": "assets/Stage/dq50@3x.png",
+    "rect": [
+      3,
+      9,
+      135,
+      132
+    ],
+    "offset": [
+      0,
+      -4.5
+    ],
+    "originalSize": [
+      141,
+      141
+    ]
+  }
+}

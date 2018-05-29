@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "11388296-af58-4118-b541-5a8a583b52bc",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "使用抽奖卡片@3x": {
+      "ver": "1.0.3",
+      "uuid": "63d8510d-6b1f-4f5a-8061-d88f47a1bbbf",
+      "rawTextureUuid": "11388296-af58-4118-b541-5a8a583b52bc",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -0.5,
+      "offsetY": 0.5,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 389,
+      "height": 77,
+      "rawWidth": 390,
+      "rawHeight": 78,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

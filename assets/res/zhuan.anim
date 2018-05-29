@@ -1,0 +1,61 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "zhuan",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 2,
+  "sample": 5,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "898d008c-6a67-42d4-8927-ab211b59c808"
+            }
+          }
+        ]
+      }
+    },
+    "props": {
+      "scale": [
+        {
+          "frame": 0,
+          "value": {
+            "__type__": "cc.Vec2",
+            "x": 1,
+            "y": 1
+          }
+        },
+        {
+          "frame": 1,
+          "value": {
+            "__type__": "cc.Vec2",
+            "x": 0.9,
+            "y": 0.9
+          }
+        },
+        {
+          "frame": 1.2,
+          "value": {
+            "__type__": "cc.Vec2",
+            "x": 0.9108586666670684,
+            "y": 0.9108586666670684
+          }
+        },
+        {
+          "frame": 2,
+          "value": {
+            "__type__": "cc.Vec2",
+            "x": 1,
+            "y": 1
+          }
+        }
+      ]
+    }
+  },
+  "events": []
+}

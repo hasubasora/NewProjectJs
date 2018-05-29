@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "jd@3x",
+    "texture": "assets/GameStart/jd@3x.png",
+    "rect": [
+      0,
+      0,
+      891,
+      890
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      891,
+      890
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "手机验证码登陆@3x",
+    "texture": "assets/Login/手机验证码登陆@3x.png",
+    "rect": [
+      0,
+      0,
+      314,
+      43
+    ],
+    "offset": [
+      0,
+      0.5
+    ],
+    "originalSize": [
+      314,
+      44
+    ]
+  }
+}

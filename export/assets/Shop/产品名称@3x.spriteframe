@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "产品名称@3x",
+    "texture": "assets/Shop/产品名称@3x.png",
+    "rect": [
+      0,
+      0,
+      282,
+      39
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      282,
+      39
+    ]
+  }
+}

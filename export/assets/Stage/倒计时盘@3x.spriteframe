@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "倒计时盘@3x",
+    "texture": "assets/Stage/倒计时盘@3x.png",
+    "rect": [
+      0,
+      0,
+      209,
+      125
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      209,
+      125
+    ]
+  }
+}

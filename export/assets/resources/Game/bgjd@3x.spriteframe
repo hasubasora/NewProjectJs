@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "bgjd@3x",
+    "texture": "assets/resources/Game/bgjd@3x.png",
+    "rect": [
+      0,
+      0,
+      230,
+      114
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      230,
+      114
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "个人信息@3x",
+    "texture": "assets/UserData/个人信息@3x.png",
+    "rect": [
+      2,
+      1,
+      229,
+      69
+    ],
+    "offset": [
+      0,
+      0.5
+    ],
+    "originalSize": [
+      233,
+      72
+    ]
+  }
+}

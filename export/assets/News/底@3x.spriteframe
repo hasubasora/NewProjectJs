@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "底@3x",
+    "texture": "assets/News/底@3x.png",
+    "rect": [
+      0,
+      0,
+      366,
+      119
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      366,
+      119
+    ]
+  }
+}

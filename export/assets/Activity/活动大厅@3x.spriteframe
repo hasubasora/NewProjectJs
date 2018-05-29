@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "活动大厅@3x",
+    "texture": "assets/Activity/活动大厅@3x.png",
+    "rect": [
+      0,
+      0,
+      527,
+      171
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      527,
+      171
+    ]
+  }
+}
