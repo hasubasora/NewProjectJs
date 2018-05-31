@@ -60,7 +60,7 @@ cc.Class({
     },
     SetInfo() {
         Global.getDataUsers()
-        this.User_Glod.string = Global.DataUsers.sBalance;
+        this.User_Glod.string = Global.DataUsers.Balance;
         this.loadUserPointer()
         this.GetRoundaboutRecord()   //先加载一次 顺序就对了
     },

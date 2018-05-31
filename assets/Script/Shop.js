@@ -49,8 +49,8 @@ cc.Class({
     SetInfo() {
         if (GetUserDatas()) {
             this.User_Name.string = Global.DataUsers.sNickName;
-            this.User_Id.string = 'ID:' + Global.DataUsers.sLogin;
-            this.User_Gold.string = Global.DataUsers.sBalance
+            this.User_Id.string = 'ID:' + Global.DataUsers.Login;
+            this.User_Gold.string = Global.DataUsers.Balance
         } else {
 
         }

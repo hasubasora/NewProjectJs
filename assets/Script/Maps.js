@@ -475,7 +475,7 @@ cc.Class({
   SetInfo() {
     Global.getDataUsers()
     this.User_Name.string = Global.DataUsers.sNickName;
-    this.User_Id.string = 'ID:' + Global.DataUsers.sLogin;
+    this.User_Id.string = 'ID:' + Global.DataUsers.Login;
   },
   nSocket() {
     var ws = new WebSocket(Global.DataUsers.wsUrl);

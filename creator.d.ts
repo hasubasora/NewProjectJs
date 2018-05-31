@@ -15117,7 +15117,7 @@ declare module anysdk {
 		!#zh
 		获取登录状态 
 		*/
-		isLogined(): boolean;		
+		iLogined(): boolean;		
 		/**
 		!#en
 		get user ID

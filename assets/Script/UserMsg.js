@@ -13,7 +13,7 @@ cc.Class({
     onLoad() {
         GetUserDatas()
         this.UserName.string = Global.DataUsers.sNickName
-        this.UserId.string = "ID:" + Global.DataUsers.sLogin
+        this.UserId.string = "ID:" + Global.DataUsers.Login
         // this.UserName.UserAddress = Global.DataUsers.UserId
     },
 

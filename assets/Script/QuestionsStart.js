@@ -51,8 +51,8 @@ cc.Class({
     SetInfo() {
         Global.getDataUsers()
         this.UserName.string = Global.DataUsers.sNickName;
-        this.UserID.string = 'ID:' + Global.DataUsers.sLogin;
-        this.Gold.string = Global.DataUsers.sBalance;
+        this.UserID.string = 'ID:' + Global.DataUsers.Login;
+        this.Gold.string = Global.DataUsers.Balance;
         this.loaderUserIcon(Global.DataUsers.sUserIcon, this.UserPic)
         this.ClientLogs()
         this.regulations()
