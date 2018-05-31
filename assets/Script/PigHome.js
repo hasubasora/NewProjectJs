@@ -145,8 +145,8 @@ cc.Class({
     GetLstCharacterCondition() {
         this.taskListView.content.removeAllChildren()
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
         }
         Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/LittlePigPeky/GetLstCharacterCondition", _data, e => {
             let _task = JSON.parse(e);
@@ -250,8 +250,8 @@ cc.Class({
     //领取 任务
     ReceiveCondition(num) {
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
             Type: num
         }
         Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/LittlePigPeky/ReceiveCondition", _data, e => {
@@ -265,8 +265,8 @@ cc.Class({
     //获取签到信息
     GetSignIn() {
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
         }
         Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/Sign/getsign", _data, e => {
             let _GetSignIn = JSON.parse(e);
@@ -288,8 +288,8 @@ cc.Class({
     //签到
     SetSignIn() {
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
         }
         Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/Sign/signin", _data, e => {
             let _SetSignIn = JSON.parse(e);
@@ -302,8 +302,8 @@ cc.Class({
     GetLstUserCharacterInfo() {
         this.Winners.removeAllChildren()
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
         }
         Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/LittlePigPeky/GetLstUserCharacterInfo", _data, e => {
             let _GetLst = JSON.parse(e);
@@ -370,8 +370,8 @@ cc.Class({
             return;
         }
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
         }
         Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/LittlePigPeky/QuailEggs", _data, e => {
             let _egg = JSON.parse(e);
@@ -432,9 +432,9 @@ cc.Class({
 
             console.log(json.object.circleUrl);
             console.log(this.ViewWeb);
-            // WebView.url = json.object.circleUrl + '/?tok=' + Global.DataUsers.sToken + '&usid=' + Global.DataUsers.sUserId
-            // WebView.url = 'http://localhost:6667/?tok=' + Global.DataUsers.sToken + '&usid=' + Global.DataUsers.sUserId
-            this.ViewWeb.url = 'http://192.168.1.106:802/?tok=' + Global.DataUsers.sToken + '&usid=' + Global.DataUsers.sUserId + '&type=' + 7
+            // WebView.url = json.object.circleUrl + '/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId
+            // WebView.url = 'http://localhost:6667/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId
+            this.ViewWeb.url = 'http://192.168.1.106:802/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId + '&type=' + 7
             console.log(this.ViewWeb.url)
             console.log('--------------------------------------------------')
         })

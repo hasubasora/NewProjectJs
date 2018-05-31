@@ -129,7 +129,7 @@ cc.Class({
    */
   LoginOut() {
     let data = {
-      userid: Global.DataUsers.sUserId
+      userid: Global.DataUsers.UserId
     }, xhr = cc.loader.getXMLHttpRequest()
     Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + '/account/logout', data, e => {
       console.log('退出')
@@ -169,8 +169,8 @@ cc.Class({
     console.log(pid)
     let xhr = cc.loader.getXMLHttpRequest()
     let _data = {
-      Token: Global.DataUsers.sToken,
-      Userid: Global.DataUsers.sUserId,
+      Token: Global.DataUsers.Token,
+      Userid: Global.DataUsers.UserId,
       ParentID: pid
     }
     Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Address/GetLstAreasInfo", _data, e => {
@@ -228,8 +228,8 @@ cc.Class({
     let xhr = cc.loader.getXMLHttpRequest()
     if (this.sign == 2) {
       let _data = {
-        Userid: Global.DataUsers.sUserId,
-        Token: Global.DataUsers.sToken,
+        Userid: Global.DataUsers.UserId,
+        Token: Global.DataUsers.Token,
         ID: 0,
         Province: this.ShengID ? this.ShengID : 0,
         City: this.ShiID ? this.ShiID : 0,
@@ -258,8 +258,8 @@ cc.Class({
   GetMessges() {
     let xhr = cc.loader.getXMLHttpRequest()
     let _data = {
-      Userid: Global.DataUsers.sUserId,
-      Token: Global.DataUsers.sToken,
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
       PageIndex: 1,
       PageSize: 1
     }
@@ -286,8 +286,8 @@ cc.Class({
   BindAlipayAccount() {
     let xhr = cc.loader.getXMLHttpRequest()
     let _data = {
-      Userid: Global.DataUsers.sUserId,
-      Token: Global.DataUsers.sToken,
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
       TrueName: this.CardName.string,
       AlipayAccount: this.alipayCard.string
     }
@@ -300,8 +300,8 @@ cc.Class({
     if (this.PayCardId != 0) {
       let xhr = cc.loader.getXMLHttpRequest()
       let _data = {
-        Userid: Global.DataUsers.sUserId,
-        Token: Global.DataUsers.sToken,
+        Userid: Global.DataUsers.UserId,
+        Token: Global.DataUsers.Token,
         AccountName: this.bankCardName.string,
         AccountNumber: this.bankCard.string,
         BankID: this.PayCardId,
@@ -323,8 +323,8 @@ cc.Class({
   GetPayInfo() {
     let xhr = cc.loader.getXMLHttpRequest()
     let _data = {
-      Userid: Global.DataUsers.sUserId,
-      Token: Global.DataUsers.sToken,
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
 
     }
     Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/account/GetPayInfo", _data, e => {
@@ -346,8 +346,8 @@ cc.Class({
   GetBankListPost(){
     let xhr = cc.loader.getXMLHttpRequest()
     let _data = {
-      Userid: Global.DataUsers.sUserId,
-      Token: Global.DataUsers.sToken,
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
     }
     Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/account/GetBankList", _data, e => {
       this.scrollViewCard.content.removeAllChildren();

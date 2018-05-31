@@ -54,10 +54,10 @@ cc.Class({
             console.log(json.object.circleUrl);
 
             if (n == 2) {
-                this.ViewWeb2.url = serverUrl + '/?tok=' + Global.DataUsers.sToken + '&usid=' + Global.DataUsers.sUserId + '&type=' + 10002
+                this.ViewWeb2.url = serverUrl + '/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId + '&type=' + 10002
             }
             if (n == 1 ) {
-                this.ViewWeb1.url = serverUrl + '/?tok=' + Global.DataUsers.sToken + '&usid=' + Global.DataUsers.sUserId + '&type=' + 10001
+                this.ViewWeb1.url = serverUrl + '/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId + '&type=' + 10001
             }
 
             console.log(this.ViewWeb1.url)

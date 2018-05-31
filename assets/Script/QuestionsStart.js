@@ -82,8 +82,8 @@ cc.Class({
     getvouchernumber() {
         let xhr = cc.loader.getXMLHttpRequest()
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
         }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/exam/getvouchernumber", _data, e => {
             let mid = JSON.parse(e)
@@ -98,8 +98,8 @@ cc.Class({
 
         let xhr = cc.loader.getXMLHttpRequest()
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
             ExamRoomID: 0,
             IsAnswerSheet: sms  //是否使用答题卡（0:否，1：是）
         }
@@ -118,8 +118,8 @@ cc.Class({
     ClientLogs() {
         let xhr = cc.loader.getXMLHttpRequest()
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
             ExamRoomID: 0
         }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/exam/getexamgamerecords", _data, e => {
@@ -211,8 +211,8 @@ cc.Class({
     regulations() {
         let xhr = cc.loader.getXMLHttpRequest()
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
             ExamRoomID: 0
         }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/exam/getexamruleinfo", _data, e => {
@@ -241,8 +241,8 @@ cc.Class({
         this.RankingLists.content.removeAllChildren()
         let xhr = cc.loader.getXMLHttpRequest()
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
         }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/exam/getlsexamprofitrankingInfo", _data, e => {
             let mid = JSON.parse(e)

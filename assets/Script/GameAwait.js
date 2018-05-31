@@ -64,8 +64,8 @@ cc.Class({
 
             let xhr = cc.loader.getXMLHttpRequest()
             let _data = {
-                Userid: Global.DataUsers.sUserId,
-                Token: Global.DataUsers.sToken,
+                Userid: Global.DataUsers.UserId,
+                Token: Global.DataUsers.Token,
                 Type: id
             }
             Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/caileigame/inroom", _data, e => {

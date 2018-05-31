@@ -32,8 +32,8 @@ cc.Class({
         this.items = []; // array to store spawned items
 
         let _data = {
-            token: Global.DataUsers.sToken,
-            userid: Global.DataUsers.sUserId,
+            token: Global.DataUsers.Token,
+            userid: Global.DataUsers.UserId,
             roomId: Global._StageData.Data
         }
         Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/caileigame/GetThunderTrades", _data, e => {

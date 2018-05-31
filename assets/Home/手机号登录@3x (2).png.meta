@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "58438cae-093c-47a4-b5f1-ba75e89306df",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "手机号登录@3x (2)": {
+      "ver": "1.0.3",
+      "uuid": "6acd53cf-b5bd-4f9a-9b2a-14f4c1f8aae8",
+      "rawTextureUuid": "58438cae-093c-47a4-b5f1-ba75e89306df",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 380,
+      "height": 126,
+      "rawWidth": 380,
+      "rawHeight": 126,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

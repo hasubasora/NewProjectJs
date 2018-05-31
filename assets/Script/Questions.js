@@ -109,8 +109,8 @@ cc.Class({
     Getroom() {
         let xhr = cc.loader.getXMLHttpRequest()
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
             roomnumberid: Global.questions
         }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/exam/getroom", _data, e => {
@@ -235,8 +235,8 @@ cc.Class({
         this.overRaing.scale = 1;
         let xhr = cc.loader.getXMLHttpRequest()
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
             ExamRoomGameNumberID: this.ExamRoomGameNumberID
         }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/exam/getexamroomgamerecords", _data, e => {
@@ -285,7 +285,7 @@ cc.Class({
             wLabel = newNode.getChildByName('wLabel');
             wMoney = newNode.getChildByName('wMoney');
             wTime = newNode.getChildByName('wTime');
-            if (uid == Global.DataUsers.sUserId) {
+            if (uid == Global.DataUsers.UserId) {
                 this.RankingNumber.string = mo.Ranking
                 this.myMonney.string = '+' + mo.RecyclingAmount
                 this.loadRes(newNode)
@@ -332,8 +332,8 @@ cc.Class({
     GetInroom() {
         let xhr = cc.loader.getXMLHttpRequest()
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
             ExamRoomID: 0
         }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/exam/inroom", _data, e => {
@@ -370,8 +370,8 @@ cc.Class({
         this.btnc.interactable = false
         let xhr = cc.loader.getXMLHttpRequest()
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
             roomnumberid: Global.questions,
             ExamRoomQuestionID: this.ExamRoomQuestionID,
             Answer: ass
@@ -445,7 +445,7 @@ cc.Class({
         }
         this.RankingLists.removeAllChildren();
         for (const iterator of this.ObjectList) {
-            if (Global.DataUsers.sUserId == iterator.UserID) {
+            if (Global.DataUsers.UserId == iterator.UserID) {
                 this.setAmount.string = iterator.innerList
             }
             this.loaderFab(iterator)
@@ -494,8 +494,8 @@ cc.Class({
                     Code: 102,
                     Data: {
                         roomId: Global.questions,
-                        userId: Global.DataUsers.sUserId,
-                        token: Global.DataUsers.sToken,
+                        userId: Global.DataUsers.UserId,
+                        token: Global.DataUsers.Token,
                     }
                 };
                 ws.send(JSON.stringify(room));

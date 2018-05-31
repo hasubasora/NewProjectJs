@@ -7,14 +7,14 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-import { GetUserDatas, SignInBoxRight, AddWindow } from "GetUserData";
+import { GetUserDatas, AddWindow } from "GetUserData";
 cc.Class({
   extends: cc.Component,
 
   properties: {
     UserInfo: {
       default: null,
-      type: cc.Prefab
+      type: cc.Node
     },
     UserInfoImg: {
       default: null,
@@ -64,9 +64,6 @@ cc.Class({
     Gold: cc.Label,
     Audios: cc.AudioSource,
 
-    loginBox: cc.Node,
-    telLoginBox: cc.Node,
-    telLogin: cc.Node,
     TurnTheScreen: cc.Node,
 
     screenOrientation: '',
@@ -89,24 +86,52 @@ cc.Class({
     LowerMemberCommission: cc.Label,
 
 
+    sPageView: cc.PageView,
+    sPageView_1: cc.Sprite,
+    sPageView_2: cc.Sprite,
+    sPageView_3: cc.Sprite,
 
+    nlayer: cc.Node,
 
+    myScrollView: cc.ScrollView,
+    AgentScrollView: cc.ScrollView,
+
+    qrCodeUrls: cc.Node,
+
+    Extext: cc.Node
   },
 
   // LIFE-CYCLE CALLBACKS:
   closeGuldsSetings() {
     this.GuldsSetings.scale = 0
   },
+  modification() {
+    let sss = this.Extext.getComponent(cc.EditBox).string
+    //   this.Extext.removeComponent(cc.EditBox)
+    //  let txt= this.Extext.addComponent(cc.Label)
+    //   txt.string  = '787878'
+    // console.log(this.Extext.getComponent(cc.EditBox));
+    // console.log(this.Extext.getComponent(cc.Label).string);
+    console.log('---');
+    let data = {
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
+      UserName: sss
+    }
+    Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/account/UpdateUserName", data, e => {
+      let code = JSON.parse(e)
+      console.log(code);
+      if (code.code == 12000) {
+
+      }
+    })
+  },
+  openUserInfo(e, num) {
+    this.UserInfo.scale = num
+  },
   onLoad() {
     this.getversion()
-    // document.body.style.position='fixed'
-    // document.getElementById('GameCanvas').height=375
-    // 添加事件监听
-    // addEventListener('load',  ()=> {
-    this.addEventListeners();
-    // });
-    // let InfoBox=this.getComponentInChildren("InfoBox");
-    this.InfoBox.on("touchstart", this.UserInfos, this);
+
     // 设置
     this.SetingsBtn.on("touchstart", this.SetingsFn, this);
     //活动界面
@@ -117,11 +142,24 @@ cc.Class({
     Global.Audios = this.Audios;
     Global.Audios.volume = cc.sys.localStorage.getItem("Mic");
     //判断有没有账户
-    // GetUserDatas() ? this.SetInfo() : SignInBoxRight(this.node, this.SignIn);
-    GetUserDatas() ? this.SetInfo() : this.loginBox.scale = 1;
+    console.log(cc.sys.localStorage.getItem('SJ') != 'undefined');
+    console.log(cc.sys.localStorage.getItem('SJ') != null);
 
+    if (cc.sys.localStorage.getItem('SJ') != null) {
+      Global.DataUsers = JSON.parse(decodeURIComponent(cc.sys.localStorage.getItem('SJ')))
+      this.SetInfo()  //设置数据
+      this.GetInvitation()
+      this.GetAgentRule()
+      this.GetAgentDataStatisticsInfo()
+      if (cc.sys.localStorage.getItem('SJ') == 'undefined') {
+        cc.director.loadScene('LoginPage')
+      }
+    } else {
+      cc.director.loadScene('LoginPage')
+    }
 
-    this.GetInvitation()
+    this.GetUserCenter()
+    this.GetRecords()
   },
   addEventListeners() {
     this.checkOrient();
@@ -143,24 +181,24 @@ cc.Class({
       // alert(window.orientation)
     }
   },
-  SignInBox() {
-    this.loginBox.scale = 0
-    this.telLoginBox.scale = 1
+  GoGameStart(e, d) {
+    cc.director.loadScene(d)
   },
-  closeSignInBoxPhone() {
-    this.loginBox.scale = 1
-    this.telLoginBox.scale = 0
-  },
-
 
   SetInfo() {
-    Global.getDataUsers()
-    this.UserInfoName.string = Global.DataUsers.sUserName;
-    this.UserInfoId.string = 'ID:' + Global.DataUsers.sLogin;
-    this.Gold.string = Global.DataUsers.sBalance;
-
+    console.log(Global.DataUsers);
+    // if (Global.DataUsers == null) {
+    //   cc.director.loadScene('LoginPage')
+    // }
+    this.UserInfoName.string = Global.DataUsers.UserName;
+    this.UserInfoId.string = 'ID:' + Global.DataUsers.Login;
+    this.Gold.string = Global.DataUsers.Balance;
   },
   Invitation(e, n) {
+    if (n == 1) {
+      this.GetParentAgentWeeklyTransaction(1)
+      this.GetParentAgentWeeklyTransaction(2)
+    }
     this.Invitations.scale = n
   },
   Shops() {
@@ -169,23 +207,11 @@ cc.Class({
   ActivityWin() {
     cc.director.loadScene("Activity");
   },
-  //游戏跳转
-  directors(e, d) {
-    if (GetUserDatas()) {
-      cc.director.loadScene(d);
-    } else {
-      this.loginBox.scale = 1;
-    }
 
-  },
   AddWindows() {
     this.GuldsSetings.scale = 1
   },
-  UserInfos() {
-    let Infos = cc.instantiate(this.UserInfo);
-    this.node.addChild(Infos, 103);
-    Infos.setPosition(0, 0);
-  },
+
   SetingsFn() {
     let Infos = cc.instantiate(this.Setings);
     this.node.addChild(Infos, 104);
@@ -205,15 +231,11 @@ cc.Class({
       // _newNode.getComponentsInChildren(cc.Label)[0].string = gold;
     });
   },
-  //手機的登陸
-  SetSignInPhone() {
-    this.GetPrefab('SignInTel')
-  },
+
   CloseViews() {
     this.node.destroy()
   },
   start() {
-
   }
   ,
   GoToMsg() {
@@ -237,36 +259,40 @@ cc.Class({
       }
     })
   },
-  //huoqu                                                                               %.65获取代理本周佣金
+  //二维码
+  qrCodeUrlFn(e, num) {
+    var nSprite = cc.instantiate(this.User_pic.node);
+    nSprite.setPosition(cc.v2(0, 0))
+    nSprite.scale = 2
+    this.qrCodeUrls.addChild(nSprite)
+    this.qrCodeUrls.scale = num;
+  },
+  //邀请                                                                               %.65获取代理本周佣金
   GetInvitation() {
     var xhr = cc.loader.getXMLHttpRequest()
     let data = {
-      Userid: Global.DataUsers.sUserId,
-      Token: Global.DataUsers.sToken,
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
     }
     Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Agent/GetWeeklyTransaction", data, e => {
       let code = JSON.parse(e)
-      console.log(code);
       if (code.AccountType == 1) {
         this.ApplicationBroker()
       }
       if (code.code == 12000 && code.AccountType == 2) {
-        console.log(code.model);
-        console.log(code.user);
-        console.log(code.tips);
         let mo = code.model
         let ser = code.user
         let tips = code.tips
         this.User_n.string = ser.UserName
-        this.User_id.string = ser.UserID
+        this.User_id.string = ' ID:' + ser.UserID
         this.TotalAmount.string = mo.TotalAmount
         this.DirectlyUnderAmount.string = mo.DirectlyUnderAmount
         this.LowerMemberAmount.string = mo.LowerMemberAmount
         this.TotalCommission.string = mo.TotalCommission
         this.DirectlyUnderCommission.string = mo.DirectlyUnderCommission
         this.LowerMemberCommission.string = mo.LowerMemberCommission
-        this.buttomMsg.string = tips[0] +tips[1]
-
+        this.buttomMsg.string = tips[0] + tips[1]
+        Global.loaderUserIcon(code.qrCodeUrl, this.User_pic)
       }
     })
   },
@@ -274,8 +300,8 @@ cc.Class({
   ApplicationBroker() {
     var xhr = cc.loader.getXMLHttpRequest()
     let data = {
-      Userid: Global.DataUsers.sUserId,
-      Token: Global.DataUsers.sToken,
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
     }
     Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Agent/ApplicationBroker", data, e => {
       let code = JSON.parse(e)
@@ -289,47 +315,59 @@ cc.Class({
   GetAgentDataStatisticsInfo() {
     var xhr = cc.loader.getXMLHttpRequest()
     let data = {
-      "clientVersion": '0.0.1',
-      "client": 0
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
     }
     Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Agent/GetAgentDataStatisticsInfo", data, e => {
-      let code = JSON.parse(e)
+      let Agent = JSON.parse(e)
+      if (Agent.code == 12000) {
+        let AgentAll = Agent.model
+        let AgentCount = this.nlayer.getChildByName('ask_list_one').getComponentsInChildren(cc.Label)
+        AgentCount[0].string = '我的代理:' + AgentAll.ParentAgentCount
+        AgentCount[1].string = '本周新增:' + AgentAll.WeekParentAgentCount
+        AgentCount[2].string = '本月新增:' + AgentAll.MonthParentAgentCount
 
-      if (code.code == 12000) {
-
-
+        let Counts = this.nlayer.getChildByName('ask_list_two').getComponentsInChildren(cc.Label)
+        Counts[0].string = '我的代理:' + AgentAll.UserCount
+        Counts[1].string = '本周新增:' + AgentAll.WeekCount
+        Counts[2].string = '本月新增:' + AgentAll.MonthCount
       }
     })
   },
   // % .67获取直属代理
-  GetParentAgentWeeklyTransaction() {
+  GetParentAgentWeeklyTransaction(num) {
+    if (num == 1) {
+      this.myScrollView.content.removeAllChildren()
+    }
+    if (num == 2) {
+      this.AgentScrollView.content.removeAllChildren()
+    }
     var xhr = cc.loader.getXMLHttpRequest()
     let data = {
-      "clientVersion": '0.0.1',
-      "client": 0
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
+      PageIndex: 1,
+      PageSize: 1,
+      Type: num //1我的代理，2直属会员
     }
     Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Agent/GetParentAgentWeeklyTransaction", data, e => {
-      let code = JSON.parse(e)
-
-      if (code.code == 12000) {
-
-
-      }
-    })
-  },
-  //%.68获取直属会员
-  GetUserList() {
-    var xhr = cc.loader.getXMLHttpRequest()
-    let data = {
-      "clientVersion": '0.0.1',
-      "client": 0
-    }
-    Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Agent/GetUserList", data, e => {
-      let code = JSON.parse(e)
-
-      if (code.code == 12000) {
-
-
+      let Transaction = JSON.parse(e)
+      if (Transaction.code == 12000) {
+        // console.log(Transaction.List);
+        for (const iterator of Transaction.List) {
+          Global.loadPre('wlist', newNode => {
+            Global.loaderUserIcon(iterator.Avatar, newNode.getChildByName('wSprite').getComponent(cc.Sprite))
+            newNode.getChildByName('nLabel').getComponent(cc.Label).string = iterator.UserName;
+            newNode.getChildByName('ILabel').getComponent(cc.Label).string = iterator.UserID;
+            newNode.getChildByName('yLabel').getComponent(cc.Label).string = iterator.Amount;
+            if (num == 1) {
+              this.myScrollView.content.addChild(newNode)
+            }
+            if (num == 2) {
+              this.AgentScrollView.content.addChild(newNode)
+            }
+          })
+        }
       }
     })
   },
@@ -337,16 +375,50 @@ cc.Class({
   GetAgentRule() {
     var xhr = cc.loader.getXMLHttpRequest()
     let data = {
-      "clientVersion": '0.0.1',
-      "client": 0
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
     }
     Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Agent/GetAgentRule", data, e => {
       let code = JSON.parse(e)
-
       if (code.code == 12000) {
-
-
+        Global.loaderUserIcon(code.Data[0], this.sPageView_1)
+        Global.loaderUserIcon(code.Data[1], this.sPageView_2)
+        Global.loaderUserIcon(code.Data[2], this.sPageView_3)
       }
     })
   },
+
+
+
+  // % .26获交易数据
+  GetRecords() {
+ var xhr = cc.loader.getXMLHttpRequest()
+    let data = {
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
+    }
+    Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/account/GetRecords", data, e => {
+      let code = JSON.parse(e)
+      if (code.code == 12000) {
+        console.log(code);
+
+      }
+    })
+ 
+  },
+  //%.27获取用户中心
+  GetUserCenter() {
+    var xhr = cc.loader.getXMLHttpRequest()
+    let data = {
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
+    }
+    Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/account/GetUserCenter", data, e => {
+      let code = JSON.parse(e)
+      if (code.code == 12000) {
+        console.log(code);
+
+      }
+    })
+  }
 });

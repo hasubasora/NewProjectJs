@@ -1,32 +1,50 @@
 module.exports = {
-    GetUserDatas(_fn) {
-        let d = cc.sys.localStorage.getItem('SJ')
-        console.log(!d)
-        if (d == 'undefined') {
-            return false;
+    GetUserDatas(ns) {
+        Global.DataUsers = JSON.parse(decodeURIComponent(cc.sys.localStorage.getItem('SJ')))
+        console.log('-------o--------');
+        let _data = {
+            token: Global.DataUsers.Token,
+            UserId: Global.DataUsers.UserId
         }
-        if (d) {
-            let ds = JSON.parse(decodeURIComponent(d))
-            let _data = {
-                token: ds.Token,
-                userid: ds.UserId
-            }
-            Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/account/getuserinfo", _data, e => {
-                console.log('獲取用戶數據')
-                module.exports.LoginTimeOut(JSON.parse(e).code)
-                let sData = JSON.parse(e)
+        Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/account/getuserinfo", _data, e => {
+            console.log('獲取用戶數據')
+            let sData = JSON.parse(e)
+            if (sData.code == 12000) {
+                console.log(sData);
+                Global.DataUsers = JSON.parse(JSON.stringify(sData.object))
                 cc.sys.localStorage.setItem("SJ", encodeURIComponent(JSON.stringify(sData.object)));
-                Global.getDataUsers()
-            })
-            return true;
+                Global.lobbySocket()
+                if (ns==1) {
+                    cc.director.loadScene('Home')
+                }
+            }
+        })
+        return true;
+    },
+    WeixinLoginTime() {
+        console.log('-------w--------');
+        console.log(Global.DataUsers.Token);
+        let _data = {
+            token: Global.DataUsers.Token,
         }
-
+        Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/Weixin/WebLoginByToken", _data, e => {
+            console.log('微信獲取用戶數據')
+            let sData = JSON.parse(e)
+            if (sData.code == 12000) {
+                console.log(sData);
+                Global.DataUsers = JSON.parse(JSON.stringify(sData.object))
+                cc.sys.localStorage.setItem("SJ", encodeURIComponent(JSON.stringify(sData.object)));
+                Global.lobbySocket()
+                cc.director.loadScene('Home')
+            }
+        })
+        return true;
     },
     //登陆超时
     LoginTimeOut(outCode) {
         if (outCode != 12000) {
             cc.sys.localStorage.removeItem('SJ')
-            module.exports.GoLoadScene('Home')
+            Global.GoLoadScene()
             Global.ws.close()
             return;
         }
@@ -62,10 +80,7 @@ module.exports = {
         obj.setPosition(x, y);
     },
     // 场景跳转
-    GoLoadScene(d) {
-        // cc.sys.localStorage.removeItem('SJ')
-        cc.director.loadScene(d);
-    },
+
 }
 // Global.streamXHREventsToLabel(xhr, "POST",Global.serverUrl + "/account/GetWebSocket", JSON.stringify(data),e=>{})
 window.Global = {
@@ -84,41 +99,7 @@ window.Global = {
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
         xhr.send("data=" + JSON.stringify(_data))
     },
-    DataUsers: {
-        sBalance: cc.sys.localStorage.getItem('sBalance'),
-        sInvitationCode: "",
-        sLogin: 0,
-        sNickName: "0",
-        sToken: "",
-        sUserIcon: "",
-        sUserId: 0,
-        sUserName: "0",
-        swsUrl: ''
-    },
-    getDataUsers() {
-        let ds = JSON.parse(decodeURIComponent(cc.sys.localStorage.getItem('SJ')))
-        console.log(ds)
-        if (ds) {
-            Global.DataUsers.sBalance = ds.Balance;
-            Global.DataUsers.sNickName = ds.NickName;
-            Global.DataUsers.sInvitationCode = ds.InvitationCode;
-            Global.DataUsers.sLogin = ds.Login;
-            Global.DataUsers.sToken = ds.Token;
-            Global.DataUsers.sUserIcon = ds.UserIcon;
-            Global.DataUsers.sUserId = ds.UserId;
-            Global.DataUsers.sUserName = ds.UserName;
-            Global.DataUsers.wsUrl = ds.wsUrl
-            if (Global.DataUsers.wsUrl !='undefined') {
-                Global.lobbySocket()
-            }
-        }
-        if (ds == null) {
-            module.exports.GoLoadScene('Home')
-        }
-        if (ds == 'undefined') {
-            module.exports.GoLoadScene('Home')
-        }
-    },
+    DataUsers: null,
     online: 0,
     RoomUserLen: 0,
     Audios: '',
@@ -128,8 +109,27 @@ window.Global = {
     GameRoomData: '',
     //保存金额列表
     _Golds: '',
-    clientid:'',
+    clientid: '',
     questions: 0,
+    loaderUserIcon(url, nSprite) {
+        cc.loader.load(url, function (err, tex) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            nSprite.spriteFrame = new cc.SpriteFrame(tex);
+        });
+    },
+    loadPre(pre, fn) {
+        cc.loader.loadRes("/prefab/" + pre, (err, Prefab) => {
+            if (err) {
+                console.log(err)
+                return;
+            }
+            var newNode = cc.instantiate(Prefab)
+            fn(newNode)
+        })
+    },
     alertWindw(msg) {
         let windowLabel = new cc.Node('Label');
         let wLabel = windowLabel.addComponent(cc.Label);
@@ -149,6 +149,9 @@ window.Global = {
     },
     socketMsg: '恭喜玩家空空获得1210金币',
     ws: '',
+    GoLoadScene() {
+        cc.director.loadScene('LoginPage')
+    },
     lobbySocket() {
         Global.ws = new WebSocket(Global.DataUsers.wsUrl);
         Global.ws.onopen = (event) => {
@@ -156,10 +159,9 @@ window.Global = {
             if (Global.ws.readyState === WebSocket.OPEN) {
                 // var room = {
                 //     Code: 100,
-                //     Data: Global.DataUsers.sUserId,
+                //     Data: Global.DataUsers.UserId,
                 //     Message: "用户登录"
                 // };
-
                 //Global.ws.send(JSON.stringify(room));
                 console.log("WebSocket 用户登录...！");
             } else {
@@ -187,7 +189,7 @@ window.Global = {
     lobbyGetStatus(x, evMsg) { //sk里面的id
         switch (x) {
             case 100:
-                module.exports.GoLoadScene('Home')
+                Global.GoLoadScene()
                 break;
             case 101:
                 console.log('101')
@@ -201,12 +203,11 @@ window.Global = {
             case 104:
                 console.log('104')
                 // { "Success": true, "Data": 3, "Code": 104, "Message": "当前在线人数" }
-                Global.ws.close()
-
+                // Global.ws.close()
                 break;
             default:
                 cc.sys.localStorage.removeItem('SJ')
-                module.exports.GoLoadScene('Home')
+                Global.GoLoadScene()
                 break;
         }
     },

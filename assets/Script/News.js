@@ -69,8 +69,8 @@ cc.Class({
     GetHallMsgFn() {
         let xhr = cc.loader.getXMLHttpRequest()
             , _data = {
-                Userid: Global.DataUsers.sUserId,
-                Token: Global.DataUsers.sToken,
+                Userid: Global.DataUsers.UserId,
+                Token: Global.DataUsers.Token,
             }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + this.GetHallMsgUrl, _data, e => {
             let hall = JSON.parse(e)
@@ -165,8 +165,8 @@ cc.Class({
     SaveUser(oid) {
         let xhr = cc.loader.getXMLHttpRequest()
             , _data = {
-                Userid: Global.DataUsers.sUserId,
-                Token: Global.DataUsers.sToken,
+                Userid: Global.DataUsers.UserId,
+                Token: Global.DataUsers.Token,
                 FollowUserID: oid
             }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + this.AddFollowUrl, _data, e => {
@@ -179,8 +179,8 @@ cc.Class({
     DelFollow(oid) {
         let xhr = cc.loader.getXMLHttpRequest()
             , _data = {
-                Userid: Global.DataUsers.sUserId,
-                Token: Global.DataUsers.sToken,
+                Userid: Global.DataUsers.UserId,
+                Token: Global.DataUsers.Token,
                 FollowUserID: oid
             }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + this.DelFollowUrl, _data, e => {
@@ -193,8 +193,8 @@ cc.Class({
     Withdrawal() {
         let xhr = cc.loader.getXMLHttpRequest()
             , _data = {
-                Userid: Global.DataUsers.sUserId,
-                Token: Global.DataUsers.sToken,
+                Userid: Global.DataUsers.UserId,
+                Token: Global.DataUsers.Token,
                 AgentID: this.SaveIdGive, Money: this.GiveGold.string
             }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + this.AddWithdrawalUrl, _data, e => {
@@ -225,8 +225,8 @@ cc.Class({
     AddMyMsgs() {
         let xhr = cc.loader.getXMLHttpRequest()
             , _data = {
-                Userid: Global.DataUsers.sUserId,
-                Token: Global.DataUsers.sToken,
+                Userid: Global.DataUsers.UserId,
+                Token: Global.DataUsers.Token,
                 Msg: this.addMsgs.string
             }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + this.AddMyMsgUrl, _data, e => {

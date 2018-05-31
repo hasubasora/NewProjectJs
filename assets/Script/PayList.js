@@ -21,7 +21,7 @@ cc.Class({
         object: ''
     },
     onLoad() {
-        this.PayList()
+        // this.PayList()
     },
 
     start() {
@@ -30,8 +30,8 @@ cc.Class({
     PayList() {
         let xhr = cc.loader.getXMLHttpRequest()
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
         }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Transaction/GetPayList", _data, e => {
             this.object = JSON.parse(e).object
@@ -70,8 +70,8 @@ cc.Class({
         let xhr = cc.loader.getXMLHttpRequest()
         if (PayTypeID != 0) {
             let _data = {
-                Userid: Global.DataUsers.sUserId,
-                Token: Global.DataUsers.sToken,
+                Userid: Global.DataUsers.UserId,
+                Token: Global.DataUsers.Token,
                 Money: money,
                 PayTypeID: PayTypeID
             }

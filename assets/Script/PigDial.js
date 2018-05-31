@@ -86,8 +86,8 @@ cc.Class({
 
     loadUserPointer() {
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
         }
         Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/LittlePigPeky/GetRoundabout", _data, e => {
             let _UserPointer = JSON.parse(e);
@@ -140,8 +140,8 @@ cc.Class({
     GetRoundaboutRecord() {
         this.LottleList.content.removeAllChildren()
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
             PageIndex: 1,
             PageSize: 10
         }
@@ -276,8 +276,8 @@ cc.Class({
         }
 
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
             VCode: str,
             Type: this.SaveNumber
         }

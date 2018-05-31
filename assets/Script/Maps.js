@@ -131,8 +131,8 @@ cc.Class({
   //获取规则
   GetBaseRoom() {
     let _data = {
-      token: Global.DataUsers.sToken,
-      userid: Global.DataUsers.sUserId,
+      token: Global.DataUsers.Token,
+      userid: Global.DataUsers.UserId,
       roomnumberid: Global._StageData.Data
     }
     Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/caileigame/getbaseroom", _data, e => {
@@ -169,8 +169,8 @@ cc.Class({
   Prepare() {
     let xhr = cc.loader.getXMLHttpRequest()
     let _data = {
-      Userid: Global.DataUsers.sUserId,
-      Token: Global.DataUsers.sToken,
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
       roomnumberid: Global._StageData.Data
     }
     Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/caileigame/getroom", _data, e => {
@@ -222,14 +222,14 @@ cc.Class({
   // 设置房间数据
   SetGameRoomData() {
     Global.GameRoomData.forEach((v, i) => {
-      if (v.UserId == Global.DataUsers.sUserId) {
+      if (v.UserId == Global.DataUsers.UserId) {
         //设置人物位置数据
         this.xUserNum = i + 2;
         this.xplayer = (15 - v.CurrentFloor)
         this.Player.setTileGID(38, this.xUserNum, v.CurrentFloor != 0 ? this.xplayer : 14, 38);
         console.log('楼层赋值' + this.xUserNum)
       }
-      // if (v.UserId != Global.DataUsers.sUserId) {
+      // if (v.UserId != Global.DataUsers.UserId) {
       //   //设置人物位置数据
       //   this.xplayer = (15 - v.CurrentFloor)
       //   this.Player.setTileGID(28, (i + 2), v.CurrentFloor != 0 ? this.xplayer : 14, 28);
@@ -242,8 +242,8 @@ cc.Class({
   GoToUpFn(types) {
     console.log(types)
     let _data = {
-      Userid: Global.DataUsers.sUserId,
-      Token: Global.DataUsers.sToken,
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
       Roomnumberid: Global._StageData.Data,
       Type: types
     }
@@ -321,8 +321,8 @@ cc.Class({
   //获取服务器时间接口
   GetServerTimes() {
     let _data = {
-      Userid: Global.DataUsers.sUserId,
-      Token: Global.DataUsers.sToken,
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
       roomnumberid: Global._StageData.Data
     }
     Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/caileigame/getheartbeat", _data, e => {
@@ -427,8 +427,8 @@ cc.Class({
   // 退出房间
   OutRoom() {
     let _data = {
-      Userid: Global.DataUsers.sUserId,
-      Token: Global.DataUsers.sToken,
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
       roomnumberid: Global._StageData.Data
     }
     Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/caileigame/outroom", _data, e => {
@@ -487,8 +487,8 @@ cc.Class({
           Code: 101,
           Data: {
             roomId: Global._StageData.Data,
-            userId: Global.DataUsers.sUserId,
-            token: Global.DataUsers.sToken,
+            userId: Global.DataUsers.UserId,
+            token: Global.DataUsers.Token,
           }
         };
 
@@ -548,7 +548,7 @@ cc.Class({
         this.Prepare()
         Global.GameRoomData.forEach((v, i) => {
           console.log('移动其他玩家的棋子')
-          if (v.UserId == u && v.UserId != Global.DataUsers.sUserId) {
+          if (v.UserId == u && v.UserId != Global.DataUsers.UserId) {
             //设置人物位置数据
             this.moveToPlayer((i + 2), (15 - v.CurrentFloor));
             this.CalculateGold()
@@ -557,7 +557,7 @@ cc.Class({
         break;
       case 7:
         console.log('停住')
-        if (u == Global.DataUsers.sUserId) {
+        if (u == Global.DataUsers.UserId) {
           this.IsStop = 1
         }
         break;
@@ -725,8 +725,8 @@ cc.Class({
   },
   WinLoseData(states) {
     let _data = {
-      token: Global.DataUsers.sToken,
-      userid: Global.DataUsers.sUserId,
+      token: Global.DataUsers.Token,
+      userid: Global.DataUsers.UserId,
       roomnumberid: Global._StageData.Data
     }
     Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/caileigame/GetThunderTradesByThunderRoomID", _data, e => {
@@ -734,7 +734,7 @@ cc.Class({
       let lists = _e.object.List
 
       lists.forEach((v, i) => {
-        if (v.UserID == Global.DataUsers.sUserId) {
+        if (v.UserID == Global.DataUsers.UserId) {
           //设置人物位置数据
           if (states == 1) {
             this.loaderViewWin(v.PlusAmount)

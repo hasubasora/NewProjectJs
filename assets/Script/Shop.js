@@ -83,8 +83,8 @@ cc.Class({
         this.GoodesOneList.content.removeAllChildren()
         let xhr = cc.loader.getXMLHttpRequest()
         let _data = {
-            Userid: Global.DataUsers.sUserId,
-            Token: Global.DataUsers.sToken,
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
         }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/shopgoods/getgoodslist", _data, e => {
             let _e = JSON.parse(e)
