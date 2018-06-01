@@ -11,11 +11,11 @@ module.exports = {
             let sData = JSON.parse(e)
             if (sData.code == 12000) {
                 console.log(sData);
-                Global.DataUsers = JSON.parse(JSON.stringify(sData.object))
                 cc.sys.localStorage.setItem("SJ", encodeURIComponent(JSON.stringify(sData.object)));
-                Global.lobbySocket()
-                if (ns==1) {
+                Global.DataUsers = JSON.parse(JSON.stringify(sData.object))
+                if (ns == 1) {
                     cc.director.loadScene('Home')
+                    Global.lobbySocket()
                 }
             }
         })
@@ -86,7 +86,9 @@ module.exports = {
 window.Global = {
     // serverUrl: 'http://192.168.1.200:819',
     // serverUrl: 'http://192.168.1.168:819',
-    serverUrl: 'http://h5.hd4yx0.cn',
+    // serverUrl: 'http://h5.hd4yx0.cn',
+    serverUrl: 'http://h5.3dou.com',
+    
     streamXHREventsToLabel: function (xhr, method, url, _data, _fn, async = true) {
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status < 400)) {
@@ -111,8 +113,9 @@ window.Global = {
     _Golds: '',
     clientid: '',
     questions: 0,
+    //加载头像图片
     loaderUserIcon(url, nSprite) {
-        cc.loader.load(url, function (err, tex) {
+        cc.loader.load({ url: url, type: 'png' }, function (err, tex) {
             if (err) {
                 console.log(err);
                 return;
@@ -170,7 +173,7 @@ window.Global = {
         };
         Global.ws.onmessage = (event) => {
             let evMsg = JSON.parse(event.data)
-            // console.log("サーバーのメッセージ: " + event.data);
+            console.log("サーバーのメッセージ: " + event.data);
             Global.lobbyGetStatus(evMsg.Code, evMsg)
 
         };
@@ -202,6 +205,8 @@ window.Global = {
                 break;
             case 104:
                 console.log('104')
+                Global.online = evMsg.Data
+                cc.sys.localStorage.setItem('online', evMsg.Data)
                 // { "Success": true, "Data": 3, "Code": 104, "Message": "当前在线人数" }
                 // Global.ws.close()
                 break;

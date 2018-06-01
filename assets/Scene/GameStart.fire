@@ -2208,12 +2208,12 @@
     "_cascadeOpacityEnabled": true,
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
+      "x": 0,
       "y": 0.5
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 180,
+      "width": 106,
       "height": 40
     },
     "_rotationX": 0,
@@ -2222,8 +2222,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 26.9,
-      "y": 0.1
+      "x": -55,
+      "y": 0
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -2248,7 +2248,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "在线人数:1875255",
+    "_N$string": "在线人数:0",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",

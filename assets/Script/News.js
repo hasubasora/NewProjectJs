@@ -47,14 +47,14 @@ cc.Class({
         present: cc.Button,
         addMsgs: cc.EditBox,
         addMsgsBtn: cc.Button
-
+        , oldID: ''
     },
 
     // LIFE-CYCLE CALLBACKS:
     // 账户数据设置
     SetInfo() {
         if (GetUserDatas()) {
-            this.User_Name.string = Global.DataUsers.sNickName;
+            this.User_Name.string = Global.DataUsers.UserName;
             this.User_Id.string = 'ID:' + Global.DataUsers.Login;
             this.User_Gold.string = Global.DataUsers.Balance
             this.GetHallMsgFn()
@@ -103,6 +103,8 @@ cc.Class({
                             if (!lists.IsFollow) {
                                 btn1[1].node.scale = 0
                             }
+
+                            this.oldID = lists.UserId
                             btn1[1].node.on(cc.Node.EventType.TOUCH_START, event => {
                                 // console.log( newNode.getChildByName('ImgSprite').getComponentInChildren(cc.Button).normalSprite)
                                 // console.log(new cc.SpriteFrame(cc.url.raw("resources/news/ysc.png")))
@@ -195,7 +197,8 @@ cc.Class({
             , _data = {
                 Userid: Global.DataUsers.UserId,
                 Token: Global.DataUsers.Token,
-                AgentID: this.SaveIdGive, Money: this.GiveGold.string
+                AgentID: this.oldID,
+                Money: this.GiveGold.string
             }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + this.AddWithdrawalUrl, _data, e => {
             let AddWithdrawal = JSON.parse(e)
@@ -233,7 +236,7 @@ cc.Class({
             let AddWithdrawal = JSON.parse(e)
             Global.alertWindw(AddWithdrawal.message)
             this.GetHallMsgFn()
-            this.addMsgs.string=''
+            this.addMsgs.string = ''
             this.addMsgsBtn.interactable = false
             // console.log(AddWithdrawal)
         })

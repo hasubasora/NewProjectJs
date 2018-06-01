@@ -18,7 +18,7 @@ cc.Class({
     },
     UserInfoImg: {
       default: null,
-      type: cc.SpriteFrame
+      type: cc.Sprite
     },
     UserInfoId: {
       default: null,
@@ -98,7 +98,24 @@ cc.Class({
 
     qrCodeUrls: cc.Node,
 
-    Extext: cc.Node
+    Extext: cc.Node,
+
+    // 个人中心
+    MyName: cc.EditBox,
+    MyId: cc.Label,
+    MyIcon: cc.Sprite,
+    QsNumber: cc.Label,
+    ThunderNumber: cc.Label,
+    PigNumber: cc.Label,
+    QsWinNumber: cc.Label,
+    ThWinNumber: cc.Label,
+
+    ByGolds: cc.ScrollView,
+    BsGolds: cc.ScrollView,
+
+    ThunderScroll: cc.ScrollView,
+    QuestionScroll: cc.ScrollView,
+
   },
 
   // LIFE-CYCLE CALLBACKS:
@@ -106,13 +123,17 @@ cc.Class({
     this.GuldsSetings.scale = 0
   },
   modification() {
+
     let sss = this.Extext.getComponent(cc.EditBox).string
     //   this.Extext.removeComponent(cc.EditBox)
     //  let txt= this.Extext.addComponent(cc.Label)
     //   txt.string  = '787878'
     // console.log(this.Extext.getComponent(cc.EditBox));
     // console.log(this.Extext.getComponent(cc.Label).string);
-    console.log('---');
+    if (sss == '') {
+      this.Extext.getComponent(cc.EditBox).string = Global.DataUsers.UserName
+      return
+    }
     let data = {
       Userid: Global.DataUsers.UserId,
       Token: Global.DataUsers.Token,
@@ -122,7 +143,7 @@ cc.Class({
       let code = JSON.parse(e)
       console.log(code);
       if (code.code == 12000) {
-
+        this.GetUserCenter()
       }
     })
   },
@@ -141,9 +162,9 @@ cc.Class({
     //音乐初始化
     Global.Audios = this.Audios;
     Global.Audios.volume = cc.sys.localStorage.getItem("Mic");
-    //判断有没有账户
-    console.log(cc.sys.localStorage.getItem('SJ') != 'undefined');
-    console.log(cc.sys.localStorage.getItem('SJ') != null);
+    // //判断有没有账户
+    // console.log(cc.sys.localStorage.getItem('SJ') != 'undefined');
+    // console.log(cc.sys.localStorage.getItem('SJ') != null);
 
     if (cc.sys.localStorage.getItem('SJ') != null) {
       Global.DataUsers = JSON.parse(decodeURIComponent(cc.sys.localStorage.getItem('SJ')))
@@ -151,15 +172,23 @@ cc.Class({
       this.GetInvitation()
       this.GetAgentRule()
       this.GetAgentDataStatisticsInfo()
+
+      //个人中心 金币购买
+      this.GetUserCenter()
+      this.GetRecords(1)
+      this.GetRecords(2)
+
+      //游戏记录
+      this.GetThunderTrades()
+      this.getexamgamerecords()
+
+
       if (cc.sys.localStorage.getItem('SJ') == 'undefined') {
         cc.director.loadScene('LoginPage')
       }
     } else {
       cc.director.loadScene('LoginPage')
     }
-
-    this.GetUserCenter()
-    this.GetRecords()
   },
   addEventListeners() {
     this.checkOrient();
@@ -186,12 +215,14 @@ cc.Class({
   },
 
   SetInfo() {
+    GetUserDatas()
     console.log(Global.DataUsers);
-    // if (Global.DataUsers == null) {
-    //   cc.director.loadScene('LoginPage')
-    // }
     this.UserInfoName.string = Global.DataUsers.UserName;
+    this.MyName.string = Global.DataUsers.UserName;
+    this.MyId.string = 'ID:' + Global.DataUsers.Login;
     this.UserInfoId.string = 'ID:' + Global.DataUsers.Login;
+    Global.loaderUserIcon(Global.DataUsers.UserIcon, this.UserInfoImg)
+    Global.loaderUserIcon(Global.DataUsers.UserIcon, this.MyIcon)
     this.Gold.string = Global.DataUsers.Balance;
   },
   Invitation(e, n) {
@@ -358,7 +389,7 @@ cc.Class({
           Global.loadPre('wlist', newNode => {
             Global.loaderUserIcon(iterator.Avatar, newNode.getChildByName('wSprite').getComponent(cc.Sprite))
             newNode.getChildByName('nLabel').getComponent(cc.Label).string = iterator.UserName;
-            newNode.getChildByName('ILabel').getComponent(cc.Label).string = iterator.UserID;
+            newNode.getChildByName('ILabel').getComponent(cc.Label).string = iterator.Login;
             newNode.getChildByName('yLabel').getComponent(cc.Label).string = iterator.Amount;
             if (num == 1) {
               this.myScrollView.content.addChild(newNode)
@@ -391,20 +422,39 @@ cc.Class({
 
 
   // % .26获交易数据
-  GetRecords() {
- var xhr = cc.loader.getXMLHttpRequest()
+  GetRecords(num) {
+    this.ByGolds.content.removeAllChildren()
+    this.BsGolds.content.removeAllChildren()
     let data = {
       Userid: Global.DataUsers.UserId,
       Token: Global.DataUsers.Token,
+      PageIndex: 1,
+      PageSize: 10,
+      Type: num
     }
-    Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/account/GetRecords", data, e => {
+    Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/account/GetRecords", data, e => {
       let code = JSON.parse(e)
       if (code.code == 12000) {
         console.log(code);
-
+        console.log(code.object);
+        console.log(code.object.List[0]);
+        for (const iterator of code.object.List) {
+          Global.loadPre('boxs', nodeList => {
+            let com = nodeList.getComponentsInChildren(cc.Label)
+            com[0].string = iterator.Money
+            com[1].string = iterator.StateCode
+            com[2].string = iterator.ExitTime
+            if (num == 1) {
+              this.ByGolds.content.addChild(nodeList)
+            }
+            if (num == 2) {
+              this.BsGolds.content.addChild(nodeList)
+            }
+          })
+        }
       }
     })
- 
+
   },
   //%.27获取用户中心
   GetUserCenter() {
@@ -416,9 +466,77 @@ cc.Class({
     Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/account/GetUserCenter", data, e => {
       let code = JSON.parse(e)
       if (code.code == 12000) {
-        console.log(code);
-
+        console.log(code.object);
+        this.QsNumber.string = '极速答题周对局：' + code.object.ExamNumber
+        this.ThunderNumber.string = '排雷先锋周对局：' + code.object.ThunderNumber
+        this.PigNumber.string = '集小猪佩奇总数量：' + code.object.LittlePigPekyNumber
+        this.QsWinNumber.string = code.object.ExamWinningRate + '%'
+        this.ThWinNumber.string = code.object.ThunderWinningRate + '%'
+        this.UserInfoName.string = code.object.UserName;
+        this.MyName.string = code.object.UserName;
+        this.MyId.string = 'ID:' + code.object.Login;
+        this.UserInfoId.string = 'ID:' + code.object.Login;
+      }
+      if (code.code == 12002) {
+        cc.director.loadScene('LoginPage')
       }
     })
-  }
+  },
+  GetThunderTrades() {
+    this.ThunderScroll.content.removeAllChildren()
+    let data = {
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
+      PageIndex: 1,
+      PageSize: 10,
+    }
+    Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/caileigame/GetThunderTrades", data, e => {
+      let code = JSON.parse(e)
+      if (code.code == 12000) {
+        console.log(code);
+        if (code.object.List != '') {
+          for (const iterator of code.object.List) {
+            Global.loadPre('boxs', nodeList => {
+              console.log(nodeList.getComponentsInChildren(cc.Label))
+              let com = nodeList.getComponentsInChildren(cc.Label)
+              com[0].string = iterator.PlusAmount > 0 ? '胜利' : '失败'
+              com[1].string = iterator.PlusAmount
+              com[2].string = iterator.ExitTime
+              this.ThunderScroll.content.addChild(nodeList)
+
+              // this.QuestionScroll.content.addChild(nodeList)
+            })
+          }
+        }
+      }
+    })
+  },
+  getexamgamerecords() {
+    this.QuestionScroll.content.removeAllChildren()
+    let data = {
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
+      PageIndex: 1,
+      PageSize: 10,
+    }
+    Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/exam/getexamgamerecords", data, e => {
+      let code = JSON.parse(e)
+      if (code.code == 12000) {
+        console.log(code);
+        if (code.object != '') {
+          for (const iterator of code.object) {
+            Global.loadPre('boxs', nodeList => {
+              console.log(nodeList.getComponentsInChildren(cc.Label))
+              let com = nodeList.getComponentsInChildren(cc.Label)
+              com[0].string = (iterator.RecyclingAmount - iterator.TradesAmount) > 0 ? '胜利' : '失败'
+              com[1].string = iterator.Profit
+              com[2].string = iterator.ExitTime
+              this.QuestionScroll.content.addChild(nodeList)
+            })
+          }
+        }
+      }
+    })
+  },
 });
+// 

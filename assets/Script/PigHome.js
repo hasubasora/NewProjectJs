@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-
+import {GetUserDatas} from 'GetUserData'
 cc.Class({
     extends: cc.Component,
 
@@ -59,10 +59,10 @@ cc.Class({
     },
     //用户数据
     SetInfo() {
-        Global.getDataUsers()
-        this.User_Name.string = Global.DataUsers.sNickName;
+        GetUserDatas()
+        this.User_Name.string = Global.DataUsers.UserName;
         this.User_Id.string = 'ID:' + Global.DataUsers.Login;
-        this.loaderUserIcon(Global.DataUsers.sUserIcon, this.UserPic)
+        this.loaderUserIcon(Global.DataUsers.UserIcon, this.UserPic)
         this.GetLstUserCharacterInfo()
         this.getView()
     },

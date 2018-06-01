@@ -34,7 +34,7 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
-        Global.getDataUsers()
+        GetUserDatas()
         this.startView(0,1)
     },
     startView(e, n) {

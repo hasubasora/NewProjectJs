@@ -48,7 +48,7 @@ cc.Class({
     // 账户数据设置
     SetInfo() {
         if (GetUserDatas()) {
-            this.User_Name.string = Global.DataUsers.sNickName;
+            this.User_Name.string = Global.DataUsers.UserName;
             this.User_Id.string = 'ID:' + Global.DataUsers.Login;
             this.User_Gold.string = Global.DataUsers.Balance
         } else {

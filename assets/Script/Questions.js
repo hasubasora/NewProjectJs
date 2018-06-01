@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-
+import { GetUserDatas } from 'GetUserData'
 cc.Class({
     extends: cc.Component,
 
@@ -89,11 +89,11 @@ cc.Class({
 
     },
     SetInfo() {
-        Global.getDataUsers()
-        this.UserName.string = Global.DataUsers.sNickName;
+        GetUserDatas()
+        this.UserName.string = Global.DataUsers.UserName;
         this.UserID.string = 'ID:' + Global.DataUsers.Login;
         this.Gold.string = Global.DataUsers.Balance;
-        this.loaderUserIcon(Global.DataUsers.sUserIcon, this.UserPic)
+        this.loaderUserIcon(Global.DataUsers.UserIcon, this.UserPic)
         this.Getroom()
         if (Global.DataUsers.wsUrl != 'undefined') {
             this.nSocket()

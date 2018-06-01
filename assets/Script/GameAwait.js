@@ -36,13 +36,13 @@ cc.Class({
     onLoad() {
         //判断有没有账户
         this.SetInfo()
-        GetUserDatas()
     },
     SetInfo() {
-        Global.getDataUsers()
-        this.UserName.string = Global.DataUsers.sNickName;
+        GetUserDatas()
+        this.UserName.string = Global.DataUsers.UserName;
         this.UserID.string = 'ID:' + Global.DataUsers.Login;
         this.Gold.string = Global.DataUsers.Balance;
+        this.OnlineNumber.getComponentInChildren(cc.Label).string = '在线人数:' + cc.sys.localStorage.getItem('online')
     },
     /**
      * 
@@ -76,7 +76,7 @@ cc.Class({
                 if (_GoToGame.code != 12000) {
                     LoginTimeOut(Global._StageData.code)
                 } else {
-                    GoLoadScene("Stage")
+                    cc.director.loadScene("Stage")
                 }
             })
         }

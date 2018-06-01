@@ -1,4 +1,4 @@
-import { GetUserDatas, AddWindow, GoLoadScene, LoginTimeOut } from "GetUserData";
+import { GetUserDatas, AddWindow, LoginTimeOut } from "GetUserData";
 // var netControl = require('NetControl');
 
 cc.Class({
@@ -88,7 +88,6 @@ cc.Class({
     // }
 
     console.log('进入游戏界面')
-    this.GetBaseRoom()
     this.SetInfo()          //设置用户数据
     this.GetServerTimes()   //获取服务器时间接口
     this.SetServerTimes()   //服务器时间自动计时
@@ -130,6 +129,10 @@ cc.Class({
 
   //获取规则
   GetBaseRoom() {
+    if (Global._StageData.Data == undefined) {
+      cc.director.loadScene('GameStart')
+      return
+    }
     let _data = {
       token: Global.DataUsers.Token,
       userid: Global.DataUsers.UserId,
@@ -426,20 +429,19 @@ cc.Class({
 
   // 退出房间
   OutRoom() {
+
     let _data = {
       Userid: Global.DataUsers.UserId,
       Token: Global.DataUsers.Token,
       roomnumberid: Global._StageData.Data
     }
     Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/caileigame/outroom", _data, e => {
-      let _StageData = JSON.parse(e);
-      GoLoadScene("Home")
-      this.unschedule(this.T1);
-      this.unschedule(this.T2);
-      if (_StageData.Success) {
-        console.log(_StageData.Message)
-      } else {
-        console.log(_StageData.Message)
+      let _Stage = JSON.parse(e);
+      if (_Stage.code == 12000) {
+        cc.director.loadScene("Home")
+        console.log('退出房间成功');
+        this.unschedule(this.T1);
+        this.unschedule(this.T2);
       }
     })
   },
@@ -469,13 +471,14 @@ cc.Class({
  * 设置按钮
  */
   SetingBox() {
-    AddWindow(this.node.parent, this.Setings, 0,0);
+    AddWindow(this.node.parent, this.Setings, 0, 0);
   },
   // 账户数据设置
   SetInfo() {
-    Global.getDataUsers()
-    this.User_Name.string = Global.DataUsers.sNickName;
+    GetUserDatas()
+    this.User_Name.string = Global.DataUsers.UserName;
     this.User_Id.string = 'ID:' + Global.DataUsers.Login;
+    this.GetBaseRoom()
   },
   nSocket() {
     var ws = new WebSocket(Global.DataUsers.wsUrl);
@@ -493,9 +496,9 @@ cc.Class({
         };
 
         ws.send(JSON.stringify(room));
-        console.log("WebSocket 卫星发射...！");
+        console.log("WebSocket 房间...！");
       } else {
-        console.log("WebSocket 准备好卫星发射...！");
+        console.log("WebSocket 准备好房间卫星发射...！");
       }
     };
     ws.onmessage = (event) => {
@@ -503,7 +506,7 @@ cc.Class({
       let aData = JSON.parse(event.data).Data.Status
       let UserID = JSON.parse(event.data).Data.UserID
       let Floor = JSON.parse(event.data).Data.Floor
-      this.GetStatus(aData, UserID, Floor)
+      this.GetStatus(aData, UserID, Floor, ws)
     };
     ws.onerror = (event) => {
       console.log("メッセージ エッロ！！");
@@ -514,13 +517,13 @@ cc.Class({
     };
     ws.onclose = (event) => {
       console.log("サーバー　オフ.");
-      this.nSocketTime()
+      // this.nSocketTime()
     };
 
   },
 
 
-  GetStatus(x, u, f) { //sk里面的id
+  GetStatus(x, u, f, ws) { //sk里面的id
     switch (x) {
       case 0:
         console.log('什么宝物都没有')
@@ -567,6 +570,7 @@ cc.Class({
       case 9:
         this.ButtonType(2)
         console.log('游戏结束')
+      
         this.Prepare()
         this.scheduleOnce(() => {
           // 这里的 this 指向 component
@@ -575,6 +579,7 @@ cc.Class({
         break;
       case 10:
         console.log('解散房间')
+        ws.close()
         break;
       case 11:
         this.aAnimationTimes()
@@ -625,7 +630,6 @@ cc.Class({
       cc.delayTime(1),
       cc.fadeOut(1),
       cc.tintTo(2, 255, 255, 255)
-
     ))
     this.scheduleOnce(() => {
       //咸鱼在当前的爆炸层
@@ -700,7 +704,7 @@ cc.Class({
       if (dot && this.xFloor != this.bom && this.n2 == 0 && this.n1 == 0) {
         this.WinLoseData(1)
         console.log('你赢了3')
-      }else{
+      } else {
         this.WinLoseData(2)
         console.log('你输了3')
       }

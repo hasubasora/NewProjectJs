@@ -28,10 +28,10 @@ cc.Class({
     },
     addressItem: {
       get: function () {
-        return this._width;
+        return this._addressItem;
       },
       set: function (value) {
-        this._width = value;
+        this._addressItem = value;
       }
     },
     /**
@@ -135,6 +135,7 @@ cc.Class({
       console.log('退出')
       if (e) {
         cc.sys.localStorage.removeItem('SJ')
+        cc.director.loadScene('LoginPage')
       }
     })
 
@@ -264,7 +265,7 @@ cc.Class({
       PageSize: 1
     }
     Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Address/GetUserAddressList", _data, e => {
-   
+
       let obj = JSON.parse(e).object
       if (!obj) {
         this.address.string = obj[0].DetailAddress
@@ -328,7 +329,6 @@ cc.Class({
 
     }
     Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/account/GetPayInfo", _data, e => {
-
       let _e = JSON.parse(e).object
       this.CardName.string = _e.TrueName
       this.alipayCard.string = _e.AlipayAccount
@@ -343,7 +343,7 @@ cc.Class({
     this.scrollViewCard.node.zIndex = 1;
   },
 
-  GetBankListPost(){
+  GetBankListPost() {
     let xhr = cc.loader.getXMLHttpRequest()
     let _data = {
       Userid: Global.DataUsers.UserId,

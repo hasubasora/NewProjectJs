@@ -1,3 +1,4 @@
+import {GetUserDatas} from 'GetUserData'
 cc.Class({
     extends: cc.Component,
     properties: {
@@ -59,7 +60,7 @@ cc.Class({
         winNode: cc.Node
     },
     SetInfo() {
-        Global.getDataUsers()
+        GetUserDatas()
         this.User_Glod.string = Global.DataUsers.Balance;
         this.loadUserPointer()
         this.GetRoundaboutRecord()   //先加载一次 顺序就对了
