@@ -41,7 +41,7 @@ cc.Class({
         GameLists: cc.ScrollView,
         misNumber: 0,
         misWindow: cc.Node,  //答题卡
-
+        ViewWeb: cc.WebView
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -54,6 +54,8 @@ cc.Class({
         this.UserName.string = Global.DataUsers.UserName;
         this.UserID.string = 'ID:' + Global.DataUsers.Login;
         this.Gold.string = Global.DataUsers.Balance;
+        this.getView()
+        
         this.loaderUserIcon(Global.DataUsers.UserIcon, this.UserPic)
         this.ClientLogs()
         this.regulations()
@@ -278,5 +280,23 @@ cc.Class({
             this.RankingLists.content.addChild(newNode)
         });
     },
-    // update (dt) {},
+
+    getView() {
+        let xhr = cc.loader.getXMLHttpRequest()
+        let _data = {
+            client: 1,
+            clientVersion: '0.0.1'
+        }
+        Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Common/getversion", _data, e => {
+            let json = JSON.parse(e)
+            console.log(json.object.circleUrl);
+            console.log(this.ViewWeb);
+            // WebView.url = json.object.circleUrl + '/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId
+            // WebView.url = 'http://localhost:6667/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId
+            this.ViewWeb.url = 'http://192.168.1.106:802/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId + '&type=' + 6
+            // console.log(this.ViewWeb.url)
+            // console.log('--------------------------------------------------')
+        })
+    }
+
 });

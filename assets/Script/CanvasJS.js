@@ -74,8 +74,8 @@ cc.Class({
     // 二维码
     QcCode: cc.Sprite,
     buttomMsg: cc.Label,
-    User_n: cc.Label,
-    User_id: cc.Label,
+    UserToName: cc.Label,
+    UserToId: cc.Label,
     User_pic: cc.Sprite,
 
     TotalAmount: cc.Label,
@@ -141,7 +141,6 @@ cc.Class({
     }
     Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/account/UpdateUserName", data, e => {
       let code = JSON.parse(e)
-      console.log(code);
       if (code.code == 12000) {
         this.GetUserCenter()
       }
@@ -216,7 +215,7 @@ cc.Class({
 
   SetInfo() {
     GetUserDatas()
-    console.log(Global.DataUsers);
+    // console.log(Global.DataUsers);
     this.UserInfoName.string = Global.DataUsers.UserName;
     this.MyName.string = Global.DataUsers.UserName;
     this.MyId.string = 'ID:' + Global.DataUsers.Login;
@@ -227,6 +226,9 @@ cc.Class({
   },
   Invitation(e, n) {
     if (n == 1) {
+      this.GetInvitation()
+      this.GetAgentRule()
+      this.GetAgentDataStatisticsInfo()
       this.GetParentAgentWeeklyTransaction(1)
       this.GetParentAgentWeeklyTransaction(2)
     }
@@ -314,8 +316,8 @@ cc.Class({
         let mo = code.model
         let ser = code.user
         let tips = code.tips
-        this.User_n.string = ser.UserName
-        this.User_id.string = ' ID:' + ser.UserID
+        this.UserToName.string = ser.UserName 
+        this.UserToId.string = ' ID:' + ser.Login 
         this.TotalAmount.string = mo.TotalAmount
         this.DirectlyUnderAmount.string = mo.DirectlyUnderAmount
         this.LowerMemberAmount.string = mo.LowerMemberAmount
@@ -336,7 +338,7 @@ cc.Class({
     }
     Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Agent/ApplicationBroker", data, e => {
       let code = JSON.parse(e)
-      console.log(code);
+      // console.log(code);
       if (code.code == 12000) {
 
       }
@@ -435,9 +437,9 @@ cc.Class({
     Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/account/GetRecords", data, e => {
       let code = JSON.parse(e)
       if (code.code == 12000) {
-        console.log(code);
-        console.log(code.object);
-        console.log(code.object.List[0]);
+        // console.log(code);
+        // console.log(code.object);
+        // console.log(code.object.List[0]);
         for (const iterator of code.object.List) {
           Global.loadPre('boxs', nodeList => {
             let com = nodeList.getComponentsInChildren(cc.Label)
@@ -466,7 +468,7 @@ cc.Class({
     Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/account/GetUserCenter", data, e => {
       let code = JSON.parse(e)
       if (code.code == 12000) {
-        console.log(code.object);
+        // console.log(code.object);
         this.QsNumber.string = '极速答题周对局：' + code.object.ExamNumber
         this.ThunderNumber.string = '排雷先锋周对局：' + code.object.ThunderNumber
         this.PigNumber.string = '集小猪佩奇总数量：' + code.object.LittlePigPekyNumber
@@ -493,11 +495,11 @@ cc.Class({
     Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/caileigame/GetThunderTrades", data, e => {
       let code = JSON.parse(e)
       if (code.code == 12000) {
-        console.log(code);
-        if (code.object.List != '') {
+        // console.log(code);
+        if (code.object.total != 0) {
           for (const iterator of code.object.List) {
             Global.loadPre('boxs', nodeList => {
-              console.log(nodeList.getComponentsInChildren(cc.Label))
+              // console.log(nodeList.getComponentsInChildren(cc.Label))
               let com = nodeList.getComponentsInChildren(cc.Label)
               com[0].string = iterator.PlusAmount > 0 ? '胜利' : '失败'
               com[1].string = iterator.PlusAmount
@@ -522,21 +524,38 @@ cc.Class({
     Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/exam/getexamgamerecords", data, e => {
       let code = JSON.parse(e)
       if (code.code == 12000) {
-        console.log(code);
+        // console.log(code);
         if (code.object != '') {
           for (const iterator of code.object) {
             Global.loadPre('boxs', nodeList => {
-              console.log(nodeList.getComponentsInChildren(cc.Label))
               let com = nodeList.getComponentsInChildren(cc.Label)
               com[0].string = (iterator.RecyclingAmount - iterator.TradesAmount) > 0 ? '胜利' : '失败'
               com[1].string = iterator.Profit
-              com[2].string = iterator.ExitTime
+              com[2].string = this.formatDateTime(iterator.ExitTime)
               this.QuestionScroll.content.addChild(nodeList)
+              // console.log(this.formatDateTime(iterator.ExitTime));
+
             })
           }
         }
       }
     })
   },
+  formatDateTime(timeStamp) {
+    var date = new Date();
+    date.setTime(timeStamp * 1000);
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = m < 10 ? ('0' + m) : m;
+    var d = date.getDate();
+    d = d < 10 ? ('0' + d) : d;
+    var h = date.getHours();
+    h = h < 10 ? ('0' + h) : h;
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+    minute = minute < 10 ? ('0' + minute) : minute;
+    second = second < 10 ? ('0' + second) : second;
+    return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+  }
 });
 // 

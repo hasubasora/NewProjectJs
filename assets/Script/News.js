@@ -1,33 +1,9 @@
-// Learn cc.Class:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-import { LoginTimeOut, GetUserDatas } from "GetUserData";
+
+import { GetUserDatas } from "GetUserData";
 cc.Class({
     extends: cc.Component,
 
     properties: {
-        // foo: {
-        //     // ATTRIBUTES:
-        //     default: null,        // The default value will be used only when the component attaching
-        //                           // to a node for the first time
-        //     type: cc.SpriteFrame, // optional, default is typeof default
-        //     serializable: true,   // optional, default is true
-        // },
-        // bar: {
-        //     get () {
-        //         return this._bar;
-        //     },
-        //     set (value) {
-        //         this._bar = value;
-        //     }
-        // },
-
         GetHallMsgUrl: '/caileigame/GetHallMsg',           //%.38获取大厅消息
         AddFollowUrl: '/caileigame/AddFollow',             //%.39大厅关注
         DelFollowUrl: '/caileigame/DelFollow',             //%.40大厅取消关注
@@ -43,28 +19,27 @@ cc.Class({
         RichTextGold: cc.RichText,
         User_Name: cc.Label,
         User_Id: cc.Label,
+        User_Pic: cc.Sprite,
         User_Gold: cc.Label,
         present: cc.Button,
         addMsgs: cc.EditBox,
-        addMsgsBtn: cc.Button
-        , oldID: ''
+        addMsgsBtn: cc.Button, oldID: ''
     },
 
     // LIFE-CYCLE CALLBACKS:
     // 账户数据设置
     SetInfo() {
-        if (GetUserDatas()) {
-            this.User_Name.string = Global.DataUsers.UserName;
-            this.User_Id.string = 'ID:' + Global.DataUsers.Login;
-            this.User_Gold.string = Global.DataUsers.Balance
-            this.GetHallMsgFn()
-        }
+        this.User_Name.string = Global.DataUsers.UserName
+        this.User_Id.string = 'ID:' + Global.DataUsers.Login
+        this.User_Gold.string = Global.DataUsers.Balance
+        Global.loaderUserIcon(Global.DataUsers.UserIcon, this.User_Pic)
+        this.GetHallMsgFn()
     },
     onLoad() {
+        GetUserDatas()
         this.SetInfo()          //设置用户数据
         this.contentLeft = this.scrollContent.content
         this.contentRight = this.scrollContentRight.content
-
     },
     GetHallMsgFn() {
         let xhr = cc.loader.getXMLHttpRequest()
@@ -141,7 +116,6 @@ cc.Class({
                         var newNode = cc.instantiate(Prefab);
                         // newNode.setPosition(this.node.width / 2, this.node.height / 2);
                         newNode.getChildByName('OSprite').getComponentInChildren(cc.Label).string = 'ID:' + msg.UserName
-
                         newNode.getChildByName('zhuanzhang').on(cc.Node.EventType.TOUCH_END, event => {
                             // 金币转正弹窗
                             this.GoldWindow.scale = 1
@@ -158,7 +132,8 @@ cc.Class({
                 }
 
             } else {
-                LoginTimeOut(hall.code)
+                console.log('cuow');
+
             }
 
         })
@@ -202,6 +177,9 @@ cc.Class({
             }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + this.AddWithdrawalUrl, _data, e => {
             let AddWithdrawal = JSON.parse(e)
+            if (AddWithdrawal.code == 12000) {
+                this.GoldWindow.scale = 0
+            }
             Global.alertWindw(AddWithdrawal.message)
             // console.log(AddWithdrawal)
         })

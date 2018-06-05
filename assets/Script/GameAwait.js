@@ -29,7 +29,7 @@ cc.Class({
         //金币
         Gold: cc.Label,
         UserName: cc.Label,
-        UserPic: cc.Node,
+        UserPic: cc.Sprite,
         UserID: cc.Label,
         ts: cc.Prefab,
     },
@@ -41,6 +41,7 @@ cc.Class({
         GetUserDatas()
         this.UserName.string = Global.DataUsers.UserName;
         this.UserID.string = 'ID:' + Global.DataUsers.Login;
+        Global.loaderUserIcon(Global.DataUsers.UserIcon, this.UserPic)
         this.Gold.string = Global.DataUsers.Balance;
         this.OnlineNumber.getComponentInChildren(cc.Label).string = '在线人数:' + cc.sys.localStorage.getItem('online')
     },

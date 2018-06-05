@@ -87,9 +87,21 @@ cc.Class({
     this.content = this.scrollView.content;
     this.content2 = this.scrollView2.content;
     this.content3 = this.scrollView3.content;
-    this.GetMessges()
+    Global.GetMessges(obj=>{
+      if (obj) {
+        Global.addressId = obj[0].ID
+        this.address.string = obj[0].DetailAddress
+        this.addressName.string = obj[0].contactName
+        this.addressTel.string = obj[0].MobilePhone
+        this.Sheng.getComponentInChildren(cc.Label).string = obj[0].ProvinceName
+        this.Shi.getComponentInChildren(cc.Label).string = obj[0].CityName
+        this.Qu.getComponentInChildren(cc.Label).string = obj[0].AreaName
+      }
+    })
     this.GetPayInfo()
     this.GetBankListPost()
+   
+    
 
     // this.scrollView.runAction(cc.moveTo(2, 100, 100));
     // console.log(this.content);
@@ -256,29 +268,28 @@ cc.Class({
     }
 
   },
-  GetMessges() {
-    let xhr = cc.loader.getXMLHttpRequest()
-    let _data = {
-      Userid: Global.DataUsers.UserId,
-      Token: Global.DataUsers.Token,
-      PageIndex: 1,
-      PageSize: 1
-    }
-    Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Address/GetUserAddressList", _data, e => {
-
-      let obj = JSON.parse(e).object
-      if (!obj) {
-        this.address.string = obj[0].DetailAddress
-        this.addressName.string = obj[0].contactName
-        this.addressTel.string = obj[0].MobilePhone
-        this.Sheng.getComponentInChildren(cc.Label).string = obj[0].ProvinceName
-        this.Shi.getComponentInChildren(cc.Label).string = obj[0].CityName
-        this.Qu.getComponentInChildren(cc.Label).string = obj[0].AreaName
-      }
-    })
-  },
+  // GetMessges() {
+  //   let xhr = cc.loader.getXMLHttpRequest()
+  //   let _data = {
+  //     Userid: Global.DataUsers.UserId,
+  //     Token: Global.DataUsers.Token,
+  //     PageIndex: 1,
+  //     PageSize: 1
+  //   }
+  //   Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Address/GetUserAddressList", _data, e => {
+  //     let obj = JSON.parse(e).object
+  //     if (obj) {
+  //       Global.addressId = obj[0].ID
+  //       this.address.string = obj[0].DetailAddress
+  //       this.addressName.string = obj[0].contactName
+  //       this.addressTel.string = obj[0].MobilePhone
+  //       this.Sheng.getComponentInChildren(cc.Label).string = obj[0].ProvinceName
+  //       this.Shi.getComponentInChildren(cc.Label).string = obj[0].CityName
+  //       this.Qu.getComponentInChildren(cc.Label).string = obj[0].AreaName
+  //     }
+  //   })
+  // },
   // 地址 end
-
 
   /***
    * 支付信息

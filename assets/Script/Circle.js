@@ -12,21 +12,6 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        // foo: {
-        //     // ATTRIBUTES:
-        //     default: null,        // The default value will be used only when the component attaching
-        //                           // to a node for the first time
-        //     type: cc.SpriteFrame, // optional, default is typeof default
-        //     serializable: true,   // optional, default is true
-        // },
-        // bar: {
-        //     get () {
-        //         return this._bar;
-        //     },
-        //     set (value) {
-        //         this._bar = value;
-        //     }
-        // },
         ViewWeb1: cc.WebView,
         ViewWeb2: cc.WebView,
     },
@@ -34,12 +19,12 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
-        GetUserDatas()
         this.startView(0,1)
     },
     startView(e, n) {
         console.log(e);
         console.log(n);
+        console.log(Global.DataUsers.Token);
 
 
         let xhr = cc.loader.getXMLHttpRequest()
@@ -47,6 +32,7 @@ cc.Class({
             client: 1,
             clientVersion: '0.0.1'
         }
+        
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Common/getversion", _data, e => {
             let json = JSON.parse(e)
             let serverUrl = 'http://192.168.1.106:802'

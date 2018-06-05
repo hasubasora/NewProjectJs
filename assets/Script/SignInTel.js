@@ -64,7 +64,6 @@ cc.Class({
         case 3:
           this.phoneBtn.scale = 1
           this.wxBtn.scale = 1
-
           break;
         default:
           break;
@@ -73,8 +72,12 @@ cc.Class({
   },
   wxBtnLogin() {
     console.log(this.webwxlogin + '?cbUrl=' + encodeURIComponent(location.href));
-    window.location.href = this.webwxlogin + '?cbUrl =' + encodeURIComponent(location.href)
+    window.location.href = this.webwxlogin + '?cbUrl=' + encodeURIComponent(location.href)
   },
+
+
+
+  
   //信息发射站
   SendMessages(e, c) {
     var xhr = cc.loader.getXMLHttpRequest()
@@ -181,10 +184,7 @@ cc.Class({
     if (this.getQueryString('wxtoken') != null) {
       console.log('??');
       console.log('??');
-      Global.DataUsers.Token = this.getQueryString('wxtoken');
-      // Global.DataUsers.UserID = this.getQueryString('UserID');
-      console.log(Global.DataUsers.Token);
-      WeixinLoginTime()
+      WeixinLoginTime(this.getQueryString('wxtoken'))
       // cc.director.loadScene('Home')
     } else {
       console.log('!!');

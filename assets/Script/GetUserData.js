@@ -1,5 +1,10 @@
 module.exports = {
     GetUserDatas(ns) {
+
+        if (Global.DataUsers == null) {
+            Global.GoLoadScene()
+            return
+        }
         Global.DataUsers = JSON.parse(decodeURIComponent(cc.sys.localStorage.getItem('SJ')))
         console.log('-------o--------');
         let _data = {
@@ -18,14 +23,17 @@ module.exports = {
                     Global.lobbySocket()
                 }
             }
+            if (sData.code == 12002) {
+                cc.sys.localStorage.removeItem('SJ')
+
+            }
         })
         return true;
     },
-    WeixinLoginTime() {
+    WeixinLoginTime(tok) {
         console.log('-------w--------');
-        console.log(Global.DataUsers.Token);
         let _data = {
-            token: Global.DataUsers.Token,
+            token: tok,
         }
         Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/Weixin/WebLoginByToken", _data, e => {
             console.log('微信獲取用戶數據')
@@ -86,9 +94,9 @@ module.exports = {
 window.Global = {
     // serverUrl: 'http://192.168.1.200:819',
     // serverUrl: 'http://192.168.1.168:819',
-    // serverUrl: 'http://h5.hd4yx0.cn',
+    // serverUrl: 'http://h5.huizhisuo.com',
     serverUrl: 'http://h5.3dou.com',
-    
+
     streamXHREventsToLabel: function (xhr, method, url, _data, _fn, async = true) {
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status < 400)) {
@@ -113,6 +121,12 @@ window.Global = {
     _Golds: '',
     clientid: '',
     questions: 0,
+    returnHome() {
+        if (Global.DataUsers == null) {
+            Global.GoLoadScene()
+            return
+        }
+    },
     //加载头像图片
     loaderUserIcon(url, nSprite) {
         cc.loader.load({ url: url, type: 'png' }, function (err, tex) {
@@ -215,6 +229,20 @@ window.Global = {
                 Global.GoLoadScene()
                 break;
         }
+    },
+    //获取收获
+    GetMessges(fn) {
+        let xhr = cc.loader.getXMLHttpRequest()
+        let _data = {
+            Userid: Global.DataUsers.UserId,
+            Token: Global.DataUsers.Token,
+            PageIndex: 1,
+            PageSize: 1
+        }
+        Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Address/GetUserAddressList", _data, e => {
+            let obj = JSON.parse(e).object
+            fn(obj)
+        })
     },
 };
 

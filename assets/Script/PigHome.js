@@ -200,47 +200,47 @@ cc.Class({
         switch (iterator.RuleCode) {
             case 'rotarydraw':
                 btn.on(cc.Node.EventType.TOUCH_END, () => {
-                    console.log('转盘抽奖');
+                    // console.log('转盘抽奖');
                 })
                 break;
             case 'jisudatitransaction1':
-                console.log('极速答题');
+                // console.log('极速答题');
                 btn.on(cc.Node.EventType.TOUCH_END, () => {
                     cc.director.loadScene('QuestionsStart')
                 })
                 break;
             case 'jisudatitransaction0':
-                console.log('极速答题');
+                // console.log('极速答题');
                 btn.on(cc.Node.EventType.TOUCH_END, () => {
                     cc.director.loadScene('QuestionsStart')
                 })
                 break;
             case 'paileitransaction1':
-                console.log('排雷先锋');
+                // console.log('排雷先锋');
                 btn.on(cc.Node.EventType.TOUCH_END, () => {
                     cc.director.loadScene('GameStart')
                 })
                 break;
             case 'paileitransaction0':
-                console.log('排雷先锋');
+                // console.log('排雷先锋');
                 btn.on(cc.Node.EventType.TOUCH_END, () => {
                     cc.director.loadScene('GameStart')
                 })
                 break;
             case 'invitingFriends':
-                console.log("邀请好友并注册");
+                // console.log("邀请好友并注册");
                 break;
             case 'accumulativeRecharge':
-                console.log("累积充值");
+                // console.log("累积充值");
                 break;
             case 'recharge':
-                console.log('首次充值');
+                // console.log('首次充值');
                 break;
             case 'signIn':
-                console.log('每日签到');
+                // console.log('每日签到');
                 break;
             case 'register':
-                console.log('用户注册');
+                // console.log('用户注册');
                 break;
 
             default:
@@ -430,8 +430,8 @@ cc.Class({
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Common/getversion", _data, e => {
             let json = JSON.parse(e)
 
-            console.log(json.object.circleUrl);
-            console.log(this.ViewWeb);
+            // console.log(json.object.circleUrl);
+            // console.log(this.ViewWeb);
             // WebView.url = json.object.circleUrl + '/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId
             // WebView.url = 'http://localhost:6667/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId
             this.ViewWeb.url = 'http://192.168.1.106:802/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId + '&type=' + 7

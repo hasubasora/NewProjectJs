@@ -48,6 +48,7 @@ cc.Class({
     SaveGolds: 0,            //保存總金額
     //用户名字设置
     User_Name: cc.Label,
+    User_Pic: cc.Sprite,
     User_Id: cc.Label,
     //当前楼层    
     xplayer: 15,             //楼层数
@@ -475,7 +476,7 @@ cc.Class({
   },
   // 账户数据设置
   SetInfo() {
-    GetUserDatas()
+    Global.loaderUserIcon(Global.DataUsers.UserIcon, this.User_Pic)
     this.User_Name.string = Global.DataUsers.UserName;
     this.User_Id.string = 'ID:' + Global.DataUsers.Login;
     this.GetBaseRoom()

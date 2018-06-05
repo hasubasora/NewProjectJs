@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "bd79fe4c-b494-44c6-99b7-b334cc72161e",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "产品box@3x": {
+      "ver": "1.0.3",
+      "uuid": "845d37be-d5d5-4c3d-a6f3-c6ba69641d43",
+      "rawTextureUuid": "bd79fe4c-b494-44c6-99b7-b334cc72161e",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 2,
+      "trimY": 2,
+      "width": 217,
+      "height": 217,
+      "rawWidth": 221,
+      "rawHeight": 221,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
