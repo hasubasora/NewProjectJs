@@ -45,7 +45,7 @@ cc.Class({
   },
   LoginList() {
     console.log('加载登陆表');
-    let data = { }
+    let data = {}
     Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/account/GetLoginList", data, e => {
       let code = JSON.parse(e)
       console.log(code.mode);
@@ -72,19 +72,11 @@ cc.Class({
   },
   wxBtnLogin() {
     console.log(this.webwxlogin + '?cbUrl=' + encodeURIComponent(location.href));
-    window.location.href = this.webwxlogin + '?cbUrl=' + encodeURIComponent(location.href)
+    // window.location.href = this.webwxlogin + '?cbUrl=' + encodeURIComponent(location.href)
   },
-
-
-
-  
   //信息发射站
   SendMessages(e, c) {
     var xhr = cc.loader.getXMLHttpRequest()
-    // console.log(this.Phone.string);
-    // console.log(this.SecurityCode.string);
-    // console.log(this.Messages.string);
-
     if (!this.Phone.string) {
       this.RedLabels("请输入手机号")
     } else {
@@ -181,28 +173,20 @@ cc.Class({
     return null;
   },
   onLoad() {
-    if (this.getQueryString('wxtoken') != null) {
-      console.log('??');
-      console.log('??');
-      WeixinLoginTime(this.getQueryString('wxtoken'))
-      // cc.director.loadScene('Home')
-    } else {
-      console.log('!!');
-    }
-    console.log(cc.sys.localStorage.getItem('SJ') == 'undefined');
-    console.log(Global.DataUsers);
-    if (cc.sys.localStorage.getItem('SJ') == 'undefined') {
-      cc.sys.localStorage.removeItem('SJ')
-    }
-    if (cc.sys.localStorage.getItem('SJ') != null && cc.sys.localStorage.getItem('SJ') != 'undefined') {
-      console.log('~~~');
-      GetUserDatas(1)
-    }
-
     console.log("/执行穿越模式/");
     this.WebUrlText()  //验证码
     this.LoginList()  //登陆按钮配置
-
+    if (navigator.userAgent.toLowerCase().match(/MicroMessenger/i) == "micromessenger") {
+      //在微信中打开
+      console.log('微信打开了');
+      console.log(this.getQueryString('wxtoken'));
+      if (this.getQueryString('wxtoken') != null) {
+        console.log('??');
+        WeixinLoginTime(this.getQueryString('wxtoken'))
+        console.log('~~1~');
+        // cc.director.loadScene('Home')
+      }
+    }
   },
   // 换验证码
   WebUrlText() {

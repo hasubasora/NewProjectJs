@@ -1,9 +1,9 @@
 module.exports = {
     GetUserDatas(ns) {
-
-        if (Global.DataUsers == null) {
+        if (cc.sys.localStorage.getItem('SJ') == 'undefined' || cc.sys.localStorage.getItem('SJ') == null) {
             Global.GoLoadScene()
-            return
+            console.log('什么数据都没有');
+            return 
         }
         Global.DataUsers = JSON.parse(decodeURIComponent(cc.sys.localStorage.getItem('SJ')))
         console.log('-------o--------');
@@ -21,17 +21,18 @@ module.exports = {
                 if (ns == 1) {
                     cc.director.loadScene('Home')
                     Global.lobbySocket()
+                    // setTimeout(() => {
+                    // }, 1000);
                 }
             }
             if (sData.code == 12002) {
                 cc.sys.localStorage.removeItem('SJ')
-
+                return 
             }
         })
-        return true;
+        return ;        
     },
     WeixinLoginTime(tok) {
-        console.log('-------w--------');
         let _data = {
             token: tok,
         }
@@ -40,10 +41,12 @@ module.exports = {
             let sData = JSON.parse(e)
             if (sData.code == 12000) {
                 console.log(sData);
+                console.log('微信獲取用戶數據成功')
                 Global.DataUsers = JSON.parse(JSON.stringify(sData.object))
                 cc.sys.localStorage.setItem("SJ", encodeURIComponent(JSON.stringify(sData.object)));
                 Global.lobbySocket()
                 cc.director.loadScene('Home')
+                
             }
         })
         return true;
@@ -170,6 +173,8 @@ window.Global = {
         cc.director.loadScene('LoginPage')
     },
     lobbySocket() {
+        console.log('连接sk');
+        
         Global.ws = new WebSocket(Global.DataUsers.wsUrl);
         Global.ws.onopen = (event) => {
             console.log("サーバー　オペ");

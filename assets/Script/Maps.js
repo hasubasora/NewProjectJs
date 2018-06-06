@@ -78,7 +78,42 @@ cc.Class({
     animOver: cc.Animation,
     anim1: cc.Node,
     anim2: cc.Node,
-    anim3: cc.Node
+    anim3: cc.Node,
+    //前进一步
+    goSource: {
+      type: cc.AudioSource,
+      default: null
+    },
+    //倒数后开始声音
+    timeStartSource: {
+      type: cc.AudioSource,
+      default: null
+    },
+    //扫雷匹配中
+    startTime: {
+      type: cc.AudioSource,
+      default: null
+    },
+    //扫雷游戏中
+    bombTimeSource: {
+      type: cc.AudioSource,
+      default: null
+    },
+    //游戏结果
+    gameOver: {
+      type: cc.AudioSource,
+      default: null
+    },
+    //游戏胜利
+    gameWin: {
+      type: cc.AudioSource,
+      default: null
+    },
+    //排雷雷暴声音
+    bombTime: {
+      type: cc.AudioSource,
+      default: null
+    },
   },
 
   // LIFE-CYCLE CALLBACKS:
@@ -87,7 +122,7 @@ cc.Class({
     // for (let i = 2; i < 12; i++) {
     //   this.Player.setTileGID(0, i, 14, 0);
     // }
-
+    this.startTime.play()
     console.log('进入游戏界面')
     this.SetInfo()          //设置用户数据
     this.GetServerTimes()   //获取服务器时间接口
@@ -271,6 +306,7 @@ cc.Class({
     this.ButtonType(2)
     this.CalculateAllGold()
     this.CalculateGold()
+    this.goSource.play()
   },
   //不走
   StopPlayer(e, n) {
@@ -543,6 +579,12 @@ cc.Class({
         break;
       case 5:
         console.log('开始游戏')
+        this.startTime.stop()
+        this.timeStartSource.play()
+        this.scheduleOnce(() => {
+          this.bombTimeSource.play()
+        }, 1)
+
         this.Prepare()
         this.CalculateGold()
         this.ButtonType(1)
@@ -571,7 +613,6 @@ cc.Class({
       case 9:
         this.ButtonType(2)
         console.log('游戏结束')
-      
         this.Prepare()
         this.scheduleOnce(() => {
           // 这里的 this 指向 component
@@ -590,6 +631,7 @@ cc.Class({
         break;
       case 12:
         console.log('爆炸了')
+      
         this.bom = f
         this.aAnimationBom()
         break;
@@ -623,6 +665,7 @@ cc.Class({
     ));
   },
   aAnimationBom() {
+    this.bombTime.play()
     let aAnimation1 = this.animbom.play();
     aAnimation1.repeatCount = 1;
     this.anim2.runAction(cc.sequence(
@@ -743,9 +786,11 @@ cc.Class({
           //设置人物位置数据
           if (states == 1) {
             this.loaderViewWin(v.PlusAmount)
+            this.gameWin.play()
           }
           if (states == 2) {
             this.loaderViewWinLost(v.PlusAmount)
+            this.gameOver.play()
           }
         }
 

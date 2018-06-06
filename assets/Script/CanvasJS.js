@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-import { GetUserDatas, AddWindow } from "GetUserData";
+import { GetUserDatas, AddWindow, WeixinLoginTime } from "GetUserData";
 cc.Class({
   extends: cc.Component,
 
@@ -62,7 +62,18 @@ cc.Class({
       type: cc.Node
     },
     Gold: cc.Label,
+
     Audios: cc.AudioSource,
+
+    clikcMis: {
+      type: cc.AudioSource,
+      default: null
+    },
+    //??
+    clickGameMis: {
+      type: cc.AudioSource,
+      default: null
+    },
 
     TurnTheScreen: cc.Node,
 
@@ -119,11 +130,8 @@ cc.Class({
   },
 
   // LIFE-CYCLE CALLBACKS:
-  closeGuldsSetings() {
-    this.GuldsSetings.scale = 0
-  },
-  modification() {
 
+  modification() {
     let sss = this.Extext.getComponent(cc.EditBox).string
     //   this.Extext.removeComponent(cc.EditBox)
     //  let txt= this.Extext.addComponent(cc.Label)
@@ -148,10 +156,30 @@ cc.Class({
   },
   openUserInfo(e, num) {
     this.UserInfo.scale = num
+    this.clikcMis.play()
+  },
+  getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return decodeURI(r[2]);
+    return null;
   },
   onLoad() {
-    this.getversion()
 
+    if (cc.sys.localStorage.getItem("Mic") == null) {
+      cc.sys.localStorage.setItem("Mic", 0.5);
+    }
+    // console.log(navigator.userAgent.toLowerCase().match(/MicroMessenger/i) == "micromessenger");
+    this.scheduleOnce(() => {
+      this.SetInfo()
+    }, 1);
+    this.getversion()
+    console.log(Global.DataUsers);
+    if (Global.DataUsers != null) {
+      GetUserDatas()
+      //设置数据
+      console.log('~~3~');
+    }
     // 设置
     this.SetingsBtn.on("touchstart", this.SetingsFn, this);
     //活动界面
@@ -165,29 +193,33 @@ cc.Class({
     // console.log(cc.sys.localStorage.getItem('SJ') != 'undefined');
     // console.log(cc.sys.localStorage.getItem('SJ') != null);
 
-    if (cc.sys.localStorage.getItem('SJ') != null) {
-      Global.DataUsers = JSON.parse(decodeURIComponent(cc.sys.localStorage.getItem('SJ')))
-      this.SetInfo()  //设置数据
-      this.GetInvitation()
-      this.GetAgentRule()
-      this.GetAgentDataStatisticsInfo()
-
-      //个人中心 金币购买
-      this.GetUserCenter()
-      this.GetRecords(1)
-      this.GetRecords(2)
-
-      //游戏记录
-      this.GetThunderTrades()
-      this.getexamgamerecords()
-
-
-      if (cc.sys.localStorage.getItem('SJ') == 'undefined') {
-        cc.director.loadScene('LoginPage')
-      }
-    } else {
-      cc.director.loadScene('LoginPage')
+  },
+  SetInfo() {
+    if (Global.DataUsers == null) {
+      return
     }
+    console.log('设置数据');
+    // console.log(Global.DataUsers);
+    this.UserInfoName.string = Global.DataUsers.UserName;
+    this.MyName.string = Global.DataUsers.UserName;
+    this.MyId.string = 'ID:' + Global.DataUsers.Login;
+    this.UserInfoId.string = 'ID:' + Global.DataUsers.Login;
+    Global.loaderUserIcon(Global.DataUsers.UserIcon, this.UserInfoImg)
+    Global.loaderUserIcon(Global.DataUsers.UserIcon, this.MyIcon)
+    this.Gold.string = Global.DataUsers.Balance;
+    this.GetInvitation()
+    this.GetAgentRule()
+    this.GetAgentDataStatisticsInfo()
+
+    //个人中心 金币购买
+    this.GetUserCenter()
+    this.GetRecords(1)
+    this.GetRecords(2)
+
+    //游戏记录
+    this.GetThunderTrades()
+    this.getexamgamerecords()
+
   },
   addEventListeners() {
     this.checkOrient();
@@ -213,17 +245,7 @@ cc.Class({
     cc.director.loadScene(d)
   },
 
-  SetInfo() {
-    GetUserDatas()
-    // console.log(Global.DataUsers);
-    this.UserInfoName.string = Global.DataUsers.UserName;
-    this.MyName.string = Global.DataUsers.UserName;
-    this.MyId.string = 'ID:' + Global.DataUsers.Login;
-    this.UserInfoId.string = 'ID:' + Global.DataUsers.Login;
-    Global.loaderUserIcon(Global.DataUsers.UserIcon, this.UserInfoImg)
-    Global.loaderUserIcon(Global.DataUsers.UserIcon, this.MyIcon)
-    this.Gold.string = Global.DataUsers.Balance;
-  },
+
   Invitation(e, n) {
     if (n == 1) {
       this.GetInvitation()
@@ -233,6 +255,7 @@ cc.Class({
       this.GetParentAgentWeeklyTransaction(2)
     }
     this.Invitations.scale = n
+    this.clikcMis.play()
   },
   Shops() {
     cc.director.loadScene("Shop");
@@ -243,12 +266,17 @@ cc.Class({
 
   AddWindows() {
     this.GuldsSetings.scale = 1
+    this.clikcMis.play()
   },
-
+  closeGuldsSetings() {
+    this.GuldsSetings.scale = 0
+    this.clikcMis.play()
+  },
   SetingsFn() {
     let Infos = cc.instantiate(this.Setings);
     this.node.addChild(Infos, 104);
     Infos.setPosition(0, 0);
+    this.clikcMis.play()
   },
   //SignIn
   GetPrefab(fab) {
@@ -316,8 +344,8 @@ cc.Class({
         let mo = code.model
         let ser = code.user
         let tips = code.tips
-        this.UserToName.string = ser.UserName 
-        this.UserToId.string = ' ID:' + ser.Login 
+        this.UserToName.string = ser.UserName
+        this.UserToId.string = ' ID:' + ser.Login
         this.TotalAmount.string = mo.TotalAmount
         this.DirectlyUnderAmount.string = mo.DirectlyUnderAmount
         this.LowerMemberAmount.string = mo.LowerMemberAmount
@@ -445,7 +473,7 @@ cc.Class({
             let com = nodeList.getComponentsInChildren(cc.Label)
             com[0].string = iterator.Money
             com[1].string = iterator.StateCode
-            com[2].string = iterator.ExitTime
+            com[2].string = iterator.Subtime
             if (num == 1) {
               this.ByGolds.content.addChild(nodeList)
             }

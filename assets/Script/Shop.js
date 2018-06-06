@@ -1,12 +1,4 @@
-// Learn cc.Class:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
+
 import { GetUserDatas, LoginTimeOut } from 'GetUserData';
 cc.Class({
     extends: cc.Component,
@@ -39,6 +31,7 @@ cc.Class({
         J3: cc.Label,
         SaveBtn: cc.Button,
         User_Name: cc.Label,
+        User_Pic: cc.Sprite,
         User_Id: cc.Label,
         User_Gold: cc.Label,
         GoodsNumber: 0,
@@ -46,7 +39,8 @@ cc.Class({
         GoodsName: '',
         GoodsID: '',
         ScrollViews: cc.ScrollView,
-        ShowRorderBox: cc.Node
+        ShowRorderBox: cc.Node,
+        tishi: cc.Node,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -55,6 +49,7 @@ cc.Class({
         this.User_Name.string = Global.DataUsers.UserName
         this.User_Id.string = 'ID:' + Global.DataUsers.Login
         this.User_Gold.string = Global.DataUsers.Balance
+        Global.loaderUserIcon(Global.DataUsers.UserIcon, this.User_Pic)
         this.getuserorderlist()
         Global.GetMessges(obj => {
             if (obj) {
@@ -63,6 +58,9 @@ cc.Class({
         })
     },
     onLoad() {
+
+
+
         // 定义 SizeProvider，这里定义一个全局对象即可，不需要创建对象实例
         var screenSizeProvider = {
             getContentSize: function () {
@@ -159,7 +157,6 @@ cc.Class({
     },
     SaveBtnFn() {
         let xhr = cc.loader.getXMLHttpRequest()
-
         let _data = {
             Userid: Global.DataUsers.UserId,
             Token: Global.DataUsers.Token,
@@ -169,7 +166,15 @@ cc.Class({
         }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/shoporder/goodsexchange", _data, e => {
             let _e = JSON.parse(e)
-            console.log(e);
+            if (_e.code == 12000) {
+                this.User_Gold.string = this.User_Gold.string - this.GoodsGoldCoin
+                this.GoodsWindow.scale = 0
+                this.tishi.scale = 1
+                this.tishi.getComponentsInChildren(cc.Label)[0].string = '兑换成功'
+
+                console.log('兑换成功');
+            }
+
         })
     },
     getuserorderlist() {
@@ -197,7 +202,6 @@ cc.Class({
 
             }
         })
-
     },
     ShowRorder(e, n) {
         this.ShowRorderBox.scale = n
@@ -205,6 +209,9 @@ cc.Class({
             this.ScrollViews.content.removeAllChildren()
             this.getuserorderlist()
         }
+    },
+    closetishi() {
+        this.tishi.scale = 0
     }
     // update (dt) {},
 });

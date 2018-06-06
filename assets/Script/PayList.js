@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-
+import { GetUserDatas } from "GetUserData";
 cc.Class({
     extends: cc.Component,
 
@@ -21,43 +21,45 @@ cc.Class({
         object: ''
     },
     onLoad() {
-        // this.PayList()
+        GetUserDatas()
+        if (Global.DataUsers!=null) {
+            this.PayList()
+        }
     },
-
     start() {
-
+      
     },
     PayList() {
         let xhr = cc.loader.getXMLHttpRequest()
         let _data = {
             Userid: Global.DataUsers.UserId,
             Token: Global.DataUsers.Token,
+            Channel: ''
         }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Transaction/GetPayList", _data, e => {
             this.object = JSON.parse(e).object
-            console.log(this.object);
 
             for (let i = 0; i < this.object.length; i++) {
-                // this.radioTabPay[i].node.scale = 1
-                console.log(this.radioTabPay[i].node.getChildByName('mLabel'));
+                this.radioTabPay[i].node.scale = 1
+                // console.log(this.radioTabPay[i].node.getChildByName('mLabel'));
                 this.radioTabPay[i].node.getChildByName('mLabel').getComponent(cc.Label).string = this.object[i].MerchantName
+                Global.loaderUserIcon(this.object[i].Icon, this.radioTabPay[i].node.getChildByName('mSprite').getComponent(cc.Sprite))
 
                 for (const iterator of this.object[i].Moneys) {
-                    cc.loader.loadRes("/prefab/jbpre", (err, prefab) => {
-                        let iterators = iterator / 10
+                    Global.loadPre('jbpre', fab => {
                         let PayTypeID = this.object[i].PayTypeID
-
-                        var newNode = cc.instantiate(prefab);
-                        console.log(newNode);
-                        newNode.getChildByName('jbLabel').getComponent(cc.Label).string = iterator + '金币'
-                        newNode.getChildByName('jbm').getComponent(cc.Label).string = '￥' + iterators
-                        newNode.on(cc.Node.EventType.TOUCH_END, (event) => {
-                            // console.log(iterators);
-                            this.SavePay(iterators, PayTypeID)
+                        fab.getChildByName('jbLabel').getComponent(cc.Label).string = iterator.Gold + '金币'
+                        fab.getChildByName('jbm').getComponent(cc.Label).string = '￥' + iterator.Money
+                        fab.on(cc.Node.EventType.TOUCH_END, (event) => {
+                            this.SavePay(iterator.Gold, PayTypeID)
                         })
-                        this.moneybk.addChild(newNode);
-                    });
+                        this.moneybk.addChild(fab);
+                    })
+
+
+
                 }
+
             }
 
 
@@ -73,12 +75,12 @@ cc.Class({
                 Userid: Global.DataUsers.UserId,
                 Token: Global.DataUsers.Token,
                 Money: money,
-                PayTypeID: PayTypeID
+                PayTypeID: PayTypeID,
+                Channel: ''
             }
             Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Transaction/Pay", _data, e => {
-               
                 var div = document.createElement("div");
-                div.className='wojiuzhidaohuigai'
+                div.className = 'wojiuzhidaohuigai'
                 div.innerHTML = JSON.parse(e).object
                 document.body.appendChild(div);
                 document.PayForm.submit();
@@ -86,7 +88,7 @@ cc.Class({
                 this.scheduleOnce(function () {
                     document.getElementsByClassName('wojiuzhidaohuigai')[0].remove()
                 }, 2);
-                
+
                 return
                 // window.location.href = JSON.parse(e).code_url
             })
