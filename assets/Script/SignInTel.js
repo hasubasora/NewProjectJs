@@ -183,10 +183,15 @@ cc.Class({
       if (this.getQueryString('wxtoken') != null) {
         console.log('??');
         WeixinLoginTime(this.getQueryString('wxtoken'))
-        console.log('~~1~');
+        Global.weixin = 1
+
         // cc.director.loadScene('Home')
       }
     }
+    if (cc.sys.localStorage.getItem("SJ") != null) {
+      GetUserDatas(1)
+    }
+
   },
   // 换验证码
   WebUrlText() {

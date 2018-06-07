@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "8d66763f-aa9b-4925-b4c2-1053c05914f6",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "参战记录@3x": {
+      "ver": "1.0.3",
+      "uuid": "00cdfa1b-c162-4084-b4d5-8e25e0eae44c",
+      "rawTextureUuid": "8d66763f-aa9b-4925-b4c2-1053c05914f6",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 231,
+      "height": 71,
+      "rawWidth": 231,
+      "rawHeight": 71,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

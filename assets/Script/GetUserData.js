@@ -6,7 +6,6 @@ module.exports = {
             return 
         }
         Global.DataUsers = JSON.parse(decodeURIComponent(cc.sys.localStorage.getItem('SJ')))
-        console.log('-------o--------');
         let _data = {
             token: Global.DataUsers.Token,
             UserId: Global.DataUsers.UserId

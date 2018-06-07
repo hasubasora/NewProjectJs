@@ -11,7 +11,7 @@
   "inlineSpriteFrames": true,
   "inlineSpriteFrames_native": true,
   "jailbreakPlatform": false,
-  "md5Cache": true,
+  "md5Cache": false,
   "mergeStartScene": true,
   "oauthLoginServer": "",
   "optimizeHotUpdate": false,
@@ -21,19 +21,23 @@
     "portrait": false,
     "upsideDown": false
   },
-  "packageName": "org.cocos2d.helloworld",
+  "packageName": "org.cocos2d.HzGame",
   "privateKey": "",
   "qqplay": {
+    "REMOTE_SERVER_ROOT": "",
     "orientation": "portrait"
   },
   "renderMode": "0",
   "startScene": "428e747f-5e15-4eab-b1f2-daad42da025b",
-  "title": "Game",
+  "title": "HzGame",
   "webOrientation": "landscape",
   "wechatgame": {
+    "REMOTE_SERVER_ROOT": "",
     "appid": "wx6ac3f5090a6b99c5",
-    "orientation": "landscape"
+    "isSubdomain": false,
+    "orientation": "portrait",
+    "subContext": ""
   },
-  "xxteaKey": "a68544a6-0de9-44",
+  "xxteaKey": "24ac4953-fc6a-43",
   "zipCompressJs": true
 }

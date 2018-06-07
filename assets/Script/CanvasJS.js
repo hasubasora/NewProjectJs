@@ -165,21 +165,16 @@ cc.Class({
     return null;
   },
   onLoad() {
-
-    if (cc.sys.localStorage.getItem("Mic") == null) {
-      cc.sys.localStorage.setItem("Mic", 0.5);
-    }
-    // console.log(navigator.userAgent.toLowerCase().match(/MicroMessenger/i) == "micromessenger");
+    console.log(cc.sys.localStorage.getItem("SJ") != null);
     this.scheduleOnce(() => {
       this.SetInfo()
-    }, 1);
+    }, .5);
+
+
+    // console.log(navigator.userAgent.toLowerCase().match(/MicroMessenger/i) == "micromessenger");
+
     this.getversion()
-    console.log(Global.DataUsers);
-    if (Global.DataUsers != null) {
-      GetUserDatas()
-      //设置数据
-      console.log('~~3~');
-    }
+
     // 设置
     this.SetingsBtn.on("touchstart", this.SetingsFn, this);
     //活动界面
@@ -187,8 +182,19 @@ cc.Class({
     //金币
     this.Gulds.on("touchstart", this.AddWindows, this);
     //音乐初始化
+    if (cc.sys.localStorage.getItem("Mic") == null) {
+      cc.sys.localStorage.setItem("Mic", 0.5);
+    }
+    if (cc.sys.localStorage.getItem("Sou") == null) {
+      cc.sys.localStorage.setItem("Sou", 0.5);
+    }
     Global.Audios = this.Audios;
+    Global.clikcMis = this.clikcMis
+
+
     Global.Audios.volume = cc.sys.localStorage.getItem("Mic");
+    Global.clikcMis.volume = cc.sys.localStorage.getItem("Sou");
+
     // //判断有没有账户
     // console.log(cc.sys.localStorage.getItem('SJ') != 'undefined');
     // console.log(cc.sys.localStorage.getItem('SJ') != null);

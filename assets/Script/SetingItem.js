@@ -101,8 +101,6 @@ cc.Class({
     this.GetPayInfo()
     this.GetBankListPost()
    
-    
-
     // this.scrollView.runAction(cc.moveTo(2, 100, 100));
     // console.log(this.content);
 
@@ -116,6 +114,7 @@ cc.Class({
     if (Global.Audios == '') {
       Global.Audios = this.node.parent.getComponentInChildren(cc.AudioSource)
     }
+    console.log(Global.clikcMis);
 
     //音乐设置
     if (cc.sys.localStorage.getItem("Mic") != null) {
@@ -124,6 +123,12 @@ cc.Class({
     } else {
       this._updateMusicVolume(this.Music.progress);
     }
+    if (cc.sys.localStorage.getItem("Sou") != null) {
+      this._updateMusicVolume(cc.sys.localStorage.getItem("Sou"));
+      this.Sounds.progress = cc.sys.localStorage.getItem("Sou");
+    } else {
+      this._updateMusicVolume(this.Sounds.progress);
+    }
   },
   /**
    * 音乐设置
@@ -131,11 +136,24 @@ cc.Class({
    */
   _updateMusicVolume(progress) {
     Global.Audios.volume = progress;
+
     cc.sys.localStorage.setItem("Mic", progress);
   },
   onSliderHEvent(sender, eventType) {
     this._updateMusicVolume(sender.progress);
   },
+
+  _updateAudiosVolume(progress) {
+    Global.clikcMis.volume = progress;
+    cc.sys.localStorage.setItem("Sou", progress);
+  },
+  onSliderHEventAudios(sender, eventType) {
+    this._updateAudiosVolume(sender.progress);
+  },
+
+
+
+
   /**
    * 退出登录
    */

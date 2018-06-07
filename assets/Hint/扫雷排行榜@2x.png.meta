@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "4295423b-e302-4bad-8360-08bec7a206ec",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "扫雷排行榜@2x": {
+      "ver": "1.0.3",
+      "uuid": "0f1f52e0-c648-401e-8dc7-708b683b15a7",
+      "rawTextureUuid": "4295423b-e302-4bad-8360-08bec7a206ec",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -0.5,
+      "trimX": 1,
+      "trimY": 1,
+      "width": 189,
+      "height": 46,
+      "rawWidth": 191,
+      "rawHeight": 47,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
