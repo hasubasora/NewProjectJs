@@ -72,7 +72,7 @@ cc.Class({
   },
   wxBtnLogin() {
     console.log(this.webwxlogin + '?cbUrl=' + encodeURIComponent(location.href));
-    // window.location.href = this.webwxlogin + '?cbUrl=' + encodeURIComponent(location.href)
+    window.location.href = this.webwxlogin + '?cbUrl=' + encodeURIComponent(location.href)
   },
   //信息发射站
   SendMessages(e, c) {
