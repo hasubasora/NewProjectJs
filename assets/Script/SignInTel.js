@@ -70,10 +70,7 @@ cc.Class({
       }
     })
   },
-  wxBtnLogin() {
-    console.log(this.webwxlogin + '?cbUrl=' + encodeURIComponent(location.href));
-    window.location.href = this.webwxlogin + '?cbUrl=' + encodeURIComponent(location.href)
-  },
+
   //信息发射站
   SendMessages(e, c) {
     var xhr = cc.loader.getXMLHttpRequest()
@@ -183,8 +180,6 @@ cc.Class({
       if (this.getQueryString('wxtoken') != null) {
         console.log('??');
         WeixinLoginTime(this.getQueryString('wxtoken'))
-        Global.weixin = 1
-
         // cc.director.loadScene('Home')
       }
     }
@@ -192,6 +187,11 @@ cc.Class({
       GetUserDatas(1)
     }
 
+  },
+  wxBtnLogin() {
+    console.log(this.webwxlogin + '?cbUrl=' + encodeURIComponent(location.href));
+    // 'weixin://'
+    window.location.href = this.webwxlogin + '?cbUrl=' + encodeURIComponent(location.href)
   },
   // 换验证码
   WebUrlText() {

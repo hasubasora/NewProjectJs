@@ -36,7 +36,7 @@ cc.Class({
       type: cc.Toggle
     },
 
-    Audios: cc.AudioSource,
+    // Audios: cc.AudioSource,
     Setings: {
       default: null,
       type: cc.Prefab
@@ -117,7 +117,7 @@ cc.Class({
   },
 
   // LIFE-CYCLE CALLBACKS:
-
+  
   onLoad() {
     // for (let i = 2; i < 12; i++) {
     //   this.Player.setTileGID(0, i, 14, 0);
@@ -128,9 +128,21 @@ cc.Class({
     this.GetServerTimes()   //获取服务器时间接口
     this.SetServerTimes()   //服务器时间自动计时
     //判断有没有账户
-    //音乐初始化
-    Global.Audios = this.Audios;
-    Global.Audios.volume = cc.sys.localStorage.getItem("Mic");
+    // Global.Audios = this.Audios;
+    Global.goSource = this.goSource;
+    Global.timeStartSource = this.timeStartSource;
+    Global.startTime = this.startTime;
+    Global.bombTimeSource = this.bombTimeSource;
+    Global.gameOver = this.gameOver;
+    Global.gameWin = this.gameWin;
+    Global.bombTime = this.bombTime;
+    // Global.Audios.volume = cc.sys.localStorage.getItem("Mic");
+    Global.goSource.volume = cc.sys.localStorage.getItem("Mic");
+    Global.timeStartSource.volume = cc.sys.localStorage.getItem("Mic");
+    Global.startTime.volume = cc.sys.localStorage.getItem("Mic");
+    Global.bombTimeSource.volume = cc.sys.localStorage.getItem("Mic");
+    Global.gameWin.volume = cc.sys.localStorage.getItem("Mic");
+    Global.gameOver.volume = cc.sys.localStorage.getItem("Mic");
     //将像素坐标转化为瓦片坐标，posInPixel：目标节点的position
     let pos = this.Player.getPositionAt(0, 0);
     let pos1 = this.Player.getPositionAt(3, 14); //Vec2 {x: 50, y: 400}
@@ -631,7 +643,7 @@ cc.Class({
         break;
       case 12:
         console.log('爆炸了')
-      
+
         this.bom = f
         this.aAnimationBom()
         break;

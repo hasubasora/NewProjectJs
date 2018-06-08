@@ -41,13 +41,25 @@ cc.Class({
         GameLists: cc.ScrollView,
         misNumber: 0,
         misWindow: cc.Node,  //答题卡
-        ViewWeb: cc.WebView
+        ViewWeb: cc.WebView,
+
+        datingMis:cc.AudioSource,
+        ipst:true
     },
 
     // LIFE-CYCLE CALLBACKS:
-
+    datingMiss(){
+        if (this.ipst) {
+            this.ipst = !this.ipst
+            this.datingMis.play()
+        }else{
+            this.datingMis.stop()
+            this.ipst = !this.ipst
+        }
+    },
     onLoad() {
         this.SetInfo()
+
     },
     SetInfo() {
         GetUserDatas()

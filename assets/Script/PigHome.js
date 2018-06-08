@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-import {GetUserDatas} from 'GetUserData'
+import { GetUserDatas } from 'GetUserData'
 cc.Class({
     extends: cc.Component,
 
@@ -55,7 +55,12 @@ cc.Class({
         Winners: cc.Node,                       //获奖名单
         PigText: 0, //记录蛋蛋
 
-        ViewWeb: cc.WebView
+        ViewWeb: cc.WebView,
+
+        Piggb: cc.AudioSource,
+        PigClick: cc.AudioSource,
+        PigShow: cc.AudioSource,
+        isMis: true,
     },
     //用户数据
     SetInfo() {
@@ -94,12 +99,23 @@ cc.Class({
         // console.log(egg);
 
     },
-
+    MisClose() {
+        if (this.isMis) {
+            this.Piggb.stop()
+            // this.PigClick.stop()
+            // this.PigShow.stop()
+            this.isMis = !this.isMis
+        } else {
+            this.isMis = !this.isMis
+            this.Piggb.play()
+        }
+    },
     start() {
 
     },
-    ruleWindowBtn(e,num) {
+    ruleWindowBtn(e, num) {
         this.ruleWindow.scale = num
+        this.PigClick.play()
     },
 
     //获奖名单
@@ -112,11 +128,14 @@ cc.Class({
     openTask() {
         this.taskWindow.scale = 1
         this.GetLstCharacterCondition()
+        this.PigClick.play()
     },
     closeTask() {
         this.taskWindow.scale = 0
+        this.PigClick.play()
     },
     closeTaskWin() {
+        this.PigClick.play()
         this.accomplishTaskWindow.scale = 0
         this.GetLstCharacterCondition()  //关闭再拉去数据
         this.GetLstUserCharacterInfo()
@@ -125,13 +144,16 @@ cc.Class({
     openEveryday() {
         this.GetSignIn()
         this.everydaySignIn.scale = 1
+        this.PigClick.play()
     },
     closeEveryday() {
         this.everydaySignIn.scale = 0
+        this.PigClick.play()
     },
     closeEverydayPir() {
         this.GetSignIn()
         this.accomplishEverydaySignIn.scale = 0
+        this.PigClick.play()
     },
     // 分享
 
@@ -321,6 +343,7 @@ cc.Class({
                 });
 
                 for (const iterator of _UserRanking) {
+                    this.PigShow.play()
                     var node = new cc.Node('Sprite');
                     var RichText = node.addComponent(cc.RichText);
                     RichText.string = '<color=#0fffff>恭喜 ' + iterator.UserDisplayName + ' 获得</color><color=#ffff00>' + iterator.Prize + '</c>'
@@ -429,7 +452,6 @@ cc.Class({
         }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Common/getversion", _data, e => {
             let json = JSON.parse(e)
-
             // console.log(json.object.circleUrl);
             // console.log(this.ViewWeb);
             // WebView.url = json.object.circleUrl + '/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId

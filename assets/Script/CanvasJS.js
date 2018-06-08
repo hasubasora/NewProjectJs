@@ -76,10 +76,8 @@ cc.Class({
     },
 
     TurnTheScreen: cc.Node,
-
     screenOrientation: '',
     sMsg: cc.Label,
-
     Invitations: cc.Node,//邀请
 
     // 二维码
@@ -95,7 +93,6 @@ cc.Class({
     TotalCommission: cc.Label,
     DirectlyUnderCommission: cc.Label,
     LowerMemberCommission: cc.Label,
-
 
     sPageView: cc.PageView,
     sPageView_1: cc.Sprite,
@@ -126,6 +123,8 @@ cc.Class({
 
     ThunderScroll: cc.ScrollView,
     QuestionScroll: cc.ScrollView,
+
+    pigScorll:cc.ScrollView
 
   },
 
@@ -216,7 +215,7 @@ cc.Class({
     this.GetInvitation()
     this.GetAgentRule()
     this.GetAgentDataStatisticsInfo()
-
+    this.GetLsUserCharacterRecord()
     //个人中心 金币购买
     this.GetUserCenter()
     this.GetRecords(1)
@@ -569,6 +568,32 @@ cc.Class({
               this.QuestionScroll.content.addChild(nodeList)
               // console.log(this.formatDateTime(iterator.ExitTime));
 
+            })
+          }
+        }
+      }
+    })
+  },
+  GetLsUserCharacterRecord(){
+    this.pigScorll.content.removeAllChildren()
+    let data = {
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
+      PageIndex: 1,
+      PageSize: 10,
+    }
+    Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/LittlePigPeky/GetLsUserCharacterRecord", data, e => {
+      let code = JSON.parse(e)
+      if (code.code == 12000) {
+        // console.log(code);
+        if (code.list != '') {
+          for (const iterator of code.list) {
+            Global.loadPre('pig', nodeList => {
+              let com = nodeList.getComponentsInChildren(cc.Label)
+              com[1].string = iterator.CharacterType
+              com[0].string = iterator.CreateTime
+              this.pigScorll.content.addChild(nodeList)
+              // console.log(this.formatDateTime(iterator.ExitTime));
             })
           }
         }

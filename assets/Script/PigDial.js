@@ -1,4 +1,4 @@
-import {GetUserDatas} from 'GetUserData'
+import { GetUserDatas } from 'GetUserData'
 cc.Class({
     extends: cc.Component,
     properties: {
@@ -57,13 +57,32 @@ cc.Class({
         run: 10,
         sim: 5,
         startBtn: cc.Button,
-        winNode: cc.Node
+        winNode: cc.Node,
+        ruleWinNodes: cc.Node,
+        Piggb: cc.AudioSource,
+        PigClick: cc.AudioSource,
+        PigShow: cc.AudioSource,
+        isMis: true,
+        ViewWeb:cc.WebView
     },
     SetInfo() {
         GetUserDatas()
         this.User_Glod.string = Global.DataUsers.Balance;
         this.loadUserPointer()
         this.GetRoundaboutRecord()   //先加载一次 顺序就对了
+        this.getView()
+        
+    },
+    MisClose() {
+        if (this.isMis) {
+            this.Piggb.stop()
+            // this.PigClick.stop()
+            // this.PigShow.stop()
+            this.isMis = !this.isMis
+        } else {
+            this.isMis = !this.isMis
+            this.Piggb.play()
+        }
     },
     onLoad() {
         this.SetInfo()
@@ -241,9 +260,11 @@ cc.Class({
         if (num == 1) {
             this.GetRoundaboutRecord()
         }
+        this.PigClick.play()
     },
     PigCardLiseFn(e, num) {
         this.PigCardLise.scale = num
+        this.PigClick.play()
     },
     //选择小猪卡片
     selectPig(toggle) {
@@ -456,11 +477,33 @@ cc.Class({
     },
     closeShowBoxWindow() {
         this.ShowBoxWindow.scale = 0
+        this.PigClick.play()
     },
     closeWinNode(num) {
         this.winNode.scale = num
+        this.PigClick.play()
+    },
+    ruleWinNode(e,num) {
+        this.ruleWinNodes.scale = num
+        this.PigClick.play()
+    },
+    getView() {
+        let xhr = cc.loader.getXMLHttpRequest()
+        let _data = {
+            client: 1,
+            clientVersion: '0.0.1'
+        }
+        Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Common/getversion", _data, e => {
+            let json = JSON.parse(e)
+            // console.log(json.object.circleUrl);
+            // console.log(this.ViewWeb);
+            // WebView.url = json.object.circleUrl + '/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId
+            // WebView.url = 'http://localhost:6667/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId
+            this.ViewWeb.url = 'http://192.168.1.106:802/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId + '&type=' + 7
+            console.log(this.ViewWeb.url)
+            console.log('--------------------------------------------------')
+        })
     }
-
 })
 
 

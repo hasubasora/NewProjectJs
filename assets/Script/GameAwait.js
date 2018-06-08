@@ -32,13 +32,31 @@ cc.Class({
         UserPic: cc.Sprite,
         UserID: cc.Label,
         ts: cc.Prefab,
+        GameAwait: {
+            type: cc.AudioSource,
+            default: null
+        },
+
+        ruleWin: cc.Node,
+        viewWin: cc.WebView,
     },
     onLoad() {
+        if (cc.sys.localStorage.getItem("Mic") == null) {
+            cc.sys.localStorage.setItem("Mic", 0.5);
+        }
+        Global.GameAwait = this.GameAwait
+        console.log(Global.GameAwait);
+
+        Global.GameAwait.volume = cc.sys.localStorage.getItem("Mic");
         //判断有没有账户
         this.SetInfo()
+        this.getView()
     },
     SetInfo() {
         GetUserDatas()
+        if (Global.DataUsers == null) {
+            return
+        }
         this.UserName.string = Global.DataUsers.UserName;
         this.UserID.string = 'ID:' + Global.DataUsers.Login;
         Global.loaderUserIcon(Global.DataUsers.UserIcon, this.UserPic)
@@ -82,5 +100,22 @@ cc.Class({
             })
         }
     },
+    openRuleWin(e, num) {
+        this.ruleWin.scale = num
+    },
+    getView() {
+        let xhr = cc.loader.getXMLHttpRequest()
+        let _data = {
+            client: 1,
+            clientVersion: '0.0.1'
+        }
+        Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Common/getversion", _data, e => {
+            let json = JSON.parse(e)
+            console.log(json.object.circleUrl);
+            console.log(this.viewWin);
+            // WebView.url = json.object.circleUrl + '/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId
+            this.viewWin.url = 'http://192.168.1.106:802/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId + '&type=' + 3
+        })
+    }
     // update (dt) {},
 });

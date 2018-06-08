@@ -40,7 +40,6 @@ cc.Class({
 
     },
     loaderViewText() {
-
         cc.loader.loadRes("/prefab/iView", (err, iView) => {
             if (err) {
                 console.log(err)

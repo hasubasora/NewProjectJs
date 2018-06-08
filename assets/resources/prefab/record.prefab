@@ -155,7 +155,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "3d5c51f5-d375-44fd-b102-47d111d42940"
     },
     "fileId": "92Q8hZ5hNAWK3A+XAviGrl",
     "sync": false
@@ -242,7 +242,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "3d5c51f5-d375-44fd-b102-47d111d42940"
     },
     "fileId": "06mp8+dD9GrLHS3NHCAh1N",
     "sync": false
@@ -329,7 +329,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "3d5c51f5-d375-44fd-b102-47d111d42940"
     },
     "fileId": "abpeUtcoVAj4kT1SRMUYTh",
     "sync": false
@@ -485,7 +485,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "3d5c51f5-d375-44fd-b102-47d111d42940"
     },
     "fileId": "f7vmmF551GbLEjYwREMvcb",
     "sync": false
@@ -634,7 +634,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "3d5c51f5-d375-44fd-b102-47d111d42940"
     },
     "fileId": "54jsmxTz9I96ujbAz7KgPN",
     "sync": false
@@ -671,7 +671,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "3d5c51f5-d375-44fd-b102-47d111d42940"
     },
     "fileId": "67FAZsfsJI5Z5tXblfC4TA",
     "sync": false
@@ -711,7 +711,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 100,
+      "width": 150,
       "height": 40
     },
     "_rotationX": 0,
@@ -746,7 +746,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "快递单号",
+    "_N$string": "暂无快递单号",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -758,7 +758,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "3d5c51f5-d375-44fd-b102-47d111d42940"
     },
     "fileId": "31ZRbEyvpA95BoJLTfDM0m",
     "sync": false
@@ -845,7 +845,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "3d5c51f5-d375-44fd-b102-47d111d42940"
     },
     "fileId": "1d0sJtyXtKlpbIbvoaynrr",
     "sync": false
@@ -932,7 +932,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "3d5c51f5-d375-44fd-b102-47d111d42940"
     },
     "fileId": "ac4m/RZHpJTbZyN/3JhW/b",
     "sync": false
@@ -1019,7 +1019,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "3d5c51f5-d375-44fd-b102-47d111d42940"
     },
     "fileId": "9bmb50me5NXottYfWeVTDo",
     "sync": false
@@ -1030,7 +1030,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "3d5c51f5-d375-44fd-b102-47d111d42940"
     },
     "fileId": "e2nuNb6XxE3bz4Hf0Ytv+e",
     "sync": false
@@ -1067,7 +1067,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "3d5c51f5-d375-44fd-b102-47d111d42940"
     },
     "fileId": "d5Ry0+x/FLPpMZmmiNUwTr",
     "sync": false

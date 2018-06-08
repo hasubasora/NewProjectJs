@@ -196,7 +196,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "e3d43763-f59d-4052-87f0-76e65f6ed456"
+      "__uuid__": "4ef28f83-0114-419f-acae-fd9ab9dcabb5"
     },
     "fileId": "bajVBtlHlGU5pDZL0NK5FZ",
     "sync": false
@@ -337,7 +337,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "23bae862-439b-4bf1-874a-e04fa92336b0"
+      "__uuid__": "2d22fb3c-86ff-4a9d-85d9-18b738dff895"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -386,7 +386,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "e3d43763-f59d-4052-87f0-76e65f6ed456"
+      "__uuid__": "4ef28f83-0114-419f-acae-fd9ab9dcabb5"
     },
     "fileId": "f2hz34sutDc6k7q/Y5dPkO",
     "sync": false
@@ -538,7 +538,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "e3d43763-f59d-4052-87f0-76e65f6ed456"
+      "__uuid__": "4ef28f83-0114-419f-acae-fd9ab9dcabb5"
     },
     "fileId": "88QKzGaT9Eq64wJjAEEQQI",
     "sync": false
@@ -601,7 +601,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "e3d43763-f59d-4052-87f0-76e65f6ed456"
+      "__uuid__": "4ef28f83-0114-419f-acae-fd9ab9dcabb5"
     },
     "fileId": "51gY6bP1RBlbpwDYiCLRXU",
     "sync": false
@@ -768,7 +768,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "e3d43763-f59d-4052-87f0-76e65f6ed456"
+      "__uuid__": "4ef28f83-0114-419f-acae-fd9ab9dcabb5"
     },
     "fileId": "9eYGesIUlKpr+HeRM/2nJy",
     "sync": false
@@ -935,7 +935,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "e3d43763-f59d-4052-87f0-76e65f6ed456"
+      "__uuid__": "4ef28f83-0114-419f-acae-fd9ab9dcabb5"
     },
     "fileId": "d9JdBCQeBPlrpxdlG8FVJZ",
     "sync": false
@@ -975,7 +975,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 576,
+      "width": 709,
       "height": 40
     },
     "_rotationX": 0,
@@ -1010,7 +1010,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "您现在金币不足30金币 请先充值",
+    "_N$string": "您现在不足100金币 请先充值~o(╥﹏╥)o",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -1022,7 +1022,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "e3d43763-f59d-4052-87f0-76e65f6ed456"
+      "__uuid__": "4ef28f83-0114-419f-acae-fd9ab9dcabb5"
     },
     "fileId": "7913VtTd1ODK9qmhRBZdIW",
     "sync": false
@@ -1036,7 +1036,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "13e687da-beb5-4899-aacc-508215e33df7"
+      "__uuid__": "b1b32afd-8d5d-4c04-8555-e9b2ae067f2f"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -1059,7 +1059,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "e3d43763-f59d-4052-87f0-76e65f6ed456"
+      "__uuid__": "4ef28f83-0114-419f-acae-fd9ab9dcabb5"
     },
     "fileId": "f1BxrvAgFFpLPJalLVLB0G",
     "sync": false
@@ -1146,7 +1146,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "e3d43763-f59d-4052-87f0-76e65f6ed456"
+      "__uuid__": "4ef28f83-0114-419f-acae-fd9ab9dcabb5"
     },
     "fileId": "b1fpdso4FNGr/cP1RJ7Z9s",
     "sync": false

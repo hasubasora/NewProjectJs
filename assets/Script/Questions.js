@@ -4,7 +4,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-  
+
         speed: 0.1,
         Gold: cc.Label,
         UserName: cc.Label,
@@ -53,18 +53,50 @@ cc.Class({
         overRaing: cc.Node,
         moneyEnough: cc.Node, //充值
         myMonney: cc.Label,   //自己的收益
-        RankingNumber: cc.Label
- 
+        RankingNumber: cc.Label,
+
+
+        //yinyue
+        clickmis: cc.AudioSource,
+        datingpipei: cc.AudioSource,
+        errorbtn: cc.AudioSource,
+        gameover: cc.AudioSource,
+        gamewin: cc.AudioSource,
+        datizhong: cc.AudioSource,
+        ipst: true,
+        misnumber: 1
     },
 
     // LIFE-CYCLE CALLBACKS:
-
+    datingMiss() {
+        if (this.ipst) {
+            this.ipst = !this.ipst
+            if (this.misnumber == 2) {
+                this.datizhong.play()
+            }
+            if (this.misnumber == 1) {
+                this.datingpipei.play()
+            }
+        } else {
+            this.ipst = !this.ipst
+            if (this.datingpipei.isPlaying) {
+                this.datingpipei.stop()
+                this.misnumber = 1
+            }
+            if (this.datizhong.isPlaying) {
+                this.datizhong.stop()
+                this.misnumber = 2
+            }
+        }
+    },
     onLoad() {
         this.SetInfo()
         // this._updataFillStart(this.horizontal, dt);
 
         console.log('this.horizontal.fillStart');
         console.log(this.horizontal.fillStart);
+
+
 
     },
     SetInfo() {
@@ -126,6 +158,7 @@ cc.Class({
                         console.log('答wan啦');
                     }
                     if (mid.object.Status == 1) {
+                        this.datingpipei.play()
                         this.prepareGame.node.scale = 1
                         this.StartTime = mid.object.EndTimestamp - mid.object.CurrDateTime
                         this.StartTimeLabel.string = this.StartTime
@@ -135,6 +168,7 @@ cc.Class({
                         this.prepareGame.string = '正在等待各个玩家就位！'
                     }
                     if (mid.object.Status == 2) {
+                        this.datizhong.play()
                         if (this.isCuo && this.ten) {
                             this.btnd.interactable = true
                             this.btnc.interactable = true
@@ -202,7 +236,7 @@ cc.Class({
                     }
                 } else {
                     sb.node.color = new cc.Color(255, 255, 255);
-                
+
                 }
                 this.StartTime = x;
             }
@@ -211,6 +245,7 @@ cc.Class({
     },
     //游戏一局完成
     GetGameQuestions() {
+        this.gamewin()
         this.overRaing.scale = 1;
         let xhr = cc.loader.getXMLHttpRequest()
         let _data = {
@@ -231,7 +266,7 @@ cc.Class({
 
                 for (const iterator of mid.object) {
                     console.log(iterator.Ranking);
-                    
+
                     switch (iterator.Ranking) {
                         case 1:
                             this.SetRaningPreFab(iterator, 'wone', iterator.UserID)
@@ -358,9 +393,8 @@ cc.Class({
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/exam/answer", _data, e => {
             let mid = JSON.parse(e)
             if (mid.code == 12000) {
-                console.log(mid)
-
                 if (mid.object.IsWrongAnswer == 1) {
+                    this.errorbtn.play()
                     this.btnd.interactable = false
                     this.btnc.interactable = false
                     console.log('答错啦');
@@ -461,9 +495,9 @@ cc.Class({
     },
     nSocket(ns) {
         console.log(ns);
-        
+
         var ws = new WebSocket(Global.DataUsers.wsUrl);
-        if (ns==1) {
+        if (ns == 1) {
             ws.close()
         }
         ws.onopen = (event) => {

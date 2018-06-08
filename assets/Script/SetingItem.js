@@ -78,16 +78,18 @@ cc.Class({
       default: [],
       type: cc.Toggle
     },
-    SaveBtn: cc.Button
+    SaveBtn: cc.Button,
+    mis: cc.Label
   },
 
 
   onLoad() {
+    this.getsys()
     this.items = [];
     this.content = this.scrollView.content;
     this.content2 = this.scrollView2.content;
     this.content3 = this.scrollView3.content;
-    Global.GetMessges(obj=>{
+    Global.GetMessges(obj => {
       if (obj) {
         Global.addressId = obj[0].ID
         this.address.string = obj[0].DetailAddress
@@ -100,7 +102,7 @@ cc.Class({
     })
     this.GetPayInfo()
     this.GetBankListPost()
-   
+
     // this.scrollView.runAction(cc.moveTo(2, 100, 100));
     // console.log(this.content);
 
@@ -114,7 +116,6 @@ cc.Class({
     if (Global.Audios == '') {
       Global.Audios = this.node.parent.getComponentInChildren(cc.AudioSource)
     }
-    console.log(Global.clikcMis);
 
     //音乐设置
     if (cc.sys.localStorage.getItem("Mic") != null) {
@@ -123,12 +124,15 @@ cc.Class({
     } else {
       this._updateMusicVolume(this.Music.progress);
     }
+
+
     if (cc.sys.localStorage.getItem("Sou") != null) {
-      this._updateMusicVolume(cc.sys.localStorage.getItem("Sou"));
+      this._updateAudiosVolume(cc.sys.localStorage.getItem("Sou"));
       this.Sounds.progress = cc.sys.localStorage.getItem("Sou");
     } else {
-      this._updateMusicVolume(this.Sounds.progress);
+      this._updateAudiosVolume(this.Sounds.progress);
     }
+
   },
   /**
    * 音乐设置
@@ -136,7 +140,9 @@ cc.Class({
    */
   _updateMusicVolume(progress) {
     Global.Audios.volume = progress;
-
+    if (Global.GameAwait) {
+      Global.GameAwait.volume = progress;
+    }
     cc.sys.localStorage.setItem("Mic", progress);
   },
   onSliderHEvent(sender, eventType) {
@@ -150,9 +156,6 @@ cc.Class({
   onSliderHEventAudios(sender, eventType) {
     this._updateAudiosVolume(sender.progress);
   },
-
-
-
 
   /**
    * 退出登录
@@ -208,8 +211,8 @@ cc.Class({
       fn(e)
     })
 
-  }
-  ,//this.content,this.ShiID
+  },
+  //this.content,this.ShiID
   itemclick(e, content, ParentID) {
     content.removeAllChildren();
     var addressObj = JSON.parse(e).object;
@@ -474,7 +477,20 @@ cc.Class({
     }
   },
 
-
+  getsys() {
+    let xhr = cc.loader.getXMLHttpRequest()
+    let _data = {
+      Userid: Global.DataUsers.UserId,
+      Token: Global.DataUsers.Token,
+      type: 4
+    }
+    Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/common/GetSysInfo", _data, e => {
+      console.log(this.mis);
+      
+      this.mis.string = JSON.parse(e).object.NoticeContent
+      
+    })
+  },
   alertWindw(msg) {
     let windowLabel = new cc.Node('Label');
     let wLabel = windowLabel.addComponent(cc.Label);

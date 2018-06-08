@@ -191,7 +191,9 @@ cc.Class({
                         let Labels = record.getChildByName('sNode').getComponentsInChildren(cc.Label)
                         let Sp = record.getChildByName('sNode').getComponentsInChildren(cc.Sprite)
                         Labels[0].string = iterator.GoodsName
-                        Labels[1].string = `快递单号:${iterator.ShippingNo}(${iterator.ExpressName})`
+                        if (iterator.ShippingNo) {
+                            Labels[1].string = `快递单号:${iterator.ShippingNo}(${iterator.ExpressName})`
+                        }
                         Labels[2].string = iterator.GoodsNumber
                         Labels[3].string = iterator.GoodsGoldCoin
                         Labels[4].string = iterator.StrCreateTime
