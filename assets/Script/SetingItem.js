@@ -79,7 +79,7 @@ cc.Class({
       type: cc.Toggle
     },
     SaveBtn: cc.Button,
-    mis: cc.Label
+    mis: cc.RichText
   },
 
 
@@ -90,7 +90,9 @@ cc.Class({
     this.content2 = this.scrollView2.content;
     this.content3 = this.scrollView3.content;
     Global.GetMessges(obj => {
-      if (obj) {
+      console.log(obj);
+
+      if (obj != '') {
         Global.addressId = obj[0].ID
         this.address.string = obj[0].DetailAddress
         this.addressName.string = obj[0].contactName
@@ -168,6 +170,7 @@ cc.Class({
       console.log('退出')
       if (e) {
         cc.sys.localStorage.removeItem('SJ')
+        cc.sys.localStorage.setItem('loginOut', 1)
         cc.director.loadScene('LoginPage')
       }
     })
@@ -485,10 +488,7 @@ cc.Class({
       type: 4
     }
     Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/common/GetSysInfo", _data, e => {
-      console.log(this.mis);
-      
       this.mis.string = JSON.parse(e).object.NoticeContent
-      
     })
   },
   alertWindw(msg) {

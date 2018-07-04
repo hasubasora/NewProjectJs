@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "659a9b7a-ef49-4229-84b8-68bfeda9b9a0",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "今日积分@3x": {
+      "ver": "1.0.3",
+      "uuid": "743d65a5-85fe-4c23-9ed3-7c8596f697a8",
+      "rawTextureUuid": "659a9b7a-ef49-4229-84b8-68bfeda9b9a0",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 3,
+      "trimY": 3,
+      "width": 372,
+      "height": 102,
+      "rawWidth": 378,
+      "rawHeight": 108,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

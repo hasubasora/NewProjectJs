@@ -43,16 +43,16 @@ cc.Class({
         misWindow: cc.Node,  //答题卡
         ViewWeb: cc.WebView,
 
-        datingMis:cc.AudioSource,
-        ipst:true
+        datingMis: cc.AudioSource,
+        ipst: true
     },
 
     // LIFE-CYCLE CALLBACKS:
-    datingMiss(){
+    datingMiss() {
         if (this.ipst) {
             this.ipst = !this.ipst
             this.datingMis.play()
-        }else{
+        } else {
             this.datingMis.stop()
             this.ipst = !this.ipst
         }
@@ -67,7 +67,7 @@ cc.Class({
         this.UserID.string = 'ID:' + Global.DataUsers.Login;
         this.Gold.string = Global.DataUsers.Balance;
         this.getView()
-        
+
         this.loaderUserIcon(Global.DataUsers.UserIcon, this.UserPic)
         this.ClientLogs()
         this.regulations()
@@ -142,8 +142,8 @@ cc.Class({
             if (mid.code == 12000) {
                 console.log(mid.object)
                 mid.object.forEach((element, index) => {
-                    console.log((index % 2));
-                    console.log('排位-' + index);
+                    // console.log((index % 2));
+                    // console.log('排位-' + index);
 
                     this.loaderFab(element, (index % 2), index)
                 });
@@ -159,11 +159,11 @@ cc.Class({
                 return;
             }
             newNode = cc.instantiate(fab);
-            console.log(index);
-            console.log('排位' + idx);
+            // console.log(index);
+            // console.log('排位' + idx);
 
             if (index == 0) {
-                console.log('index');
+                // console.log('index');
                 this.loadRes(newNode)
             }
             rangLabel = newNode.getChildByName('rangLabel');
@@ -262,7 +262,7 @@ cc.Class({
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/exam/getlsexamprofitrankingInfo", _data, e => {
             let mid = JSON.parse(e)
             if (mid.code == 12000) {
-                console.log(mid.object)
+                // console.log(mid.object)
                 mid.object.forEach((element, index) => {
                     this.loaderRaing(element, (index % 2), index)
                 });
@@ -272,7 +272,7 @@ cc.Class({
     loaderRaing(mo, index, idx) {
         var newNode, rang, timeLabel, moneyLabel, name
         console.log(index);
-        console.log('排位' + idx);
+        // console.log('排位' + idx);
         cc.loader.loadRes("/prefab/Spriter", (err, fab) => {
             if (err) {
                 console.log(err);
@@ -280,7 +280,7 @@ cc.Class({
             }
             newNode = cc.instantiate(fab);
             if (index == 1) {
-                console.log('index');
+                // console.log('index');
                 this.loadRes(newNode)
             }
             rang = newNode.getChildByName('rang');
@@ -303,9 +303,9 @@ cc.Class({
             let json = JSON.parse(e)
             console.log(json.object.circleUrl);
             console.log(this.ViewWeb);
-            // WebView.url = json.object.circleUrl + '/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId
+            this.ViewWeb.url = json.object.circleUrl + '/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId + '&type=' + 6
             // WebView.url = 'http://localhost:6667/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId
-            this.ViewWeb.url = 'http://192.168.1.106:802/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId + '&type=' + 6
+            // this.ViewWeb.url = 'http://192.168.1.106:802/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId + '&type=' + 6
             // console.log(this.ViewWeb.url)
             // console.log('--------------------------------------------------')
         })

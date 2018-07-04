@@ -35,7 +35,8 @@ cc.Class({
         
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + "/Common/getversion", _data, e => {
             let json = JSON.parse(e)
-            let serverUrl = 'http://192.168.1.106:802'
+            // let serverUrl = 'http://192.168.1.106:802'
+            let serverUrl = 'http://localhost:6667'
             // let serverUrl = json.object.circleUrl
             console.log(json.object.circleUrl);
 

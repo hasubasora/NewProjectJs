@@ -67,7 +67,7 @@ cc.Class({
         GetUserDatas()
         this.User_Name.string = Global.DataUsers.UserName;
         this.User_Id.string = 'ID:' + Global.DataUsers.Login;
-        this.loaderUserIcon(Global.DataUsers.UserIcon, this.UserPic)
+        Global.loaderUserIcon(Global.DataUsers.UserIcon, this.UserPic)
         this.GetLstUserCharacterInfo()
         this.getView()
     },
@@ -91,7 +91,7 @@ cc.Class({
     },
     onLoad() {
         this.SetInfo()
-
+        this.GetLstCharacterCondition()
         // let egg = cc.director.getScene().getChildByName('Canvas').getChildByName('egg').getComponent(cc.Animation)
         // let chuizi = cc.director.getScene().getChildByName('Canvas').getChildByName('chuizi').getComponent(cc.Animation)
         // egg.play()
@@ -279,6 +279,9 @@ cc.Class({
         Global.streamXHREventsToLabel(cc.loader.getXMLHttpRequest(), "POST", Global.serverUrl + "/LittlePigPeky/ReceiveCondition", _data, e => {
             this.accomplishTaskWindow.scale = 1;
             let _egg = JSON.parse(e);
+            if (_egg.code == 12000) {
+                this.GetLstUserCharacterInfo()
+            }
         })
     },
 
@@ -335,9 +338,11 @@ cc.Class({
                 this.eggNumber.string = _GetLst.UserOpportunity
                 // this.PigList
                 this.PigList.forEach((iterator, index) => {
-
                     if (_object[index].CharactersNumber < 1) {
+                        console.log(_object[index].CharactersNumber);
                         iterator.getComponent(cc.Button).interactable = false
+                    } else {
+                        iterator.getComponent(cc.Button).interactable = true
                     }
                     iterator.getChildByName('pigNum').getComponent(cc.Label).string = 'x' + _object[index].CharactersNumber;
                 });
@@ -407,12 +412,63 @@ cc.Class({
                 this.chuiziAnima.on('finished', this.onFinished, this);
 
             }
+            //有奖品
             if (_egg.IsWinning == 1) {
                 this.PigText = _egg.IsWinning
                 this.chuiziAnima.play()
                 this.chuiziAnima.on('finished', this.onFinished, this);
             }
+            if (_egg.CharacterType > 0) {
+                this.GetEggPig.getChildByName('title').getComponent(cc.Label).string = _egg.CharacterName
+
+                switch (_egg.CharacterType) {
+                    case 1:
+                        console.log('佩奇');
+                        this.loadPig(1)
+                        break;
+                    case 2:
+                        console.log('乔治');
+                        this.loadPig(2)
+                        break;
+                    case 3:
+                        this.loadPig(3)
+                        console.log('猪爸爸');
+                        break;
+                    case 4:
+                        this.loadPig(4)
+                        console.log('猪妈妈');
+                        break;
+                    case 5:
+                        this.loadPig(5)
+                        console.log('小马');
+                        break;
+                    case 6:
+                        this.loadPig(6)
+                        console.log('小羊');
+                        break;
+                    case 7:
+                        this.loadPig(7)
+                        console.log('小兔');
+                        break;
+                    case 8:
+                        this.loadPig(8)
+                        console.log('大象');
+                        break;
+                    case 9:
+                        this.loadPig(9)
+                        console.log('羚羊');
+                        break;
+                    default:
+                        break;
+                }
+            }
         })
+    },
+    loadPig(pic) {
+        var self = this;
+        cc.loader.loadRes("pig/pig" + pic, cc.SpriteFrame, function (err, spriteFrame) {
+            self.GetEggPig.getChildByName('pic').getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        });
     },
     onFinished() {
         this.eggAnima.play()
@@ -454,9 +510,8 @@ cc.Class({
             let json = JSON.parse(e)
             // console.log(json.object.circleUrl);
             // console.log(this.ViewWeb);
-            // WebView.url = json.object.circleUrl + '/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId
-            // WebView.url = 'http://localhost:6667/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId
-            this.ViewWeb.url = 'http://192.168.1.106:802/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId + '&type=' + 7
+            this.ViewWeb.url = json.object.circleUrl + '/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId + '&type=' + 7
+            // this.ViewWeb.url = 'http://192.168.1.106:802/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId + '&type=' + 7
             console.log(this.ViewWeb.url)
             console.log('--------------------------------------------------')
         })

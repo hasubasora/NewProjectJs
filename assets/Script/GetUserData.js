@@ -3,7 +3,7 @@ module.exports = {
         if (cc.sys.localStorage.getItem('SJ') == 'undefined' || cc.sys.localStorage.getItem('SJ') == null) {
             Global.GoLoadScene()
             console.log('什么数据都没有');
-            return 
+            return
         }
         Global.DataUsers = JSON.parse(decodeURIComponent(cc.sys.localStorage.getItem('SJ')))
         let _data = {
@@ -26,10 +26,10 @@ module.exports = {
             }
             if (sData.code == 12002) {
                 cc.sys.localStorage.removeItem('SJ')
-                return 
+                return
             }
         })
-        return ;        
+        return;
     },
     WeixinLoginTime(tok) {
         let _data = {
@@ -45,7 +45,7 @@ module.exports = {
                 cc.sys.localStorage.setItem("SJ", encodeURIComponent(JSON.stringify(sData.object)));
                 Global.lobbySocket()
                 cc.director.loadScene('Home')
-                
+
             }
         })
         return true;
@@ -74,7 +74,7 @@ module.exports = {
         node.parent.addChild(PhoneViews, 101);
         PhoneViews.setPosition(node.parent.width, 0);
         // var ViewWidth = node.parent.width / 2 + TelBox.width / 2;
-        var SignInBox = cc.moveBy(0.2, cc.p(-node.parent.width, 0));
+        var SignInBox = cc.moveBy(1, cc.p(-node.parent.width, 0));
         PhoneViews.runAction(SignInBox);
     },
     DestroyNode(node) {
@@ -94,10 +94,10 @@ module.exports = {
 }
 // Global.streamXHREventsToLabel(xhr, "POST",Global.serverUrl + "/account/GetWebSocket", JSON.stringify(data),e=>{})
 window.Global = {
-    // serverUrl: 'http://192.168.1.200:819',
+    serverUrl: 'http://192.168.1.200:819',
     // serverUrl: 'http://192.168.1.168:819',
     // serverUrl: 'http://h5.huizhisuo.com',
-    serverUrl: 'http://h5.3dou.com',
+    // serverUrl: 'http://h5.3dou.com',
 
     streamXHREventsToLabel: function (xhr, method, url, _data, _fn, async = true) {
         xhr.onreadystatechange = function () {
@@ -173,7 +173,7 @@ window.Global = {
     },
     lobbySocket() {
         console.log('连接sk');
-        
+
         Global.ws = new WebSocket(Global.DataUsers.wsUrl);
         Global.ws.onopen = (event) => {
             console.log("サーバー　オペ");
@@ -248,5 +248,15 @@ window.Global = {
             fn(obj)
         })
     },
+    //qiuqiu
+    _bollPoint: 0,
+    _bollPointString: null,
+    _bollSpeeds: 0,
+    _bollTime: 0,
+    _bollGameOver: null,
+    _bollSpeed: -500,
+    _bollMM: 0,
+    _boll_Map_x1: 0,
+    _boll_Map_x2: 0,
 };
 

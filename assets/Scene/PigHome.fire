@@ -1214,7 +1214,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "taskNode",
+    "_name": "rtaskNode",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -2616,9 +2616,7 @@
       "__id__": 63
     },
     "_enabled": true,
-    "_spriteFrame": {
-      "__uuid__": "b19530f7-7637-4bba-bf16-db6bcf3e10f1"
-    },
+    "_spriteFrame": null,
     "_type": 0,
     "_sizeMode": 1,
     "_fillType": 0,
@@ -2831,7 +2829,7 @@
     "_rotationX": 0,
     "_rotationY": 0,
     "_scaleX": 0,
-    "_scaleY": 1,
+    "_scaleY": 0,
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -7171,7 +7169,7 @@
     "_rotationX": 0,
     "_rotationY": 0,
     "_scaleX": 0,
-    "_scaleY": 1,
+    "_scaleY": 0,
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -9355,7 +9353,7 @@
     "_rotationX": 0,
     "_rotationY": 0,
     "_scaleX": 0,
-    "_scaleY": 1,
+    "_scaleY": 0,
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -9637,7 +9635,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "机会图@3x",
+    "_name": "pic",
     "_objFlags": 0,
     "_parent": {
       "__id__": 239
@@ -9715,7 +9713,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "砸蛋机会加@3x",
+    "_name": "title",
     "_objFlags": 0,
     "_parent": {
       "__id__": 239

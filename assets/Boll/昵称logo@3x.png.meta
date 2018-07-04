@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "d8e2d067-6bc5-4ff9-9dcc-7a5f658cb9ac",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "昵称logo@3x": {
+      "ver": "1.0.3",
+      "uuid": "3364c829-f178-485d-980b-58e12b1ea7c7",
+      "rawTextureUuid": "d8e2d067-6bc5-4ff9-9dcc-7a5f658cb9ac",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 1125,
+      "height": 485,
+      "rawWidth": 1125,
+      "rawHeight": 485,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

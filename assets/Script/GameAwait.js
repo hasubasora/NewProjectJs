@@ -113,8 +113,8 @@ cc.Class({
             let json = JSON.parse(e)
             console.log(json.object.circleUrl);
             console.log(this.viewWin);
-            // WebView.url = json.object.circleUrl + '/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId
-            this.viewWin.url = 'http://192.168.1.106:802/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId + '&type=' + 3
+            this.viewWin.url = json.object.circleUrl + '/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId + '&type=' + 3
+            // this.viewWin.url = 'http://192.168.1.106:802/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId + '&type=' + 3
         })
     }
     // update (dt) {},

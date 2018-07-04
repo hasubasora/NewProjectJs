@@ -145,7 +145,7 @@ cc.Class({
                     this.question.node.scale = 0
                     this.ten = false
                 } else {
-                    console.log(mid.object.Question.CurrentQuestions);
+                    // console.log(mid.object.Question.CurrentQuestions);
                     console.log('__________________________');
                     this._updataFillStart(this.horizontal, this.QusNumber + 1);
                 }
@@ -245,7 +245,7 @@ cc.Class({
     },
     //游戏一局完成
     GetGameQuestions() {
-        this.gamewin()
+        this.gamewin.play()
         this.overRaing.scale = 1;
         let xhr = cc.loader.getXMLHttpRequest()
         let _data = {
@@ -265,8 +265,7 @@ cc.Class({
                 console.log(mid.object[0].UserName)
 
                 for (const iterator of mid.object) {
-                    console.log(iterator.Ranking);
-
+                    // console.log(iterator.Ranking);
                     switch (iterator.Ranking) {
                         case 1:
                             this.SetRaningPreFab(iterator, 'wone', iterator.UserID)

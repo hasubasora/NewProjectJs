@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "b8eaeb55-2700-4795-a73e-f9b663926765",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "排名前99名均分@3x": {
+      "ver": "1.0.3",
+      "uuid": "855e7c52-26e6-4901-acd5-f9d59899d18c",
+      "rawTextureUuid": "b8eaeb55-2700-4795-a73e-f9b663926765",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 3,
+      "trimY": 3,
+      "width": 198,
+      "height": 33,
+      "rawWidth": 204,
+      "rawHeight": 39,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

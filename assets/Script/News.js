@@ -51,6 +51,7 @@ cc.Class({
             let hall = JSON.parse(e)
             if (hall.code == 12000) {
                 this.contentLeft.removeAllChildren()
+                this.contentRight.removeAllChildren()
                 let hallObj = hall.object
                 //msgList大厅消息参数介绍
                 let msgLists = hallObj.msgList
@@ -148,6 +149,12 @@ cc.Class({
             }
         Global.streamXHREventsToLabel(xhr, "POST", Global.serverUrl + this.AddFollowUrl, _data, e => {
             let AddFollowObj = JSON.parse(e)
+
+            if (AddFollowObj.code == 12000) {
+                Global.alertWindw(AddFollowObj.message)
+            }else{
+                Global.alertWindw(AddFollowObj.message)
+            }
             this.GetHallMsgFn()
             // console.log(AddFollowObj)
         })

@@ -52,6 +52,7 @@ cc.Class({
     User_Id: cc.Label,
     //当前楼层    
     xplayer: 15,             //楼层数
+    cplayer: 15,             //楼层数
     xUserNum: 0,             //设置人物位置
     IsStop: 0,               //停止的楼层
     xFloor: 1,               //记录当前玩家移动楼层
@@ -114,14 +115,23 @@ cc.Class({
       type: cc.AudioSource,
       default: null
     },
+    cat: true
   },
 
   // LIFE-CYCLE CALLBACKS:
-  
+
   onLoad() {
     // for (let i = 2; i < 12; i++) {
     //   this.Player.setTileGID(0, i, 14, 0);
     // }
+
+    console.log('---setTileOpacity---');
+    for (let x = Global.RoomUserLen + 1; x < 13; x++) {
+      console.log(this.Player.getTileGIDAt(x, 14));
+      this.Player.removeTileAt(x, 14)
+    }
+
+
     this.startTime.play()
     console.log('进入游戏界面')
     this.SetInfo()          //设置用户数据
@@ -150,7 +160,14 @@ cc.Class({
     let pos3 = this.Player.getPositionAt(3, 12); //Vec2 {x: 150, y: 450}
 
 
-    // this.Player.setTileGID(pos1, 3, 14, gid);
+
+
+
+    // this.Player.setTileGID(pos1, 3, 14, pos1);
+
+
+
+
     // console.log(this.Player.setTexture()) //setTexture 设置纹理。
     //选择人物前面+1 移动后面-1
 
@@ -236,7 +253,7 @@ cc.Class({
         Global.RoomUserLen = D.RoomUser.length
         Global.GameRoomData = D.RoomUser;
         this.CalculateAllGold()
-        this.SetGameRoomData()
+
         // console.log(this.sThirty)
         // console.log('设置结束时间：' + D.EndTimestamps)
         // console.log('设置开始时间：' + D.CurrentTimestamps)
@@ -249,6 +266,7 @@ cc.Class({
           this.StartTimeOuts()
         }
         if (D.CountdownType == 2) {
+          this.cat = false
           this.tName.string = '上一层'
           this.eTneTime = D.EndTimestamps - D.CurrentTimestamps
           // this.eTneTime = 10
@@ -265,6 +283,8 @@ cc.Class({
         }
         console.log('参的咸鱼')
         console.log(D.RoomUser)
+        this.SetGameRoomData()
+        
       } else {
         console.log('GetRoom 错误，在房间躺枪了')
       }
@@ -276,17 +296,27 @@ cc.Class({
       if (v.UserId == Global.DataUsers.UserId) {
         //设置人物位置数据
         this.xUserNum = i + 2;
+        console.log('自己在' + v.CurrentFloor);
         this.xplayer = (15 - v.CurrentFloor)
-        this.Player.setTileGID(38, this.xUserNum, v.CurrentFloor != 0 ? this.xplayer : 14, 38);
+        if (this.cat) {
+          this.Player.setTileGID(38, this.xUserNum, v.CurrentFloor > 0 ? this.xplayer : 14, 38);
+        }
+        
         console.log('楼层赋值' + this.xUserNum)
+        console.log('楼层' + this.xplayer)
       }
-      // if (v.UserId != Global.DataUsers.UserId) {
-      //   //设置人物位置数据
-      //   this.xplayer = (15 - v.CurrentFloor)
-      //   this.Player.setTileGID(28, (i + 2), v.CurrentFloor != 0 ? this.xplayer : 14, 28);
-      //   console.log('楼层赋值')
-      // }
+
+      if (v.UserId != Global.DataUsers.UserId) {
+        //设置人物位置数据
+        this.cplayer = (15 - v.CurrentFloor)
+        if (this.cat) {
+          this.Player.setTileGID(28, (i + 2), v.CurrentFloor > 0 ? this.cplayer : 14, 28);
+        }
+        console.log('--------------楼层赋值----------------')
+      }
     })
+
+
   },
 
   //上一楼
@@ -314,6 +344,10 @@ cc.Class({
     console.log("前进");
     this.GoToUpFn(n)
     this.xFloor++
+    console.log(this.xUserNum);
+    console.log(this.xplayer);
+    let gid = this.Player.getTileGIDAt(this.xUserNum, this.xplayer);
+    console.log('GID' + gid)
     this.moveToPlayer(this.xUserNum, this.xplayer);
     this.ButtonType(2)
     this.CalculateAllGold()
@@ -327,6 +361,7 @@ cc.Class({
     //前进按钮设置false
     this.ButtonType(2)
   },
+
   //移动人物用
   moveToPlayer(n, x) {
     //获取玩家
@@ -350,6 +385,7 @@ cc.Class({
     //顺序执行
     let mAcion = cc.sequence(moveTo, finish);
     // 启动运动
+    // players.runAction(moveTo);
     players.runAction(mAcion);
     //运动结束后重新设置GID
   },
@@ -478,7 +514,6 @@ cc.Class({
 
   // 退出房间
   OutRoom() {
-
     let _data = {
       Userid: Global.DataUsers.UserId,
       Token: Global.DataUsers.Token,
@@ -495,27 +530,7 @@ cc.Class({
     })
   },
 
-  /**
-   * 切换金币的
-   */
-  radioButtonClicked: function (toggle) {
-    var index = this.radioButton.indexOf(toggle);
-    alert(index);
-    var title = "RadioButton";
-    switch (index) {
-      case 0:
-        title += "1";
-        break;
-      case 1:
-        title += "2";
-        break;
-      case 2:
-        title += "3";
-        break;
-      default:
-        break;
-    }
-  },
+ 
   /**
  * 设置按钮
  */
@@ -551,7 +566,7 @@ cc.Class({
       }
     };
     ws.onmessage = (event) => {
-      console.log("サーバーのメッセージ: " + event.data);
+      // console.log("サーバーのメッセージ: " + event.data);
       let aData = JSON.parse(event.data).Data.Status
       let UserID = JSON.parse(event.data).Data.UserID
       let Floor = JSON.parse(event.data).Data.Floor
@@ -579,6 +594,7 @@ cc.Class({
         break;
       case 1:
         console.log('有人参战')
+        this.Prepare()
         break;
       case 2:
         console.log('有人观战')
@@ -591,13 +607,13 @@ cc.Class({
         break;
       case 5:
         console.log('开始游戏')
+        this.Prepare()
         this.startTime.stop()
         this.timeStartSource.play()
         this.scheduleOnce(() => {
           this.bombTimeSource.play()
         }, 1)
 
-        this.Prepare()
         this.CalculateGold()
         this.ButtonType(1)
         break;
@@ -638,12 +654,11 @@ cc.Class({
       case 11:
         this.aAnimationTimes()
         this.ButtonType(2)
-        this.Prepare()  //获取爆炸倒计时
+        // this.Prepare()  //获取爆炸倒计时
         console.log('要爆炸了')
         break;
       case 12:
         console.log('爆炸了')
-
         this.bom = f
         this.aAnimationBom()
         break;

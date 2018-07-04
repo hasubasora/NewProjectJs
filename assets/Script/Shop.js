@@ -113,6 +113,7 @@ cc.Class({
                         this.GoodsID = iterator.GoodsID
                         this.openWindowGoods(iterator.GoodsPic, iterator.GoodsMarketPrice)/*图片，金币，件*/
                         this.GoodsWindow.scale = 1
+                        this.J3.string = 1
                     })
                     Global.loaderUserIcon(iterator.GoodsPic, newNode.getChildByName('Pic').getComponent(cc.Sprite))
                     this.GoodesOneList.content.addChild(newNode);

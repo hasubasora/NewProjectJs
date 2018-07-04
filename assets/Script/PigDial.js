@@ -63,7 +63,8 @@ cc.Class({
         PigClick: cc.AudioSource,
         PigShow: cc.AudioSource,
         isMis: true,
-        ViewWeb:cc.WebView
+        ViewWeb: cc.WebView,
+        PigArrayNumber: []
     },
     SetInfo() {
         GetUserDatas()
@@ -71,7 +72,7 @@ cc.Class({
         this.loadUserPointer()
         this.GetRoundaboutRecord()   //先加载一次 顺序就对了
         this.getView()
-        
+
     },
     MisClose() {
         if (this.isMis) {
@@ -86,9 +87,10 @@ cc.Class({
     },
     onLoad() {
         this.SetInfo()
-
+        this.PigBox = []
+        this.PigNumbers = 0
         // console.log(360 / 9);
-
+        this.RoundsNumber = 0
         // console.log(this.pointer.node.rotation = this.pointer.node.rotation + 40);
 
 
@@ -101,7 +103,7 @@ cc.Class({
 
         // console.log(this.sssNumber);
 
-
+        this.sRound = true
     },
 
     loadUserPointer() {
@@ -123,12 +125,13 @@ cc.Class({
                 this.RankingMsg(_UserRanking)
             }
             //RoundaboutInfo 转盘信息
+
             let _Roundabout = _UserPointer.Roundabout
             this.Roundabout = _Roundabout
 
             let _object = _UserPointer.object
             this._objectList = _object
-            this.radioButtonClicked(this.radioButton[0])
+            this.radioButtonClicked(this.radioButton[this.RoundsNumber])
         })
     },
     //抽到的东西
@@ -148,15 +151,31 @@ cc.Class({
     },
     //猪
     PigListType(_UserCharacter) {
+        this.PigArrayNumber = []
         this.PigList.forEach((iterator, index) => {
             if (_UserCharacter[index].CharactersNumber < 1) {
                 iterator.getComponent(cc.Button).interactable = false
             }
             iterator.node.getChildByName('PigNum').getComponent(cc.Label).string = _UserCharacter[index].CharactersNumber;
+            this.PigArrayNumber.push(_UserCharacter[index].CharactersNumber)
+
         });
+
+
     },
-
-
+    bubbleSort(arr) {
+        var len = arr.length;
+        for (var i = 0; i < len; i++) {
+            for (var j = 0; j < len - 1 - i; j++) {
+                if (arr[j] > arr[j + 1]) { //相邻元素两两对比
+                    var temp = arr[j + 1]; //元素交换
+                    arr[j + 1] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+        }
+        return arr;
+    },
     GetRoundaboutRecord() {
         this.LottleList.content.removeAllChildren()
         let _data = {
@@ -194,53 +213,103 @@ cc.Class({
     //下面的切换列表
     radioButtonClicked: function (toggle) {
         var index = this.radioButton.indexOf(toggle);
-        // console.log(toggle);
         switch (index) {
             case 0:
                 //5卡
                 this.GetPointerUrl(index)
+                this.RoundsNumber = 0
                 break;
             case 1:
                 //6卡
                 this.GetPointerUrl(index)
+                this.RoundsNumber = 1
                 break;
             case 2:
                 //7卡
                 this.GetPointerUrl(index)
+                this.RoundsNumber = 2
                 break;
             case 3:
-                //7卡
+                //8卡
                 this.GetPointerUrl(index)
+                this.RoundsNumber = 3
                 break;
             case 4:
-                //7卡
+                //9卡
                 this.GetPointerUrl(index)
+                this.RoundsNumber = 4
                 break;
             default:
                 break;
         }
     },
     GetPointerUrl(index) {
-        this.pointerTitle.string = this._objectList[index].Conditions
+
+        // this.pointerTitle.string = this._objectList[index].Conditions
         this.SaveNumber = this._objectList[index].RoundaboutType
+        //
         this.loaderUserIcon(this.Roundabout[index].Path, this.pointer)
+        var numbers = 0
         for (let i = 0; i < this.PigList.length; i++) {
             this.PigList[i].isChecked = false;
-            if (i < this.SaveNumber) {
+            if (this.PigList[i].node.getChildByName('PigNum').getComponent(cc.Label).string > 0) {
+                // if (i < this.SaveNumber) {
                 //if 没有卡片的 就不选中
-                if (this.PigList[i].node.getChildByName('PigNum').getComponent(cc.Label).string > 0) {
-                    this.PigList[i].isChecked = true
-                    this.PigList[i].interactable = true
-                }
+                this.PigList[i].isChecked = true
+                this.PigList[i].interactable = true
                 // console.log(this.PigList[i].isChecked);
+                // } 
+                if (this.PigList[i].isChecked) {
+                    numbers++
+                }
+                if (numbers > this.SaveNumber) {
+                    this.PigList[i].isChecked = false;
+                    this.PigList[i].interactable = false
+                }
             } else {
                 //自动干掉选择
                 this.PigList[i].isChecked = false;
                 this.PigList[i].interactable = false
             }
+
         }
         // console.log(this._objectList[index]);
         // console.log(this.Roundabout[index].Path);
+        this.ForPigBox()
+    },
+    ForPigBox() {
+        this.PigBox = []
+        this.PigNumbers = 0
+        // console.log(this.bubbleSort(this.PigArrayNumber));
+        let PigArrays = this.bubbleSort(this.PigArrayNumber)
+        for (const iterator of PigArrays) {
+            if (iterator > 0) {
+                this.PigBox.push(iterator)
+            }
+        }
+        this.NumberBox = this.PigBox;
+        this.ForPigBoxTwo()
+    },
+    ForPigBoxTwo() {
+        let tt = []
+        if (this.NumberBox.length >= this.SaveNumber) {
+            for (const PigBoxItem of this.NumberBox) {
+                if (PigBoxItem > 0) {
+                    tt.push(PigBoxItem - 1)
+                }
+            }
+            if (tt.length >= this.SaveNumber) {
+                this.PigNumbers++
+            } else {
+                // console.log('不够了');
+            }
+            this.NumberBox = tt
+            this.ForPigBoxTwo()
+        } else {
+            // console.log('长度不够');
+        }
+        // console.log(this.PigNumbers + '次数');
+        this.pointerTitle.string = this.PigNumbers
     },
     loaderUserIcon(mo, nSprite) {
         cc.loader.load(mo, function (err, tex) {
@@ -271,7 +340,6 @@ cc.Class({
         var index = this.PigList.indexOf(toggle);
         let n = 0;
         this.PigList.forEach((ele, i) => {
-            console.log(ele.isChecked);
             if (ele.isChecked) {
                 n++
             }
@@ -286,7 +354,9 @@ cc.Class({
         } else {
             this.PigList.forEach((ele, i) => {
                 if (!ele.isChecked) {
-                    ele.interactable = true
+                    if (this.PigList[i].node.getChildByName('PigNum').getComponent(cc.Label).string > 0) {
+                        ele.interactable = true
+                    }
                 }
             });
         }
@@ -311,6 +381,7 @@ cc.Class({
                 console.log(_pointer.prize.path);
                 console.log(_pointer.prize.prompt);
                 this.turntableStart(_pointer.prize.prizeType)
+                //拉去猪列表
             }
 
         })
@@ -472,18 +543,17 @@ cc.Class({
             }
             this.ShowBoxWindow.getChildByName('nSprite').getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(spriteFrame)
         })
-
-
     },
     closeShowBoxWindow() {
         this.ShowBoxWindow.scale = 0
+        this.loadUserPointer()
         this.PigClick.play()
     },
     closeWinNode(num) {
         this.winNode.scale = num
         this.PigClick.play()
     },
-    ruleWinNode(e,num) {
+    ruleWinNode(e, num) {
         this.ruleWinNodes.scale = num
         this.PigClick.play()
     },
@@ -497,9 +567,8 @@ cc.Class({
             let json = JSON.parse(e)
             // console.log(json.object.circleUrl);
             // console.log(this.ViewWeb);
-            // WebView.url = json.object.circleUrl + '/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId
-            // WebView.url = 'http://localhost:6667/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId
-            this.ViewWeb.url = 'http://192.168.1.106:802/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId + '&type=' + 7
+            this.ViewWeb.url = json.object.circleUrl + '/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId + '&type=' + 7
+            // this.ViewWeb.url = 'http://192.168.1.106:802/?tok=' + Global.DataUsers.Token + '&usid=' + Global.DataUsers.UserId + '&type=' + 7
             console.log(this.ViewWeb.url)
             console.log('--------------------------------------------------')
         })

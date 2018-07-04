@@ -98,6 +98,7 @@ cc.Class({
     sPageView_1: cc.Sprite,
     sPageView_2: cc.Sprite,
     sPageView_3: cc.Sprite,
+    sPageView_4: cc.Sprite,
 
     nlayer: cc.Node,
 
@@ -450,6 +451,7 @@ cc.Class({
         Global.loaderUserIcon(code.Data[0], this.sPageView_1)
         Global.loaderUserIcon(code.Data[1], this.sPageView_2)
         Global.loaderUserIcon(code.Data[2], this.sPageView_3)
+        Global.loaderUserIcon(code.Data[3], this.sPageView_4)
       }
     })
   },

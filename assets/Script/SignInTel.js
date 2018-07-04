@@ -38,7 +38,9 @@ cc.Class({
 
     wxBtn: cc.Node,
     phoneBtn: cc.Node,
-    webwxlogin: ''
+    webwxlogin: '',
+    loadNode: cc.Node
+
   },
   RedLabels(str) {
     this.RedLabel.string = str
@@ -50,24 +52,28 @@ cc.Class({
       let code = JSON.parse(e)
       console.log(code.mode);
       this.webwxlogin = code.webwxlogin
-      switch (code.mode) {
-        case 1:
-          this.wxBtn.scale = 1
-          this.wxBtn.setPositionX(0)
-
-          break;
-        case 2:
-          this.phoneBtn.scale = 1
-          this.phoneBtn.setPositionX(0)
-
-          break;
-        case 3:
-          this.phoneBtn.scale = 1
-          this.wxBtn.scale = 1
-          break;
-        default:
-          break;
+      if (code.code == 12000) {
+        this.loadNode.scale = 0
+        switch (code.mode) {
+          case 1:
+            this.wxBtn.scale = 1
+            this.wxBtn.setPositionX(0)
+            break;
+          case 2:
+            this.phoneBtn.scale = 1
+            this.phoneBtn.setPositionX(0)
+            break;
+          case 3:
+            this.phoneBtn.scale = 1
+            this.wxBtn.scale = 1
+            break;
+          default:
+            break;
+        }
+      } else {
+        cc.sys.localStorage.removeItem('loginOut')
       }
+
     })
   },
 
@@ -160,7 +166,6 @@ cc.Class({
   },
 
   CloseViews(e, num) {
-    console.log(num);
     this.SignWindow.scale = num
   },
   getQueryString(name) {
@@ -170,18 +175,30 @@ cc.Class({
     return null;
   },
   onLoad() {
+    // this.loadNode = cc.director.getScene().getChildByName('Canvas').getChildByName('Splash').scale
+
     console.log("/执行穿越模式/");
     this.WebUrlText()  //验证码
-    this.LoginList()  //登陆按钮配置
     if (navigator.userAgent.toLowerCase().match(/MicroMessenger/i) == "micromessenger") {
       //在微信中打开
       console.log('微信打开了');
       console.log(this.getQueryString('wxtoken'));
+      // 存在的话直接跳进去
       if (this.getQueryString('wxtoken') != null) {
-        console.log('??');
+        //如果是退出的话
+        console.log(cc.sys.localStorage.getItem('loginOut'));
+        if (cc.sys.localStorage.getItem('loginOut')) {
+          this.LoginList()  //登陆按钮配置
+          return
+        }
         WeixinLoginTime(this.getQueryString('wxtoken'))
+        console.log('??');
         // cc.director.loadScene('Home')
+      } else {
+        this.LoginList()  //登陆按钮配置
       }
+    } else {
+      this.LoginList()  //登陆按钮配置
     }
     if (cc.sys.localStorage.getItem("SJ") != null) {
       GetUserDatas(1)
@@ -189,9 +206,11 @@ cc.Class({
 
   },
   wxBtnLogin() {
-    console.log(this.webwxlogin + '?cbUrl=' + encodeURIComponent(location.href));
+    cc.sys.localStorage.removeItem('loginOut')
+    console.log(this.webwxlogin + '?cbUrl=' + encodeURIComponent(location.origin));
     // 'weixin://'
-    window.location.href = this.webwxlogin + '?cbUrl=' + encodeURIComponent(location.href)
+    // window.location.href = this.webwxlogin + '?cbUrl=' + encodeURIComponent(location.href.split("?")[0])
+    window.location.href = this.webwxlogin + '?cbUrl=' + encodeURIComponent(location.origin)
   },
   // 换验证码
   WebUrlText() {
